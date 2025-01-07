@@ -1,0 +1,157 @@
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card w-50 shadow-lg">
+    <div class="card-header text-center">
+      <h2 class="my-2">
+        <i class="bi bi-plus-square"></i>
+        Creación de Usuario
+        <i class="bi bi-person-circle"></i>
+      </h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="oSocioForm!" (ngSubmit)="onSubmit()" novalidate>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              formControlName="nombre"
+              placeholder="Pon aquí tu nombre"
+              class="form-control"
+            />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            <mat-error *ngIf="oSocioForm?.get('nombre')?.hasError('required')">
+              El campo nombre es obligatorio
+            </mat-error>
+            <mat-error *ngIf="oSocioForm?.get('nombre')?.hasError('minlength')">
+              El nombre debe ser más largo
+            </mat-error>
+            <mat-error *ngIf="oSocioForm?.get('nombre')?.hasError('maxlength')">
+              El nombre debe ser más corto
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Primer Apellido</mat-label>
+            <input
+              matInput
+              formControlName="apellido1"
+              placeholder="Escribe tu primer apellido"
+              class="form-control"
+            />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oSocioForm?.get('nombre')?.hasError('required')){
+            <mat-error> El campo nombre es obligatorio </mat-error>
+            } @if (oSocioForm?.get('nombre')?.hasError('minlength')){
+            <mat-error> El nombre debe ser mas largo </mat-error>
+            } @if (oSocioForm?.get('nombre')?.hasError('maxlength')){
+            <mat-error> El nombre debe ser mas corto </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Segundo Apellido</mat-label>
+            <input
+              matInput
+              formControlName="apellido2"
+              placeholder="Escribe tu segundo apellido"
+              class="form-control"
+            />
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              placeholder="Pon aquí tu email"
+              class="form-control"
+            />
+            <mat-hint align="start">Formato email</mat-hint>
+            @if (oSocioForm?.get('email')?.hasError('required')) {
+            <mat-error>Debes introducir un email</mat-error>
+            } @if (oSocioForm?.get('email')?.hasError('email')) {
+            <mat-error>Debes introducir un email correcto</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>DNI</mat-label>
+            <input
+              matInput
+              formControlName="dni"
+              placeholder="Escribe tu DNI"
+              class="form-control"
+            />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oSocioForm?.get('dni')?.hasError('required')) {
+            <mat-error>Debes introducir un dni </mat-error>
+            } @if (oSocioForm?.get('dni')?.hasError('minlength')) {
+            <mat-error>Debes introducir un dni mas largo</mat-error>
+            } @if (oSocioForm?.get('dni')?.hasError('maxlength')) {
+            <mat-error>Debes introducir un dni mas corto</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="text-center">
+          <button
+            class="btn btn-warning mt-4 mx-1"
+            [routerLink]="['/admin', 'usuario', 'plist']"
+          >
+            <i class="bi bi-list"></i> Ir a listado de Usuarios
+          </button>
+          <button class="btn btn-secondary mt-4 mx-1" (click)="onReset()">
+            <i class="bi bi-x-lg"></i> Reset
+          </button>
+          <button
+            class="btn btn-primary mt-4 mx-1"
+            type="submit"
+            [disabled]="!oSocioForm?.valid"
+          >
+            <i class="bi bi-floppy"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="mimodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ strMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="hideModal()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

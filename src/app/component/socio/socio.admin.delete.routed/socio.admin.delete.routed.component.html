@@ -1,0 +1,93 @@
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white text-center">
+          <h2 class="mb-0">
+            <i class="bi bi-trash"></i> Borrar Socio <i class="bi bi-person-circle"></i>
+          </h2>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-bordered my-5 text-center">
+            <tbody>
+              <tr class="text-center">
+                <th scope="row" class="bg-danger text-white text-end pe-5">ID</th>
+                <td class="text-start ps-5">{{ oSocio!.id }}</td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row" class="bg-primary text-white text-end pe-5">Nombre</th>
+                <td class="text-start ps-5">{{ oSocio!.nombre }}</td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row" class="bg-primary text-white text-end pe-5">Primer Apellido</th>
+                <td class="text-start ps-5">{{ oSocio!.apellido1 }}</td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row" class="bg-primary text-white text-end pe-5">Segundo Apellido</th>
+                <td class="text-start ps-5">{{ oSocio!.apellido2 }}</td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row" class="bg-primary text-white text-end pe-5">DNI</th>
+                <td class="text-start ps-5">{{ oSocio!.dni }}</td>
+              </tr>
+              <tr class="text-center">
+                <th scope="row" class="bg-primary text-white text-end pe-5">Correo</th>
+                <td class="text-start ps-5">{{ oSocio!.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center mt-4">
+            <p class="fs-3">¿Seguro que desea borrar el socio?</p>
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            <button
+              class="btn btn-warning mt-4 mx-1"
+              [routerLink]="['/admin', 'socio', 'plist']"
+            >
+              <i class="bi bi-list"></i> Ir a listado de Socios
+            </button>
+            <button class="btn btn-danger mt-4 mx-1" (click)="deleteSocio()">
+              <i class="bi bi-trash"></i> Borrar socio
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    [id]="'mimodal'"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="hideModal()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ strMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="hideModal()"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

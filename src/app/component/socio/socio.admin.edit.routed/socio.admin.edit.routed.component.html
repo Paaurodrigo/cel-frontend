@@ -1,0 +1,153 @@
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card border-0 shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="fw-bold">
+            <i class="bi bi-person-circle"></i> Edición de Socio <i class="bi bi-pencil"></i>
+          </h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="oSocioForm!" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mb-3">
+              <label for="id" class="form-label fw-bold">ID</label>
+              <input
+                type="text"
+                id="id"
+                class="form-control"
+                formControlName="id"
+                placeholder="ID"
+                readonly
+              />
+              <div class="form-text">No se puede cambiar.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                formControlName="nombre"
+                placeholder="Nombre"
+              />
+              <div *ngIf="oSocioForm?.get('nombre')?.errors" class="text-danger">
+                <small *ngIf="oSocioForm?.get('nombre')?.hasError('required')">Debes introducir un nombre.</small>
+                <small *ngIf="oSocioForm?.get('nombre')?.hasError('minlength')">El nombre es demasiado corto.</small>
+                <small *ngIf="oSocioForm?.get('nombre')?.hasError('maxlength')">El nombre es demasiado largo.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="apellido1" class="form-label fw-bold">Primer Apellido</label>
+              <input
+                type="text"
+                id="apellido1"
+                class="form-control"
+                formControlName="apellido1"
+                placeholder="Primer Apellido"
+              />
+              <div *ngIf="oSocioForm?.get('apellido1')?.errors" class="text-danger">
+                <small *ngIf="oSocioForm?.get('apellido1')?.hasError('required')">Debes introducir un apellido.</small>
+                <small *ngIf="oSocioForm?.get('apellido1')?.hasError('minlength')">El apellido es demasiado corto.</small>
+                <small *ngIf="oSocioForm?.get('apellido1')?.hasError('maxlength')">El apellido es demasiado largo.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="apellido2" class="form-label fw-bold">Segundo Apellido</label>
+              <input
+                type="text"
+                id="apellido2"
+                class="form-control"
+                formControlName="apellido2"
+                placeholder="Segundo Apellido"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="dni" class="form-label fw-bold">DNI</label>
+              <input
+                type="text"
+                id="dni"
+                class="form-control"
+                formControlName="dni"
+                placeholder="DNI"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">Correo Electrónico</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+                placeholder="Correo Electrónico"
+              />
+              <div *ngIf="oSocioForm?.get('email')?.errors" class="text-danger">
+                <small *ngIf="oSocioForm?.get('email')?.hasError('required')">Debes introducir un correo.</small>
+                <small *ngIf="oSocioForm?.get('email')?.hasError('email')">El formato del correo es incorrecto.</small>
+              </div>
+            </div>
+
+            <div class="mt-4 d-flex justify-content-evenly">
+              <button
+              class="btn btn-warning mt-4 mx-1"
+              [routerLink]="['/admin', 'socio', 'plist']"
+            >
+              <i class="bi bi-list"></i> Ir a listado de Socios
+            </button>
+              <button class="btn btn-secondary px-4" type="reset" (click)="onReset()">
+                <i class="bi bi-x-lg"></i> Reset
+              </button>
+              <button
+                class="btn btn-primary px-4"
+                type="submit"
+                [disabled]="!oSocioForm?.valid"
+              >
+                <i class="bi bi-save"></i> Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    [id]="'mimodal'"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="hideModal()"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="fs-5">{{ strMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="hideModal()"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
