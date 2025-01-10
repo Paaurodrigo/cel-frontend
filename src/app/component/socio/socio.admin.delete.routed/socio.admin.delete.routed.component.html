@@ -12,31 +12,31 @@
             <tbody>
               <tr class="text-center">
                 <th scope="row" class="bg-danger text-white text-end pe-5">ID</th>
-                <td class="text-start ps-5">{{ oSocio!.id }}</td>
+                <td class="text-start ps-5">{{ oSocio?.id }}</td> <!-- Uso del operador ? -->
               </tr>
               <tr class="text-center">
                 <th scope="row" class="bg-primary text-white text-end pe-5">Nombre</th>
-                <td class="text-start ps-5">{{ oSocio!.nombre }}</td>
+                <td class="text-start ps-5">{{ oSocio?.nombre }}</td>
               </tr>
               <tr class="text-center">
                 <th scope="row" class="bg-primary text-white text-end pe-5">Primer Apellido</th>
-                <td class="text-start ps-5">{{ oSocio!.apellido1 }}</td>
+                <td class="text-start ps-5">{{ oSocio?.apellido1 }}</td>
               </tr>
               <tr class="text-center">
                 <th scope="row" class="bg-primary text-white text-end pe-5">Segundo Apellido</th>
-                <td class="text-start ps-5">{{ oSocio!.apellido2 }}</td>
+                <td class="text-start ps-5">{{ oSocio?.apellido2 }}</td>
               </tr>
               <tr class="text-center">
                 <th scope="row" class="bg-primary text-white text-end pe-5">DNI</th>
-                <td class="text-start ps-5">{{ oSocio!.dni }}</td>
+                <td class="text-start ps-5">{{ oSocio?.dni }}</td>
               </tr>
               <tr class="text-center">
                 <th scope="row" class="bg-primary text-white text-end pe-5">Correo</th>
-                <td class="text-start ps-5">{{ oSocio!.email }}</td>
+                <td class="text-start ps-5">{{ oSocio?.email }}</td>
               </tr>
               <tr class="text-center">
                 <th scope="row" class="bg-primary text-white text-end pe-5">Teléfono</th>
-                <td class="text-start ps-5">{{ oSocio!.telefono }}</td>
+                <td class="text-start ps-5">{{ oSocio?.telefono }}</td>
               </tr>
             </tbody>
           </table>

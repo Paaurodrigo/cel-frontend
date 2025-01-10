@@ -60,19 +60,11 @@ export class SocioAdminPlistRoutedComponent implements OnInit {
       });
   }
 
-  edit(oSocio: ISocio) {
-    //navegar a la página de edición
-    this.oRouter.navigate(['admin/socio/edit', oSocio.id]);
-  }
-
   view(oSocio: ISocio) {
     //navegar a la página de edición
     this.oRouter.navigate(['admin/socio/view', oSocio.id]);
   }
 
-  deleteSocio(oSocio: ISocio) {
-    this.oRouter.navigate(['admin/socio/delete', oSocio.id]);
-  }
 
   goToPage(p: number) {
     if (p) {

@@ -12,7 +12,8 @@ export class SocioAdminViewRoutedComponent implements OnInit {
 
   id: number = 0;
   oSocio: ISocio = {} as ISocio;
-  fotoDniBase64: string | undefined;
+  fotoDni: string | undefined;
+  modalImage: string = '';
 
   constructor(private oActivatedRoute: ActivatedRoute, private oSocioService: SocioService) { }
 
@@ -27,13 +28,13 @@ export class SocioAdminViewRoutedComponent implements OnInit {
       next: (blob: Blob) => {
         const reader = new FileReader();
         reader.onload = () => {
-          this.fotoDniBase64 = reader.result as string;
+          this.fotoDni = reader.result as string;
         };
         reader.readAsDataURL(blob);
     },
     error: (err) => {
       console.error('Error al obtener la foto del socio', err);
-      this.fotoDniBase64 = undefined;
+      this.fotoDni = undefined;
     },
   });
   
@@ -43,17 +44,13 @@ export class SocioAdminViewRoutedComponent implements OnInit {
     this.oSocioService.getOne(this.id).subscribe({
       next: (data: ISocio) => {
         this.oSocio = data;
-        // Verifica que la foto en base64 está siendo recibida correctamente
-        console.log('Foto base64:', data.fotoDni);
-  
-        if (data.fotoDni) {
-          this.fotoDniBase64 = 'data:image/png;base64,' + data.fotoDni;
-          console.log('Foto en base64 convertida:', this.fotoDniBase64);  // Verifica que la cadena está bien formateada
-        }
       },
       error: (err) => {
         console.error('Error al obtener los datos del socio', err);
       }
     });
   }
+
+ 
+  
 }
