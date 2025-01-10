@@ -52,16 +52,17 @@ export class SocioService {
     return this.oHttp.get<ISocio>(URL);
   }
 
-  create(oSocio: ISocio): Observable<ISocio> {
+
+  create(formData: FormData): Observable<ISocio> {
     let URL: string = '';
     URL += this.serverURL;
-    return this.oHttp.put<ISocio>(URL, oSocio);
+    return this.oHttp.put<ISocio>('http://localhost:8085/socio/new', formData);
   }
 
   update(oSocio: ISocio): Observable<ISocio> {
     let URL: string = '';
     URL += this.serverURL;
-    return this.oHttp.put<ISocio>(URL, oSocio);
+    return this.oHttp.post<ISocio>(URL, oSocio);
   }
 
   getOne(id: number): Observable<ISocio> {
@@ -69,10 +70,16 @@ export class SocioService {
     URL += 'http://localhost:8085';
     URL += '/socio';
     URL += '/' + id;
-    return this.oHttp.get<ISocio>(URL);
+    return this.oHttp.get<ISocio>('http://localhost:8085/socio/' + id);
   }
 
   delete(id: number) {
     return this.oHttp.delete('http://localhost:8085/socio/' + id);
   }
+
+  getFotoDni(id: number): Observable<Blob> {
+    return this.oHttp.get('http://localhost:8085/socio/'+id+'/foto', { responseType: 'blob' });
+  }
+  
+
 }

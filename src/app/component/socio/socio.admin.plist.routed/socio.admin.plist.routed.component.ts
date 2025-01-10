@@ -98,7 +98,7 @@ export class SocioAdminPlistRoutedComponent implements OnInit {
     this.strField = field;
     this.strDir = this.strDir === 'asc' ? 'desc' : 'asc';
     this.getPage();
-  }
+  }   
 
   goToRpp(nrpp: number) {
     this.nPage = 0;

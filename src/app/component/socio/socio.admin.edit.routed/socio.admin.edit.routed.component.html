@@ -76,6 +76,8 @@
               />
             </div>
 
+
+
             <div class="mb-3">
               <label for="email" class="form-label fw-bold">Correo Electrónico</label>
               <input
@@ -91,6 +93,22 @@
               </div>
             </div>
 
+
+            <div class="mb-3">
+              <label for="telefono" class="form-label fw-bold">Telefono</label>
+              <input
+                type="telefono"
+                id="telefono"
+                class="form-control"
+                formControlName="telefono"
+                placeholder="Telefono"
+              />
+              <div *ngIf="oSocioForm?.get('telefono')?.errors" class="text-danger">
+                <small *ngIf="oSocioForm?.get('telefono')?.hasError('required')">Debes introducir un telefono.</small>
+                <small *ngIf="oSocioForm?.get('telefono')?.hasError('telefono')">El formato del telefono es incorrecto.</small>
+              </div>
+            </div>
+
             <div class="mt-4 d-flex justify-content-evenly">
               <button
               class="btn btn-warning mt-4 mx-1"
@@ -98,11 +116,11 @@
             >
               <i class="bi bi-list"></i> Ir a listado de Socios
             </button>
-              <button class="btn btn-secondary px-4" type="reset" (click)="onReset()">
+              <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
                 <i class="bi bi-x-lg"></i> Reset
               </button>
               <button
-                class="btn btn-primary px-4"
+                class="btn btn-success mt-4 mx-1"
                 type="submit"
                 [disabled]="!oSocioForm?.valid"
               >
