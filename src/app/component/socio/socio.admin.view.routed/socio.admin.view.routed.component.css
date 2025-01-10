@@ -1,0 +1,12 @@
+.imagen-contenedor {
+    width: 500px; /* Ancho fijo del contenedor */
+    height: 200px; /* Altura fija del contenedor */
+    overflow: hidden; /* Asegura que la imagen no se desborde */
+  }
+  
+  .imagen-contenedor img {
+    width: 100%; /* La imagen ocupa el 100% del ancho del contenedor */
+    height: 100%; /* La imagen ocupa el 100% de la altura del contenedor */
+    object-fit: contain; /* La imagen se ajusta al contenedor sin recortarse */
+  }
+  

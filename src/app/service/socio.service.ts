@@ -78,7 +78,7 @@ export class SocioService {
   }
 
   getFotoDni(id: number): Observable<Blob> {
-    return this.oHttp.get('http://localhost:8085/socio/'+id+'/foto', { responseType: 'blob' });
+    return this.oHttp.get('http://localhost:8085/socio/'+id+'/image', { responseType: 'blob' });
   }
   
 

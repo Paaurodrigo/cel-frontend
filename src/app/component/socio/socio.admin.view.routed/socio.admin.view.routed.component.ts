@@ -19,8 +19,26 @@ export class SocioAdminViewRoutedComponent implements OnInit {
   ngOnInit() {
     this.id = this.oActivatedRoute.snapshot.params['id'];
     this.getOne();
+    this.verImagen(this.id);
   }
 
+  verImagen(id: number): void {
+    this.oSocioService.getFotoDni(id).subscribe({
+      next: (blob: Blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.fotoDniBase64 = reader.result as string;
+        };
+        reader.readAsDataURL(blob);
+    },
+    error: (err) => {
+      console.error('Error al obtener la foto del socio', err);
+      this.fotoDniBase64 = undefined;
+    },
+  });
+  
+    
+  }
   getOne() {
     this.oSocioService.getOne(this.id).subscribe({
       next: (data: ISocio) => {
