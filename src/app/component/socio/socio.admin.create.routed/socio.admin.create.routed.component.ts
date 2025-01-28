@@ -49,7 +49,9 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       dni: ['', [Validators.required, Validators.pattern(/^\d{8}[A-Z]$/)]], // Ejemplo de validación de DNI
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      fotoDni: [null]  // Campo para la foto del DNI
+      fotoDni: [null],  // Campo para la foto del DNI
+      direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      codigopostal: [''],
     });
   }
 
@@ -96,7 +98,10 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('telefono', this.oSocioForm.get('telefono')?.value);
     formData.append('dni', this.oSocioForm.get('dni')?.value);
     formData.append('fotoDni', this.fotoDni!);  // Aquí añadimos el archivo
-  
+    formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
+    formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
+    formData.append('tiposocio', '2'); // ID del tipo de socio "Miembro"
+    
     this.oSocioService.create(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;

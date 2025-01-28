@@ -56,12 +56,36 @@
             }
           </mat-form-field>
         </div>
+        
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Dirección Fiscal</mat-label>
+            <input matInput formControlName="direccionfiscal" placeholder="Escribe tu direccion fiscal" class="form-control" />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oSocioForm.get('direccionfiscal')?.hasError('required')){
+            <mat-error> El campo nombre es obligatorio </mat-error>
+            } @if (oSocioForm.get('direccionfiscal')?.hasError('minlength')){
+            <mat-error> El nombre debe ser mas largo </mat-error>
+            } @if (oSocioForm.get('direccionfiscal')?.hasError('maxlength')){
+            <mat-error> El nombre debe ser mas corto </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        
         <div class="mb-3">
           <mat-form-field class="w-100">
             <mat-label>Telefono</mat-label>
             <input matInput formControlName="telefono" placeholder="Escribe tu telefono" class="form-control" />
           </mat-form-field>
         </div>
+
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Código Postal</mat-label>
+            <input matInput formControlName="codigopostal" placeholder="Escribe tu código postal" class="form-control" />
+          </mat-form-field>
+        </div>
+        
         <div class="mb-3">
           <mat-form-field class="w-100">
             <mat-label>DNI</mat-label>
