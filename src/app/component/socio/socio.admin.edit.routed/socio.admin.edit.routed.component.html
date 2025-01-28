@@ -109,6 +109,36 @@
               </div>
             </div>
 
+            <div class="mb-3">
+                <label for="direccionfiscal" class="form-label fw-bold">Direccion Fiscal</label>
+                <input
+                  type="direccionfiscal"
+                  id="direccionfiscal"
+                  class="form-control"
+                  formControlName="direccionfiscal"
+                  placeholder="Direccion Fiscal"
+                />
+                <div *ngIf="oSocioForm?.get('direccionfiscal')?.errors" class="text-danger">
+                  <small *ngIf="oSocioForm?.get('direccionfiscal')?.hasError('required')">Debes introducir un telefono.</small>
+                  <small *ngIf="oSocioForm?.get('direccionfiscal')?.hasError('direccionfiscal')">El formato del telefono es incorrecto.</small>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="telefono" class="form-label fw-bold">Codigo Postal</label>
+                <input
+                  type="codigopostal"
+                  id="codigopostal"
+                  class="form-control"
+                  formControlName="codigopostal"
+                  placeholder="Codigo Postal"
+                />
+                <div *ngIf="oSocioForm?.get('codigopostal')?.errors" class="text-danger">
+                  <small *ngIf="oSocioForm?.get('codigopostal')?.hasError('required')">Debes introducir un telefono.</small>
+                  <small *ngIf="oSocioForm?.get('codigopostal')?.hasError('codigopostal')">El formato del telefono es incorrecto.</small>
+                </div>
+              </div>
+
             <div class="mt-4 d-flex justify-content-evenly">
               <button
               class="btn btn-warning mt-4 mx-1"

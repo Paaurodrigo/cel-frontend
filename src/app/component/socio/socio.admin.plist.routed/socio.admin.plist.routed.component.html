@@ -84,6 +84,28 @@
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
+
+                  <th (click)="sort('direccionFiscal')" >
+                    Direccion Fiscal @if (strField === 'direccionFiscal') { @if (strDir === 'desc') {
+                    <i class="bi bi-caret-down-fill"></i>
+                    } @else {
+                    <i class="bi bi-caret-up-fill"></i>} }
+                  </th>
+
+                  <th (click)="sort('codigoPostal')" >
+                   Codigo Postal @if (strField === 'codigoPostal') { @if (strDir === 'desc') {
+                    <i class="bi bi-caret-down-fill"></i>
+                    } @else {
+                    <i class="bi bi-caret-up-fill"></i>} }
+                  </th>
+
+                   <th>
+                   Inmuebles 
+                    
+                   </th>
+
+
+
                   <th>Acciones</th>
                   
                 </tr>
@@ -98,6 +120,9 @@
                   <td>{{ socio.apellido2 }}</td>           
                   <td>{{ socio.email }}</td>
                   <td>{{ socio.telefono }}</td>
+                  <td>{{ socio.direccionfiscal }}</td>
+                  <td>{{ socio.codigopostal }}</td>
+                  <td><a class="btn btn-info">{{0}}</a></td>
                   <td>
                     <div class="btn-group">     
                       <button type="button" class="btn btn-info" (click)="view(socio)">

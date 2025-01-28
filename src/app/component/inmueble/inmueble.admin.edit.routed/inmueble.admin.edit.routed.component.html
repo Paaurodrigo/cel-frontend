@@ -1,3 +1,210 @@
-<p>
-  inmueble.admin.edit.routed works!
-</p>
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card border-0 shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="fw-bold">
+            <i class="bi bi-person-circle"></i> Edición de Inmueble <i class="bi bi-pencil"></i>
+          </h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="oInmuebleForm!" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mb-3">
+              <label for="cups" class="form-label fw-bold">Cups</label>
+              <input
+                type="text"
+                id="cups"
+                class="form-control"
+                formControlName="cups"
+                placeholder="CUPS"
+                readonly
+              />
+              <div class="form-text">No se puede cambiar.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="Direccion" class="form-label fw-bold">Direccion</label>
+              <input
+                type="text"
+                id="direccion"
+                class="form-control"
+                formControlName="direccion"
+                placeholder="direccion"
+              />
+              <div *ngIf="oInmuebleForm?.get('direccion')?.errors" class="text-danger">
+                <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('required')">Debes introducir un Direccion.</small>
+                <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('minlength')">El Direccion es demasiado corto.</small>
+                <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('maxlength')">El Direccion es demasiado largo.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="codigoPostal" class="form-label fw-bold">Codigo Postal</label>
+              <input
+                type="text"
+                id="codigoPostal"
+                class="form-control"
+                formControlName="codigoPostal"
+                placeholder="Codigo Postal"
+              />
+              <div *ngIf="oInmuebleForm?.get('codigoPostal')?.errors" class="text-danger">
+                <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Codigo Postal.</small>
+                <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('minlength')">El Codigo Postal es demasiado corto.</small>
+                <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('maxlength')">El Codigo Postal es demasiado largo.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="municipio" class="form-label fw-bold">municipio</label>
+              <input
+                type="text"
+                id="municipio"
+                class="form-control"
+                formControlName="municipio"
+                placeholder="municipio"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="refCatas" class="form-label fw-bold">Referencia Catastral</label>
+              <input
+                type="text"
+                id="refCatas"
+                class="form-control"
+                formControlName="referenciacatastral"
+                placeholder="refCatas"
+              />
+            </div>
+
+
+
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">Potencia1</label>
+              <input
+                type="email"
+                id="potencia1"
+                class="form-control"
+                formControlName="potencia1"
+                placeholder="potencia1"
+              />
+              <div *ngIf="oInmuebleForm?.get('potencia1')?.errors" class="text-danger">
+                <small *ngIf="oInmuebleForm?.get('potencia1')?.hasError('required')">Debes introducir un correo.</small>
+                <small *ngIf="oInmuebleForm?.get('potencia1')?.hasError('email')">El formato del correo es incorrecto.</small>
+              </div>
+            </div>
+
+
+            <div class="mb-3">
+              <label for="telefono" class="form-label fw-bold">potencia2</label>
+              <input
+                type="text"
+                id="potencia2"
+                class="form-control"
+                formControlName="potencia2"
+                placeholder="potencia2"
+              />
+              <div *ngIf="oInmuebleForm?.get('potencia2')?.errors" class="text-danger">
+                <small *ngIf="oInmuebleForm?.get('potencia2')?.hasError('required')">Debes introducir un telefono.</small>
+                <small *ngIf="oInmuebleForm?.get('potencia2')?.hasError('potencia2')">El formato del telefono es incorrecto.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="tension" class="form-label fw-bold">Tensión</label>
+              <select
+                id="tension"
+                class="form-control"
+                formControlName="tension"
+              >
+                <option value="" disabled selected>Selecciona una tensión</option>
+                <option value="230">230</option>
+                <option value="400">400</option>
+              </select>
+              <div *ngIf="oInmuebleForm?.get('tension')?.errors" class="text-danger">
+                <!-- Aquí puedes mostrar mensajes de error -->
+                {{ oInmuebleForm?.get('tension')?.errors | json }}
+              </div>
+            </div>
+            
+
+            <div class="mb-3">
+              <label for="uso" class="form-label fw-bold">Uso</label>
+              <select
+                id="uso"
+                class="form-control"
+                formControlName="uso"
+              >
+                <option value="" disabled selected>Selecciona un uso</option>
+                <option value="Vivienda Habitual">Vivienda Habitual</option>
+                <option value="Vivienda No Habitualab">Vivienda No Habitual</option>
+                <option value="Local Comercial">Local Comercial</option>
+                <option value="Garaje">Garaje</option>
+                <option value="Otros">Otros</option>
+              </select>
+              <div *ngIf="oInmuebleForm?.get('uso')?.errors" class="text-danger">
+                <!-- Aquí puedes mostrar mensajes de error -->
+                {{ oInmuebleForm?.get('uso')?.errors | json }}
+              </div>
+            </div>
+            
+
+            <div class="mt-4 d-flex justify-content-evenly">
+              <button
+              class="btn btn-warning mt-4 mx-1"
+              [routerLink]="['/admin', 'inmueble', 'plist']"
+            >
+              <i class="bi bi-list"></i> Ir a listado de Inmuebles
+            </button>
+              <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
+                <i class="bi bi-x-lg"></i> Reset
+              </button>
+              <button
+                class="btn btn-success mt-4 mx-1"
+                type="submit"
+                [disabled]="!oInmuebleForm?.valid"
+              >
+                <i class="bi bi-save"></i> Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    [id]="'mimodal'"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="hideModal()"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="fs-5">{{ strMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="hideModal()"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

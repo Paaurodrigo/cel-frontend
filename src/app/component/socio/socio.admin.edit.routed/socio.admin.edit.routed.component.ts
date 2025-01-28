@@ -61,6 +61,9 @@ export class SocioAdminEditRoutedComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       dni : new FormControl('', [Validators.required]),
       telefono : new FormControl('', [Validators.required]),
+      direccionfiscal : new FormControl('', [Validators.required]),
+      codigopostal : new FormControl('', [Validators.required]),
+
      
     });
   }
@@ -86,6 +89,8 @@ export class SocioAdminEditRoutedComponent implements OnInit {
     this.oSocioForm?.controls['email'].setValue(this.oSocio?.email);
     this.oSocioForm?.controls['dni'].setValue(this.oSocio?.dni);
     this.oSocioForm?.controls['telefono'].setValue(this.oSocio?.telefono)
+    this.oSocioForm?.controls['direccionfiscal'].setValue(this.oSocio?.direccionfiscal)
+    this.oSocioForm?.controls['codigopostal'].setValue(this.oSocio?.codigopostal)
   }
 
   get() {

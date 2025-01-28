@@ -1,3 +1,88 @@
-<p>
-  inmueble.admin.view.routed works!
-</p>
+
+<div class="row justify-content-center m-3">
+  <div class="col-lg-7 col-md-10 col-sm-12">
+    <h1 class="my-5 text-center">
+      <i class="bi bi-card-list"></i>
+      Detalle de Inmueble
+      <i class="bi bi-person-circle"></i>
+    </h1>
+    <br />
+    <table class="table table-striped table-bordered my-5 text-center">
+      <tbody>
+        <tr class="text-center">
+          <th scope="row" class="bg-danger text-white text-end pe-5">CUPS</th>
+          <td class="text-start ps-5">{{ oInmueble.cups }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Direccion
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.direccion }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Codigo Postal
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.codigoPostal }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+           Municipio
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.municipio }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Referencia Catastral
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.refCatas }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+           Potencia1
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.potencia1 }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Potencia2
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.potencia2 }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+           Tension
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.tension }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Uso
+          </th>
+          <td class="text-start ps-5">{{ oInmueble.uso }}</td>
+        </tr>
+        
+
+       
+
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div class="d-flex justify-content-center mt-4">
+    <a class="btn btn-warning mt-4 mx-1" href="admin/inmueble/plist">
+      <i class="bi bi-list"></i>
+      Ir a listado de Inmuebles
+    </a>
+    <a class="btn btn-primary mt-4 mx-1" href="admin/inmueble/edit/{{ oInmueble.id }}">
+      <i class="bi bi-pencil"></i>
+      Editar
+    </a>
+    <a class="btn btn-danger mt-4 mx-1" href="admin/inmueble/delete/{{ oInmueble.id }}">
+      <i class="bi bi-trash"></i>
+      Borrar
+    </a>
+  </div>
+</div>

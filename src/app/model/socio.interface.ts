@@ -9,4 +9,7 @@ export interface ISocio {
   email: string;
   telefono: string;
   fotoDni: string | null;  // Foto del DNI, opcional y de tipo File
+  direccionfiscal: string;
+  codigopostal: number;
+  tipoSocio: number;
 }
