@@ -14,6 +14,7 @@ import { InstalacionAdminDeleteRoutedComponent } from './component/instalacion/i
 import { InstalacionAdminEditRoutedComponent } from './component/instalacion/instalacion.admin.edit.routed/instalacion.admin.edit.routed.component';
 import { InstalacionAdminCreateRoutedComponent } from './component/instalacion/instalacion.admin.create.routed/instalacion.admin.create.routed.component';
 import { InstalacionAdminViewRoutedComponent } from './component/instalacion/instalacion.admin.view.routed/instalacion.admin.view.routed.component';
+import { InstalacionXsocioAdminPlistRoutedComponent } from './component/instalacion/instalacion.xsocio.admin.plist.routed/instalacion.xsocio.admin.plist.routed.component';
 
 export const routes: Routes = [
 
@@ -38,4 +39,5 @@ export const routes: Routes = [
   {path: 'admin/instalacion/edit/:id', component: InstalacionAdminEditRoutedComponent},
   {path: 'admin/instalacion/create', component: InstalacionAdminCreateRoutedComponent},
   {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent},
+  { path: 'admin/instalacion/plist/xsocio/:id', component: InstalacionXsocioAdminPlistRoutedComponent }, //pte de desarrollo
 ];

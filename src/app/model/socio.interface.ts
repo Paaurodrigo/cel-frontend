@@ -1,3 +1,4 @@
+import { ITipoSocio } from "./tipoSocio.interface";
 
 
 export interface ISocio {
@@ -11,5 +12,6 @@ export interface ISocio {
   fotoDni: string | null;  // Foto del DNI, opcional y de tipo File
   direccionfiscal: string;
   codigopostal: number;
-  tiposocio: number;
+  tiposocio: ITipoSocio ;
+  instalaciones: any;
 }
