@@ -13,5 +13,5 @@ export interface ISocio {
   direccionfiscal: string;
   codigopostal: number;
   tiposocio: ITipoSocio ;
-  instalaciones: any;
+  inmuebles: any;
 }

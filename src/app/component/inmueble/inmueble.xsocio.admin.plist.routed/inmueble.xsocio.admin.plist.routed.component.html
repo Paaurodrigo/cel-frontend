@@ -4,13 +4,13 @@
       <div class="card shadow-sm">
         <div class="card-header bg-dark text-white text-center">
           <h2 class="mb-0">
-            <i class="bi bi-list"></i> Lista de Socios <i class="bi bi-person-circle"></i>
+            <i class="bi bi-list"></i> Lista de inmuebles <i class="bi bi-person-circle"></i>
           </h2>
         </div>
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="admin/socio/create" class="btn btn-success">
-              <i class="bi bi-plus-square"></i> Crear nuevo socio
+            <a href="admin/inmueble/create" class="btn btn-success">
+              <i class="bi bi-plus-square"></i> Crear nuevo inmueble
             </a>
             <div class="input-group" style="max-width: 300px;">
               <input type="text" class="form-control" placeholder="Buscar" (keyup)="filter($event)" [(ngModel)]="strFiltro" />
@@ -40,102 +40,81 @@
             <table class="table table-striped table-bordered">
               <thead class="table-dark">
                 <tr>
-                  <th (click)="sort('id')">
-                    ID @if (strField === 'id') { @if (strDir === 'desc') {
+                  <th (click)="sort('cups')">
+                    CUPS @if (strField === 'cups') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-                  <th (click)="sort('DNI')">
-                    DNI @if (strField === 'DNI') { @if (strDir === 'desc') {
+                  <th (click)="sort('direccion')">
+                    Direccion @if (strField === 'direccion') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-                  <th (click)="sort('nombre')" >
-                    Nombre @if (strField === 'nombre') { @if (strDir === 'desc') {
+                  <th (click)="sort('codigopostal')" >
+                    Codigo Postal @if (strField === 'codigopostal') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-                  <th (click)="sort('apellido1')" >
-                    Primer Apellido @if (strField === 'apellido1') { @if (strDir ===
+                  <th (click)="sort('municipio')" >
+                    Municipio @if (strField === 'municipio') { @if (strDir ===
                     'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-                  <th (click)="sort('apellido2')">
-                    Segundo Apellido @if (strField === 'apellido2') { @if (strDir
+                  <th (click)="sort('refCatas')">
+                    Referencia Catastral @if (strField === 'refCatas') { @if (strDir
                     === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-                  <th (click)="sort('email')" >
-                    Correo @if (strField === 'email') { @if (strDir === 'desc') {
+                  <th (click)="sort('potencia1')" >
+                    Potencia1 @if (strField === 'potencia1') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-                  <th (click)="sort('telefono')" >
-                    Telefono @if (strField === 'telefono') { @if (strDir === 'desc') {
+                  <th (click)="sort('potencia2')" >
+                    Potencia2 @if (strField === 'potencia2') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-
-                  <th (click)="sort('direccionFiscal')" >
-                    Direccion Fiscal @if (strField === 'direccionFiscal') { @if (strDir === 'desc') {
+                  <th (click)="sort('tension')" >
+                    Tension @if (strField === 'tension') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-
-                  <th (click)="sort('codigoPostal')" >
-                   Codigo Postal @if (strField === 'codigoPostal') { @if (strDir === 'desc') {
+                  <th (click)="sort('uso')" >
+                    Uso @if (strField === 'uso') { @if (strDir === 'desc') {
                     <i class="bi bi-caret-down-fill"></i>
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
-
-                  <td class="text-center">
-                   Inmubles
-                  </td>
-                   <th (click)="sort('tiposocio')" >
-                   Tipo Socio @if (strField === 'direccionFiscal') { @if (strDir === 'desc') {
-                    <i class="bi bi-caret-down-fill"></i>
-                    } @else {
-                    <i class="bi bi-caret-up-fill"></i>} }
-                  </th>
-
-
                   <th>Acciones</th>
                   
                 </tr>
               </thead>
               <tbody>
-                @for (socio of oPage?.content; track socio.id) {
+                @for (inmueble of oPage?.content; track inmueble.cups) {
                 <tr>
-                  <td class="text-center">{{ socio.id }}</td>
-                  <td>{{ socio.dni }}</td>
-                  <td>{{ socio.nombre | trim : 10 }}</td>
-                  <td>{{ socio.apellido1 | trim : 10 }}</td>
-                  <td>{{ socio.apellido2 }}</td>           
-                  <td>{{ socio.email }}</td>
-                  <td>{{ socio.telefono }}</td>
-                  <td>{{ socio.direccionfiscal }}</td>
-                  <td>{{ socio.codigopostal }}</td>
-                  
-                  <td class="text-center">
-                    <a href="admin/instalacion/plist/xtipocuenta/{{ socio.id }}" class="btn btn-primary">{{
-                      socio.inmuebles }}</a>
-                  </td>
-                  <td>{{socio.tiposocio.descripcion}}</td>
-                  
+                  <td class="text-center">{{ inmueble.cups }}</td>
+                  <td>{{ inmueble.direccion}}</td>
+                  <td>{{ inmueble.codigoPostal }}</td>
+                  <td>{{ inmueble.municipio }}</td>           
+                  <td>{{ inmueble.refCatas }}</td>
+                  <td>{{ inmueble.potencia1 }}</td>
+                  <td>{{ inmueble.potencia2 }}</td>
+                  <td>{{ inmueble.tension }}</td>
+                  <td>{{ inmueble.uso }}</td>
                   <td>
                     <div class="btn-group">     
-                      <button type="button" class="btn btn-info" (click)="view(socio)">
+                      <button type="button" class="btn btn-info" (click)="view(inmueble)">
                         <i class="bi bi-eye"></i>
                       </button>
       
@@ -145,7 +124,7 @@
                 </tr>
                 } @empty {
                 <tr>
-                  <td colspan="7" class="text-center">No hay Socios</td>
+                  <td colspan="7" class="text-center">No hay inmuebles</td>
                 </tr>
                 }
               </tbody>

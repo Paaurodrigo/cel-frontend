@@ -1,25 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ISocio } from '../../../model/socio.interface';
-import { IPage } from '../../../model/model.interface';
-import { BotoneraService } from '../../../service/botonera.service';
-import { debounceTime, Subject } from 'rxjs';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TrimPipe } from '../../../pipe/trim.pipe';
-import { IInstalacion } from '../../../model/instalacion.interface';
-import { InstalacionService } from '../../../service/instalacion.service';
-import { SocioService } from '../../../service/socio.service';
-import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
-  selector: 'app-instalacion.xsocio.admin.plist.routed',
-  templateUrl: './instalacion.xsocio.admin.plist.routed.component.html',
-  styleUrls: ['./instalacion.xsocio.admin.plist.routed.component.css'],
+  selector: 'app-inmueble.xsocio.admin.plist.routed',
+  templateUrl: './inmueble.xsocio.admin.plist.routed.component.html',
+  styleUrls: ['./inmueble.xsocio.admin.plist.routed.component.css'],
   standalone: true,
   imports: [CommonModule, FormsModule, TrimPipe, RouterModule],
 })
-export class InstalacionXsocioAdminPlistRoutedComponent implements OnInit {
-  oPage: IPage<IInstalacion> | null = null;
+export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
+
+  oPage: IPage<IInmueble> | null = null;
   //
   nPage: number = 0; // 0-based server count
   nRpp: number = 10;
@@ -35,19 +25,18 @@ export class InstalacionXsocioAdminPlistRoutedComponent implements OnInit {
 
   oSocio: ISocio = {} as ISocio;
 
-
   constructor(
-    private oInstalacionService: InstalacionService,
+    private oInmuebleService: InmuebleService,
     private oSocioService: SocioService,
     private oBotoneraService: BotoneraService,
-    private oActivatedRoute: ActivatedRoute,
-    private oRouter: Router
+    private oRouter: Router,
+    private oActivatedRoute: ActivatedRoute
   ) {
     this.debounceSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.nPage = 0;
       this.getPage();
     });
- 
+    // get id from route admin/Inmueble/plist/xSocio/:id
     this.oActivatedRoute.params.subscribe((params) => {
       this.oSocioService.get(params['id']).subscribe({
         next: (oSocio: ISocio) => {
@@ -59,13 +48,14 @@ export class InstalacionXsocioAdminPlistRoutedComponent implements OnInit {
         },
       });
     });
-  }
+   }
 
-  ngOnInit() {
+   ngOnInit() {
     this.getPage();
   }
+
   getPage() {
-    this.oInstalacionService
+    this.oInmuebleService
       .getPageXSocio(
         this.nPage,
         this.nRpp,
@@ -75,7 +65,7 @@ export class InstalacionXsocioAdminPlistRoutedComponent implements OnInit {
         this.oSocio.id
       )
       .subscribe({
-        next: (oPageFromServer: IPage<IInstalacion>) => {
+        next: (oPageFromServer: IPage<IInmueble>) => {
           this.oPage = oPageFromServer;
           this.arrBotonera = this.oBotoneraService.getBotonera(
             this.nPage,
@@ -88,18 +78,18 @@ export class InstalacionXsocioAdminPlistRoutedComponent implements OnInit {
       });
   }
 
-  edit(oInstalacion: IInstalacion) {
+  edit(oInmueble: IInmueble) {
     //navegar a la página de edición
-    this.oRouter.navigate(['admin/instalacion/edit/', oInstalacion.id]);
+    this.oRouter.navigate(['admin/inmueble/edit/', oInmueble.id]);
   }
 
-  view(oInstalacion: IInstalacion) {
+  view(oInmueble: IInmueble) {
     //navegar a la página de edición
-    this.oRouter.navigate(['admin/instalacion/view/', oInstalacion.id]);
+    this.oRouter.navigate(['admin/inmueble/view/', oInmueble.id]);
   }
 
-  remove(oInstalacion: IInstalacion) {
-    this.oRouter.navigate(['admin/instalacion/delete/', oInstalacion.id]);
+  remove(oInmueble: IInmueble) {
+    this.oRouter.navigate(['admin/inmueble/delete/', oInmueble.id]);
   }
 
   goToPage(p: number) {
