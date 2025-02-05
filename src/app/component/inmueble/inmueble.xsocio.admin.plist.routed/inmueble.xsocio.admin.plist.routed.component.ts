@@ -1,4 +1,16 @@
+import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { Subject, debounceTime } from 'rxjs';
+import { IInmueble } from '../../../model/inmueble.interface';
+import { IPage } from '../../../model/model.interface';
+import { ISocio } from '../../../model/socio.interface';
+import { TrimPipe } from '../../../pipe/trim.pipe';
+import { BotoneraService } from '../../../service/botonera.service';
+import { InmuebleService } from '../../../service/inmueble.service';
+import { SocioService } from '../../../service/socio.service';
 
 @Component({
   selector: 'app-inmueble.xsocio.admin.plist.routed',

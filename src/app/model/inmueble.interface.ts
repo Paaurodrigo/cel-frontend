@@ -1,3 +1,5 @@
+import { ISocio } from "./socio.interface";
+
 export interface IInmueble {
     id: number;
     cups: string;
@@ -13,5 +15,6 @@ export interface IInmueble {
     habitos: string;
     intencion: string;
     recomendacion:string;
+    socio: ISocio;
 }
   
