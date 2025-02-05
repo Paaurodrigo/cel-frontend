@@ -15,10 +15,14 @@ import { InstalacionAdminEditRoutedComponent } from './component/instalacion/ins
 import { InstalacionAdminCreateRoutedComponent } from './component/instalacion/instalacion.admin.create.routed/instalacion.admin.create.routed.component';
 import { InstalacionAdminViewRoutedComponent } from './component/instalacion/instalacion.admin.view.routed/instalacion.admin.view.routed.component';
 import { InmuebleXsocioAdminPlistRoutedComponent } from './component/inmueble/inmueble.xsocio.admin.plist.routed/inmueble.xsocio.admin.plist.routed.component';
+import { SharedLoginRoutedComponent } from './shared/shared.login.routed/shared.login.routed';
+import { SharedLogoutRoutedComponent } from './shared/shared.logout.routed/shared.logout.routed';
 
 export const routes: Routes = [
 
-
+  { path: 'login', component: SharedLoginRoutedComponent },
+  { path: 'logout', component: SharedLogoutRoutedComponent },
+  
   { path: 'admin/socio/plist', component: SocioAdminPlistRoutedComponent },
   { path: 'admin/socio/delete/:id', component: SocioAdminDeleteRoutedComponent },
   { path: 'admin/socio/edit/:id', component: SocioAdminEditRoutedComponent },

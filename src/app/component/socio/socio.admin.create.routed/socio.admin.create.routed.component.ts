@@ -12,6 +12,7 @@ import {
 import { ISocio } from '../../../model/socio.interface';
 import { SocioService } from '../../../service/socio.service';
 import { Component, OnInit } from '@angular/core';
+import { CryptoService } from '../../../service/crypto.service';
 
 declare let bootstrap: any;
 
@@ -39,7 +40,9 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private oCryptoService: CryptoService
+
   ) {
     // Inicialización del formulario
     this.oSocioForm = this.fb.group({
@@ -47,6 +50,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       apellido1: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       apellido2: [''],
       email: ['', [Validators.required, Validators.email]],
+      contraseña: ['', [Validators.required, Validators.minLength(4)]],
       dni: ['', [Validators.required, Validators.pattern(/^\d{8}[A-Z]$/)]], // Ejemplo de validación de DNI
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       fotoDni: [null],  // Campo para la foto del DNI
@@ -89,19 +93,22 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.showModal('Formulario inválido. Revisa los campos e inténtalo de nuevo.');
       return;
     }
-  
+    const contraseña = this.oSocioForm.get('contraseña')?.value || ''; // Asegura que sea un string
+    const hashedcontraseña = this.oCryptoService.getHashSHA256(contraseña);
+    
+    
     const formData = new FormData();
     formData.append('nombre', this.oSocioForm.get('nombre')?.value);
     formData.append('apellido1', this.oSocioForm.get('apellido1')?.value);
     formData.append('apellido2', this.oSocioForm.get('apellido2')?.value);
     formData.append('email', this.oSocioForm.get('email')?.value);
+    formData.append('contraseña', hashedcontraseña);
     formData.append('telefono', this.oSocioForm.get('telefono')?.value);
     formData.append('dni', this.oSocioForm.get('dni')?.value);
     formData.append('fotoDni', this.fotoDni!);  // Aquí añadimos el archivo
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
     formData.append('tiposocio', '2'); // ID del tipo de socio "Miembro"
-    
     this.oSocioService.create(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;

@@ -8,6 +8,7 @@ export interface ISocio {
   apellido1: string;
   apellido2: string;
   email: string;
+  password: string;
   telefono: string;
   fotoDni: string | null;  // Foto del DNI, opcional y de tipo File
   direccionfiscal: string;
