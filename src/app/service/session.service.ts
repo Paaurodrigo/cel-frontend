@@ -37,14 +37,44 @@ export class SessionService {
             return false;
         }
     }
-
+    
     getSessionEmail(): string {
         const token = this.getToken();
         if (token) {
             if (this.isSessionActive()) {
                 let parsedToken: IJwt;
                 parsedToken = this.parseJwt(token);
-                return parsedToken.email; // si arriba derecha no quiero el mail quiero otra cosa, lo pongo ahi
+                return parsedToken.email;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    getSessionNombre(): string {
+        const token = this.getToken();
+        if (token) {
+            if (this.isSessionActive()) {
+                let parsedToken: IJwt;
+                parsedToken = this.parseJwt(token);
+                return parsedToken.nombre; // si arriba derecha no quiero el mail quiero otra cosa, lo pongo ahi
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    getSessionApellido1(): string {
+        const token = this.getToken();
+        if (token) {
+            if (this.isSessionActive()) {
+                let parsedToken: IJwt;
+                parsedToken = this.parseJwt(token);
+                return parsedToken.apellido1; // si arriba derecha no quiero el mail quiero otra cosa, lo pongo ahi
             } else {
                 return '';
             }

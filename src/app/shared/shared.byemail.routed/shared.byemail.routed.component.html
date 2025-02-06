@@ -1,0 +1,50 @@
+<div class="row justify-content-center m-3">
+  <div class="col-lg-7 col-md-10 col-sm-12">
+    <h1 class="my-5 text-center">
+      <i class="bi bi-card-list"></i>
+      Detalles de {{ oSocio.email }}
+      <i class="bi bi-person-circle"></i>
+    </h1>
+    <br />
+    <table class="table table-striped table-bordered my-5 text-center">
+      <tbody>
+        <tr class="text-center">
+          <th scope="row" class="bg-danger text-white text-end pe-5">Id</th>
+          <td class="text-start ps-5">{{ oSocio.id }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Nombre
+          </th>
+          <td class="text-start ps-5">{{ oSocio.nombre }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Primer Apellido
+          </th>
+          <td class="text-start ps-5">{{ oSocio.apellido1 }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Segundo Apellido
+          </th>
+          <td class="text-start ps-5">{{ oSocio.apellido2 }}</td>
+        </tr>
+        <tr class="text-center">
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Correo
+          </th>
+          <td class="text-start ps-5">{{ oSocio.email }}</td>
+        </tr>
+        <tr>
+          <th scope="row" class="bg-primary text-white text-end pe-5">
+            Tipo de Socio
+          </th>
+          <td class="text-start ps-5">
+            {{ oSocio.tiposocio.descripcion }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

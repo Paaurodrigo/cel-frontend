@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container">
+   <!-- Logo con imagen -->
+<a class="navbar-brand d-flex align-items-center" href="/">
+  <img src="../../../images/cel.png" alt="Logo Comunidad Energética" width="50" height="50" class="me-2">
+  <span class="fw-bold text-primary">Comunidad Energética</span>
+</a>
+
+    <!-- Botón de colapso para dispositivos pequeños -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenido del navbar -->
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+      <!-- Enlaces de navegación -->
+      <div class="navbar-nav">
+        <a class="nav-link" [class.active]="strRuta == 'admin/socio/plist'" href="admin/socio/plist">Usuarios</a>
+        <a class="nav-link" [class.active]="strRuta == 'admin/inmueble/plist'" href="admin/inmueble/plist">Inmuebles</a>
+        <a class="nav-link" [class.active]="strRuta == 'admin/instalacion/plist'" href="admin/instalacion/plist">Instalaciones</a>
+      </div>
+
+      <!-- Sección de usuario -->
+<div class="navbar-nav">
+  @if (!activeSession) {
+    <a href="/login" class="btn btn-outline-primary">Iniciar Sesión</a>
+  } @else {
+    <div class="dropdown">
+      <button class="btn btn-light dropdown-toggle fw-semibold text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-person-circle"></i> {{userNombre}} {{userApellido}}
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" [routerLink]="'/byemail/' + userEmail">Mi Perfil</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger" href="/logout">Cerrar Sesión</a></li>
+      </ul>
+    </div>
+  }
+</div>
+
+    </div>
+  </div>
+</nav>

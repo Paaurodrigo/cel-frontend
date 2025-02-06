@@ -80,6 +80,15 @@ export class SocioService {
   getFotoDni(id: number): Observable<Blob> {
     return this.oHttp.get('http://localhost:8085/socio/'+id+'/image', { responseType: 'blob' });
   }
+
+  getSocioByEmail(email: string): Observable<ISocio> {
+    let URL: string = '';
+    URL += this.serverURL + '/byemail';
+    URL += '/' + email;
+    return this.oHttp.get<ISocio>(URL);
+  }
+
+ 
   
 
 }

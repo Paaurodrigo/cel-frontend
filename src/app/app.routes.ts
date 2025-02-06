@@ -17,32 +17,39 @@ import { InstalacionAdminViewRoutedComponent } from './component/instalacion/ins
 import { InmuebleXsocioAdminPlistRoutedComponent } from './component/inmueble/inmueble.xsocio.admin.plist.routed/inmueble.xsocio.admin.plist.routed.component';
 import { SharedLoginRoutedComponent } from './shared/shared.login.routed/shared.login.routed';
 import { SharedLogoutRoutedComponent } from './shared/shared.logout.routed/shared.logout.routed';
+import { SharedHomeRoutedComponent } from './shared/shared.home.routed/shared.home.routed.component';
+import { AdminGuard } from './guards/admin.guard';
+import { SharedByemailRoutedComponent } from './shared/shared.byemail.routed/shared.byemail.routed.component';
+import { MiembroGuard } from './guards/miembro.guard';
 
 export const routes: Routes = [
 
   { path: 'login', component: SharedLoginRoutedComponent },
   { path: 'logout', component: SharedLogoutRoutedComponent },
+  { path: '', component: SharedHomeRoutedComponent },
+  { path: 'byemail/:email', component: SharedByemailRoutedComponent},
   
-  { path: 'admin/socio/plist', component: SocioAdminPlistRoutedComponent },
-  { path: 'admin/socio/delete/:id', component: SocioAdminDeleteRoutedComponent },
-  { path: 'admin/socio/edit/:id', component: SocioAdminEditRoutedComponent },
-  { path: 'admin/socio/create', component: SocioAdminCreateRoutedComponent },
-  { path: 'admin/socio/view/:id', component: SocioAdminViewRoutedComponent},
+  
+  { path: 'admin/socio/plist', component: SocioAdminPlistRoutedComponent,canActivate: [AdminGuard] },
+  { path: 'admin/socio/delete/:id', component: SocioAdminDeleteRoutedComponent,canActivate: [AdminGuard] },
+  { path: 'admin/socio/edit/:id', component: SocioAdminEditRoutedComponent,canActivate: [AdminGuard] },
+  { path: 'admin/socio/create', component: SocioAdminCreateRoutedComponent,canActivate: [AdminGuard] },
+  { path: 'admin/socio/view/:id', component: SocioAdminViewRoutedComponent,canActivate: [AdminGuard]},
 
  
-  {path: 'admin/inmueble/plist', component:InmuebleAdminPlistRoutedComponent},
-  {path: 'admin/inmueble/delete/:id', component:InmuebleAdminDeleteRoutedComponent},
-  {path: 'admin/inmueble/edit/:id', component:InmuebleAdminEditRoutedComponent},
-  {path: 'admin/inmueble/create', component:InmuebleAdminCreateRoutedComponent},
-  {path: 'admin/inmueble/view/:id', component:InmuebleAdminViewRoutedComponent},
+  {path: 'admin/inmueble/plist', component:InmuebleAdminPlistRoutedComponent,canActivate: [AdminGuard] },
+  {path: 'admin/inmueble/delete/:id', component:InmuebleAdminDeleteRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/inmueble/edit/:id', component:InmuebleAdminEditRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/inmueble/create', component:InmuebleAdminCreateRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/inmueble/view/:id', component:InmuebleAdminViewRoutedComponent,canActivate: [AdminGuard]},
   
 
 
-  { path: 'admin/instalacion/plist', component: InstalacionAdminPlistRoutedComponent },
-  {path: 'admin/instalacion/delete/:id', component: InstalacionAdminDeleteRoutedComponent},
-  {path: 'admin/instalacion/edit/:id', component: InstalacionAdminEditRoutedComponent},
-  {path: 'admin/instalacion/create', component: InstalacionAdminCreateRoutedComponent},
-  {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent},
-  {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent}
+  { path: 'admin/instalacion/plist', component: InstalacionAdminPlistRoutedComponent,canActivate: [AdminGuard] },
+  {path: 'admin/instalacion/delete/:id', component: InstalacionAdminDeleteRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/instalacion/edit/:id', component: InstalacionAdminEditRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/instalacion/create', component: InstalacionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent,canActivate: [AdminGuard]}
   //{ path: 'admin/instalacion/plist/xtipocuenta/:id', component : InmuebleXsocioAdminPlistRoutedComponent},
 ];

@@ -102,13 +102,13 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('apellido1', this.oSocioForm.get('apellido1')?.value);
     formData.append('apellido2', this.oSocioForm.get('apellido2')?.value);
     formData.append('email', this.oSocioForm.get('email')?.value);
-    formData.append('contraseña', hashedcontraseña);
+    formData.append('password', hashedcontraseña);
     formData.append('telefono', this.oSocioForm.get('telefono')?.value);
     formData.append('dni', this.oSocioForm.get('dni')?.value);
     formData.append('fotoDni', this.fotoDni!);  // Aquí añadimos el archivo
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
-    formData.append('tiposocio', '2'); // ID del tipo de socio "Miembro"
+    formData.append('tiposocio', '1'); // ID del tipo de socio "Miembro"
     this.oSocioService.create(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
@@ -153,6 +153,8 @@ private esDniValido(dni: string): boolean {
 onDniChange(): void {
   this.dniValido = null; // Reinicia el estado al modificar el DNI
 }
+
+
 
 
 }
