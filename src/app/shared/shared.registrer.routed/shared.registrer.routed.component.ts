@@ -1,26 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { ISocio } from '../../model/socio.interface';
+import { CryptoService } from '../../service/crypto.service';
+import { SocioService } from '../../service/socio.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,  
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { ISocio } from '../../../model/socio.interface';
-import { SocioService } from '../../../service/socio.service';
-import { Component, OnInit } from '@angular/core';
-import { CryptoService } from '../../../service/crypto.service';
-
 declare let bootstrap: any;
-
 @Component({
+  selector: 'app-shared.registrer.routed',
+  templateUrl: './shared.registrer.routed.component.html',
+  styleUrls: ['./shared.registrer.routed.component.css'],
   standalone: true,
-  selector: 'app-socio-admin-create-routed',
-  templateUrl: './socio.admin.create.routed.component.html',
-  styleUrls: ['./socio.admin.create.routed.component.css'],
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -28,8 +20,10 @@ declare let bootstrap: any;
     ReactiveFormsModule,
     RouterModule,
   ],
+
 })
-export class SocioAdminCreateRoutedComponent implements OnInit {
+
+export class SharedRegistrerRoutedComponent implements OnInit {
   oSocioForm: FormGroup;
   oSocio: ISocio | null = null;
   strMessage: string = '';
@@ -108,8 +102,8 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('fotoDni', this.fotoDni!);  // Aquí añadimos el archivo
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
-    formData.append('tiposocio', '1'); // ID del tipo de socio "Miembro"
-    this.oSocioService.createbyAdmin(formData).subscribe({
+    formData.append('tiposocio', '2'); // ID del tipo de socio "Miembro"
+    this.oSocioService.create(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
         this.showModal(`Socio creado con el id: ${this.oSocio.id}`);

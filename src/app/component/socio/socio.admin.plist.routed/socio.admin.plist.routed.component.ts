@@ -22,7 +22,7 @@ export class SocioAdminPlistRoutedComponent implements OnInit {
   oPage: IPage<ISocio> | null = null;
   //
   nPage: number = 0; // 0-based server count
-  nRpp: number = 10;
+  nRpp: number = 6;
   //
   strField: string = '';
   strDir: string = '';

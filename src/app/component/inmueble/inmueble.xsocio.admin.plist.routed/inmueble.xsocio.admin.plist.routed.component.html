@@ -9,9 +9,10 @@
         </div>
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="admin/inmueble/create" class="btn btn-success">
-              <i class="bi bi-plus-square"></i> Crear nuevo inmueble
-            </a>
+            
+            <button class="btn btn-primary ms-2">
+              <i class="bi bi-building-add"></i> Añadir inmueble
+            </button>
             <div class="input-group" style="max-width: 300px;">
               <input type="text" class="form-control" placeholder="Buscar" (keyup)="filter($event)" [(ngModel)]="strFiltro" />
               <button class="btn btn-outline-secondary" type="button">

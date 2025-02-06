@@ -21,6 +21,7 @@ import { SharedHomeRoutedComponent } from './shared/shared.home.routed/shared.ho
 import { AdminGuard } from './guards/admin.guard';
 import { SharedByemailRoutedComponent } from './shared/shared.byemail.routed/shared.byemail.routed.component';
 import { MiembroGuard } from './guards/miembro.guard';
+import { SharedRegistrerRoutedComponent } from './shared/shared.registrer.routed/shared.registrer.routed.component';
 
 export const routes: Routes = [
 
@@ -28,6 +29,9 @@ export const routes: Routes = [
   { path: 'logout', component: SharedLogoutRoutedComponent },
   { path: '', component: SharedHomeRoutedComponent },
   { path: 'byemail/:email', component: SharedByemailRoutedComponent},
+  { path: 'register', component: SharedRegistrerRoutedComponent },
+  
+  
   
   
   { path: 'admin/socio/plist', component: SocioAdminPlistRoutedComponent,canActivate: [AdminGuard] },
@@ -36,7 +40,7 @@ export const routes: Routes = [
   { path: 'admin/socio/create', component: SocioAdminCreateRoutedComponent,canActivate: [AdminGuard] },
   { path: 'admin/socio/view/:id', component: SocioAdminViewRoutedComponent,canActivate: [AdminGuard]},
 
- 
+  
   {path: 'admin/inmueble/plist', component:InmuebleAdminPlistRoutedComponent,canActivate: [AdminGuard] },
   {path: 'admin/inmueble/delete/:id', component:InmuebleAdminDeleteRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/edit/:id', component:InmuebleAdminEditRoutedComponent,canActivate: [AdminGuard]},

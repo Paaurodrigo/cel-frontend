@@ -1,0 +1,160 @@
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card w-50 shadow-lg">
+    <div class="card-header text-center">
+      <h2 class="my-2">
+        <i class="bi bi-plus-square"></i>
+        Creación de Socio
+        <i class="bi bi-person-circle"></i>
+      </h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="oSocioForm!" (ngSubmit)="onSubmit()" novalidate>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" placeholder="Pon aquí tu nombre" class="form-control" />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oSocioForm.get('nombre')?.hasError('required')){
+            <mat-error> El campo nombre es obligatorio </mat-error>
+            } @if (oSocioForm.get('nombre')?.hasError('minlength')){
+            <mat-error> El nombre debe ser mas largo </mat-error>
+            } @if (oSocioForm.get('nombre')?.hasError('maxlength')){
+            <mat-error> El nombre debe ser mas corto </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Primer Apellido</mat-label>
+            <input matInput formControlName="apellido1" placeholder="Escribe tu primer apellido" class="form-control" />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oSocioForm.get('apellido1')?.hasError('required')){
+            <mat-error> El campo nombre es obligatorio </mat-error>
+            } @if (oSocioForm.get('apellido1')?.hasError('minlength')){
+            <mat-error> El nombre debe ser mas largo </mat-error>
+            } @if (oSocioForm.get('apellido1')?.hasError('maxlength')){
+            <mat-error> El nombre debe ser mas corto </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Segundo Apellido</mat-label>
+            <input matInput formControlName="apellido2" placeholder="Escribe tu segundo apellido"
+              class="form-control" />
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Pon aquí tu email" class="form-control" />
+            <mat-hint align="start">Formato email</mat-hint>
+            @if (oSocioForm.get('email')?.hasError('required')) {
+            <mat-error>Debes introducir un email</mat-error>
+            } @if (oSocioForm.get('email')?.hasError('email')) {
+            <mat-error>Debes introducir un email correcto</mat-error>
+            }
+          </mat-form-field>
+        </div>
+       
+        
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="contraseña" placeholder="Escribe la contraseña" class="form-control" />
+          </mat-form-field>
+        </div>
+
+
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Dirección Fiscal</mat-label>
+            <input matInput formControlName="direccionfiscal" placeholder="Escribe tu direccion fiscal" class="form-control" />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oSocioForm.get('direccionfiscal')?.hasError('required')){
+            <mat-error> El campo nombre es obligatorio </mat-error>
+            } @if (oSocioForm.get('direccionfiscal')?.hasError('minlength')){
+            <mat-error> El nombre debe ser mas largo </mat-error>
+            } @if (oSocioForm.get('direccionfiscal')?.hasError('maxlength')){
+            <mat-error> El nombre debe ser mas corto </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Telefono</mat-label>
+            <input matInput formControlName="telefono" placeholder="Escribe tu telefono" class="form-control" />
+          </mat-form-field>
+        </div>
+
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>Código Postal</mat-label>
+            <input matInput formControlName="codigopostal" placeholder="Escribe tu código postal" class="form-control" />
+          </mat-form-field>
+        </div>
+        
+        <div class="mb-3">
+          <mat-form-field class="w-100">
+            <mat-label>DNI</mat-label>
+            <input matInput formControlName="dni" placeholder="Escribe tu DNI" class="form-control"
+              (input)="onDniChange()" />
+            <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
+            @if (oSocioForm.get('dni')?.hasError('required')) {
+            <mat-error>Debes introducir un DNI</mat-error>
+            } @if (oSocioForm.get('dni')?.hasError('pattern')) {
+            <mat-error>Formato incorrecto. Debe ser 8 dígitos y 1 letra</mat-error>
+            }
+          </mat-form-field>
+
+          <button class="btn btn-info" type="button" (click)="comprobarDni()">
+            Comprobar DNI
+          </button>
+
+          
+
+        
+
+
+        </div>
+        <div>
+          <label for="fotoDni">Foto del DNI</label>
+          <input type="file" id="fotoDni" (change)="onFileSelect($event)" accept="image/*" formControlName="fotoDni" />
+        </div>
+        <div class="text-center">
+          <button class="btn btn-warning mt-4 mx-1" [routerLink]="['/admin', 'socio', 'plist']">
+            <i class="bi bi-list"></i> Ir a listado de Socios
+          </button>
+          <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
+            <i class="bi bi-x-lg"></i> Reset
+          </button>
+          <button class="btn btn-success mt-4 mx-1" type="submit" [disabled]="!oSocioForm.valid || dniValido !== true">
+            <i class="bi bi-floppy"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="hideModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ strMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

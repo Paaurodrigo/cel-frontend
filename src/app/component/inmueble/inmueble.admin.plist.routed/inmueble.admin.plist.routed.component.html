@@ -96,6 +96,30 @@
                     } @else {
                     <i class="bi bi-caret-up-fill"></i>} }
                   </th>
+                  <th (click)="sort('consumoAnual')" >
+                    Consumo Anual @if (strField === 'consumoAnual') { @if (strDir === 'desc') {
+                    <i class="bi bi-caret-down-fill"></i>
+                    } @else {
+                    <i class="bi bi-caret-up-fill"></i>} }
+                  </th>
+                  <th (click)="sort('habitos')" >
+                    habitos @if (strField === 'habitos') { @if (strDir === 'desc') {
+                    <i class="bi bi-caret-down-fill"></i>
+                    } @else {
+                    <i class="bi bi-caret-up-fill"></i>} }
+                  </th>
+                  <th (click)="sort('intencion')" >
+                    intencion @if (strField === 'intencion') { @if (strDir === 'desc') {
+                    <i class="bi bi-caret-down-fill"></i>
+                    } @else {
+                    <i class="bi bi-caret-up-fill"></i>} }
+                  </th>
+                  <th (click)="sort('recomendacion')" >
+                    recomendacion @if (strField === 'recomendacion') { @if (strDir === 'desc') {
+                    <i class="bi bi-caret-down-fill"></i>
+                    } @else {
+                    <i class="bi bi-caret-up-fill"></i>} }
+                  </th>
                   <th>Acciones</th>
                   
                 </tr>
@@ -112,6 +136,10 @@
                   <td>{{ inmueble.potencia2 }}</td>
                   <td>{{ inmueble.tension }}</td>
                   <td>{{ inmueble.uso }}</td>
+                  <td>{{ inmueble.consumoAnual}}</td>
+                  <td>{{ inmueble.habitos}}</td>
+                  <td>{{ inmueble.intencion}}</td>
+                  <td>{{ inmueble.recomendacion}}</td>
                   <td>
                     <div class="btn-group">     
                       <button type="button" class="btn btn-info" (click)="view(inmueble)">

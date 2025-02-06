@@ -59,6 +59,12 @@ export class SocioService {
     return this.oHttp.put<ISocio>('http://localhost:8085/socio/new', formData);
   }
 
+  createbyAdmin(formData: FormData): Observable<ISocio> {
+    let URL: string = '';
+    URL += this.serverURL;
+    return this.oHttp.put<ISocio>('http://localhost:8085/socio/new/byadmin', formData);
+  }
+
   update(oSocio: ISocio): Observable<ISocio> {
     let URL: string = '';
     URL += this.serverURL;
