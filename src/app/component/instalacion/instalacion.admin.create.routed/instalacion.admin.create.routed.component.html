@@ -1,3 +1,179 @@
-<p>
-  instalacion.admin.create.routed works!
-</p>
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card w-50 shadow-lg">
+    <div class="card-header text-center">
+      <h2 class="my-2">
+        <i class="bi bi-plus-square"></i>
+        Creación de Instalacion
+        <i class="bi bi-person-circle"></i>
+      </h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="oInstalacionForm!" (ngSubmit)="onSubmit()" novalidate>
+        <div class="mb-3">
+          <label for="nombre" class="form-label fw-bold">nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            class="form-control"
+            formControlName="nombre"
+            placeholder="nombre"
+          />
+         
+        </div>
+
+        <div class="mb-3">
+          <label for="Direccion" class="form-label fw-bold">Direccion</label>
+          <input
+            type="text"
+            id="direccion"
+            class="form-control"
+            formControlName="direccion"
+            placeholder="direccion"
+          />
+          <div *ngIf="oInstalacionForm?.get('direccion')?.errors" class="text-danger">
+            <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('required')">Debes introducir un Direccion.</small>
+            <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('minlength')">El Direccion es demasiado corto.</small>
+            <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('maxlength')">El Direccion es demasiado largo.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="codigoPostal" class="form-label fw-bold">Codigo Postal</label>
+          <input
+            type="text"
+            id="codigoPostal"
+            class="form-control"
+            formControlName="codigoPostal"
+            placeholder="Codigo Postal"
+          />
+          <div *ngIf="oInstalacionForm?.get('codigoPostal')?.errors" class="text-danger">
+            <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Codigo Postal.</small>
+            <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('minlength')">El Codigo Postal es demasiado corto.</small>
+            <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('maxlength')">El Codigo Postal es demasiado largo.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="municipio" class="form-label fw-bold">municipio</label>
+          <input
+            type="text"
+            id="municipio"
+            class="form-control"
+            formControlName="municipio"
+            placeholder="municipio"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="refCatas" class="form-label fw-bold">Referencia Catastral</label>
+          <input
+            type="text"
+            id="refCatas"
+            class="form-control"
+            formControlName="refCatas"
+            placeholder="refCatas"
+          />
+        </div>
+
+
+
+        <div class="mb-3">
+          <label for="email" class="form-label fw-bold">Potencia1</label>
+          <input
+            type="email"
+            id="potencia1"
+            class="form-control"
+            formControlName="potencia1"
+            placeholder="potencia1"
+          />
+          <div *ngIf="oInstalacionForm?.get('potencia1')?.errors" class="text-danger">
+            <small *ngIf="oInstalacionForm?.get('potencia1')?.hasError('required')">Debes introducir un correo.</small>
+            <small *ngIf="oInstalacionForm?.get('potencia1')?.hasError('email')">El formato del correo es incorrecto.</small>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="telefono" class="form-label fw-bold">potencia2</label>
+          <input
+            type="text"
+            id="potencia2"
+            class="form-control"
+            formControlName="potencia2"
+            placeholder="potencia2"
+          />
+          <div *ngIf="oInstalacionForm?.get('potencia2')?.errors" class="text-danger">
+            <small *ngIf="oInstalacionForm?.get('potencia2')?.hasError('required')">Debes introducir un telefono.</small>
+            <small *ngIf="oInstalacionForm?.get('potencia2')?.hasError('potencia2')">El formato del telefono es incorrecto.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="tension" class="form-label fw-bold">Tensión</label>
+          <select
+            id="tension"
+            class="form-control"
+            formControlName="tension"
+          >
+            <option value="" disabled selected>Selecciona una tensión</option>
+            <option value="230">230</option>
+            <option value="400">400</option>
+          </select>
+          
+        </div>
+        
+
+        <div class="mb-3">
+          <label for="uso" class="form-label fw-bold">Uso</label>
+          <select
+            id="uso"
+            class="form-control"
+            formControlName="uso"
+          >
+            <option value="" disabled selected>Selecciona un uso</option>
+            <option value="Vivienda Habitual">Vivienda Habitual</option>
+            <option value="Vivienda No Habitualab">Vivienda No Habitual</option>
+            <option value="Local Comercial">Local Comercial</option>
+            <option value="Garaje">Garaje</option>
+            <option value="Otros">Otros</option>
+          </select>
+         
+        </div>
+        
+
+        <div class="text-center">
+          <button class="btn btn-warning mt-4 mx-1" [routerLink]="['/admin', 'Instalacion', 'plist']">
+            <i class="bi bi-list"></i> Ir a listado de Instalacions
+          </button>
+          <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
+            <i class="bi bi-x-lg"></i> Reset
+          </button>
+          <button class="btn btn-success mt-4 mx-1" type="submit">
+            <i class="bi bi-floppy"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="hideModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ strMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

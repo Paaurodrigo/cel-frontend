@@ -117,6 +117,11 @@ export class TiposocioselectorComponent implements OnInit {
       filter(event: KeyboardEvent) {
         this.debounceSubject.next(this.strFiltro);    
       }
+
+      trackById(index: number, item: any): number {
+        return item.id;  // Usamos el id para hacer el seguimiento de cada elemento
+      }
+      
     }
 
   

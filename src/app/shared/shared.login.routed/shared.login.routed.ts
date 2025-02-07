@@ -80,7 +80,12 @@ export class SharedLoginRoutedComponent implements OnInit {
     });
   }
 
-  
+  showPassword: boolean = false;
+
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
+}
+
 
 
 }

@@ -61,7 +61,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       fotoDni: [null],  // Campo para la foto del DNI
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: [''],
-     // 🔴 CAMBIO AQUÍ: tipoSocio debe ser un FormGroup con ID
+    
   tipoSocio: this.fb.group({
     id: [null, Validators.required],
     descripcion:[null, Validators.required],
@@ -119,7 +119,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('fotoDni', this.fotoDni!);  // Aquí añadimos el archivo
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
-    formData.append('tipoSocio', this.oSocioForm.get('tipoSocio.id')?.value);
+    formData.append('tiposocio', this.oSocioForm.get('tipoSocio')?.value.id);
 
     this.oSocioService.createbyAdmin(formData).subscribe({
       next: (oSocio: ISocio) => {
@@ -168,8 +168,8 @@ onDniChange(): void {
 
 showTipoSocioSelectorModal() {
   const dialogRef = this.dialog.open(TiposocioselectorComponent, {
-    height: '800px',
-    maxHeight: '1200px',
+    height: '400px',
+    maxHeight: '500px',
     width: '80%',
     maxWidth: '90%',
     data: { origen: '', idBalance: '' },
@@ -190,6 +190,26 @@ showTipoSocioSelectorModal() {
   });
   return false;
 }
+
+ datosEjemplo = {
+  nombre: 'Juan',
+  apellido1: 'Pérez',
+  apellido2: 'García',
+  email: 'juan.perez@example.com',
+  contraseña: 'contraseñaSegura',
+  dni: '54013411G',
+  telefono: '600123456',
+  direccionfiscal: 'Calle Falsa 123',
+  codigopostal: '46001',
+  tipoSocio: 1,
+   
+  
+};
+
+rellenarFormulario(): void {
+  this.oSocioForm.patchValue(this.datosEjemplo);
+}
+
 
 
 
