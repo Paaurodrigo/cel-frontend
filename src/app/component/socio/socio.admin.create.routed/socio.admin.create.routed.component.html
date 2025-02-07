@@ -94,6 +94,25 @@
             <input matInput formControlName="codigopostal" placeholder="Escribe tu código postal" class="form-control" />
           </mat-form-field>
         </div>
+
+        <div formGroupName="tipoSocio">
+          <div class="row mt-4">
+              <mat-form-field>
+                  <mat-label>Tipo Socio</mat-label>
+                  <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary" (click)="showTipoSocioSelectorModal()">
+                          <i class="bi bi-search"></i>
+                          Buscar
+                      </button>
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    <input matInput formControlName="descripcion" placeholder="Tipo Socio" />
+                  </div>
+
+                  <input matInput formControlName="id" placeholder="Tipo Socio" />
+              </mat-form-field>
+          </div>
+      </div>
         
         <div class="mb-3">
           <mat-form-field class="w-100">
@@ -118,6 +137,8 @@
 
 
         </div>
+
+
         <div>
           <label for="fotoDni">Foto del DNI</label>
           <input type="file" id="fotoDni" (change)="onFileSelect($event)" accept="image/*" formControlName="fotoDni" />

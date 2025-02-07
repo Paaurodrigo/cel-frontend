@@ -11,8 +11,11 @@ import {
 } from '@angular/forms';
 import { ISocio } from '../../../model/socio.interface';
 import { SocioService } from '../../../service/socio.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CryptoService } from '../../../service/crypto.service';
+import { TiposocioselectorComponent } from '../../tiposocio/tiposocioselector/tiposocioselector.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ITipoSocio } from '../../../model/tipoSocio.interface';
 
 declare let bootstrap: any;
 
@@ -37,6 +40,8 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   dniValido: boolean | null = null; // Estado del DNI
   fotoDni: File | null = null;
   resultado: boolean | null = null; // Resultado de la comprobación
+  readonly dialog = inject(MatDialog);
+  oTipoSocio: ITipoSocio = {} as ITipoSocio;
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
@@ -56,6 +61,12 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       fotoDni: [null],  // Campo para la foto del DNI
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: [''],
+     // 🔴 CAMBIO AQUÍ: tipoSocio debe ser un FormGroup con ID
+  tipoSocio: this.fb.group({
+    id: [null, Validators.required],
+    descripcion:[null, Validators.required],
+    socios:[null, Validators.required],
+  })
     });
   }
 
@@ -108,7 +119,8 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('fotoDni', this.fotoDni!);  // Aquí añadimos el archivo
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
-    formData.append('tiposocio', '1'); // ID del tipo de socio "Miembro"
+    formData.append('tipoSocio', this.oSocioForm.get('tipoSocio.id')?.value);
+
     this.oSocioService.createbyAdmin(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
@@ -152,6 +164,31 @@ private esDniValido(dni: string): boolean {
 // Manejar cambios en el campo DNI
 onDniChange(): void {
   this.dniValido = null; // Reinicia el estado al modificar el DNI
+}
+
+showTipoSocioSelectorModal() {
+  const dialogRef = this.dialog.open(TiposocioselectorComponent, {
+    height: '800px',
+    maxHeight: '1200px',
+    width: '80%',
+    maxWidth: '90%',
+    data: { origen: '', idBalance: '' },
+
+
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+    if (result !== undefined) {
+      console.log(result);
+      this.oSocioForm?.controls['tipoSocio'].setValue({
+        id: result.id,
+        descripcion: result.descripcion,
+        socios:result.socios,
+      });
+    }
+  });
+  return false;
 }
 
 
