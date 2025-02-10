@@ -6,6 +6,7 @@ import { InstalacionService } from '../../../service/instalacion.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 declare let bootstrap: any;
 @Component({
@@ -19,6 +20,7 @@ declare let bootstrap: any;
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule,
+    CommonModule,
   ],
 })
 export class InstalacionAdminCreateRoutedComponent implements OnInit {
@@ -37,15 +39,12 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
 
   createForm() {
     this.oInstalacionForm = this.fb.group({
-      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]], // Ahora no es obligatorio
-      direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      codigoPostal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      refCatas: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      potencia1: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-      potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-      tension: ['', ], // Ejemplo: 220V o 5kV
-      uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      nombre: ['', [Validators.minLength(3), Validators.maxLength(50)]], // Ahora no es obligatorio
+      paneles: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      potenciaPanel:['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      potenciaTotal:['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      precioKw: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+     
     });
   }
   
@@ -91,7 +90,21 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   }
   
 
+  get panelesControl() {
+    return this.oInstalacionForm?.get('paneles');
+  }
+
+  get potenciaPanelControl() {
+    return this.oInstalacionForm?.get('potenciaPanel');
+  }
+
+  get potenciaTotalControl() {
+    return this.oInstalacionForm?.get('potenciaTotal');
+  }
 
 
+  get precioKwControl() {
+    return this.oInstalacionForm?.get('precioKw');
+  }
 
 }

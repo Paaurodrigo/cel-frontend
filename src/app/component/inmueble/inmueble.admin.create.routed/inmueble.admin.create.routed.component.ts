@@ -10,9 +10,11 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IInmueble } from '../../../model/inmueble.interface';
 import { InmuebleService } from '../../../service/inmueble.service';
+import { SocioselectorComponent } from '../../socio/socioselector/socioselector.component';
+import { MatDialog } from '@angular/material/dialog';
 
 declare let bootstrap: any;
 
@@ -27,44 +29,64 @@ declare let bootstrap: any;
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule,
+   
   ],
 })
 export class InmuebleAdminCreateRoutedComponent implements OnInit {
-  oInmuebleForm: FormGroup | undefined = undefined;
+  oInmuebleForm!: FormGroup; // ¡Sin inicializar aquí!
   oInmueble: IInmueble | null = null;
   strMessage: string = '';
   myModal: any;
+  readonly dialog = inject(MatDialog);
   constructor( private oInmuebleService: InmuebleService,
     private oRouter: Router,
     private fb: FormBuilder) { }
 
+    
   ngOnInit() {
-    this.createForm();
+   this.createForm();
     this.oInmuebleForm?.markAllAsTouched();
   }
-
+  
   createForm() {
     this.oInmuebleForm = this.fb.group({
-      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]], // Ahora no es obligatorio
+      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]], 
       direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigoPostal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
       municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       refCatas: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       potencia1: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
       potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-      tension: ['', ], // Ejemplo: 220V o 5kV
+      tension: [''],
       uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      recomendacion: ['', Validators.required],  // Asegúrate de tener estos campos
+      consumoanual: ['', Validators.required],
+      intencion: ['', Validators.required],
+      habitos: ['', Validators.required],
+      socio: this.fb.group({
+        nombre: [''], 
+        apellido1: ['']
+      })
     });
   }
   
   
-  showModal(mensaje: string): void {
-    this.strMessage = mensaje;
-    this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
-      keyboard: false,
-    });
-    this.myModal.show();
-  }
+  
+  // Modal con MatDialog en lugar de bootstrap.Modal
+showModal(mensaje: string): void {
+  this.strMessage = mensaje;
+  const dialogRef = this.dialog.open(SocioselectorComponent, { // Cambia por tu componente modal
+    width: '300px',
+    data: { message: this.strMessage },
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      console.log('El modal se cerró', result);
+    }
+  });
+}
+
 
   hideModal(): void {
     this.myModal.hide();
@@ -76,29 +98,59 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   }
   onSubmit() {
     if (this.oInmuebleForm?.invalid) {
-      this.showModal('Formulario inválido. Por favor, revisa los campos marcados.');
+      this.myModal('Formulario inválido. Por favor, revisa los campos marcados.');
       return;
     }
   
     this.oInmuebleService.create(this.oInmuebleForm?.value).subscribe({
       next: (oInmueble: IInmueble) => {
         this.oInmueble = oInmueble;
-        this.showModal(`Inmueble creado correctamente con el CUPS: ${this.oInmueble.cups}`);
+        this.myModal(`Inmueble creado correctamente con el CUPS: ${this.oInmueble.cups}`);
       },
       error: (err) => {
         if (err.status === 400) {
-          this.showModal('Datos inválidos. Revisa los campos.');
+          this.myModal('Datos inválidos. Revisa los campos.');
         } else if (err.status === 500) {
-          this.showModal('Error interno del servidor. Inténtalo más tarde.');
+          this.myModal('Error interno del servidor. Inténtalo más tarde.');
         } else {
-          this.showModal('Error desconocido. Consulta con el administrador.');
+          this.myModal('Error desconocido. Consulta con el administrador.');
         }
         console.error(err);
       },
     });
   }
   
-
+  showSocioSelectorModal() {
+    const dialogRef = this.dialog.open(SocioselectorComponent, {
+      height: '400px',
+      maxHeight: '500px',
+      width: '80%',
+      maxWidth: '90%',
+      data: { origen: '', idBalance: '' },
+  
+  
+    });
+  
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        console.log("Socio seleccionado antes de asignarlo al formulario:", result);
+    
+        if (result.nombre && result.apellido1) { // ⚠️ Asegurar que hay valores
+          this.oInmuebleForm.get('socio')?.setValue({
+            nombre: result.nombre || '',
+            apellido1: result.apellido1 || ''
+          });
+          
+    
+          console.log("Formulario actualizado:", this.oInmuebleForm.value);
+        } else {
+          console.error("El socio no tiene nombre o apellido1:", result);
+        }
+      }
+    });
+    
+    return false;
+  }
 
 
 

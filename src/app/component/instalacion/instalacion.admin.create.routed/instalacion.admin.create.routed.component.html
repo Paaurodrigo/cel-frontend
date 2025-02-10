@@ -20,125 +20,84 @@
           />
          
         </div>
-
         <div class="mb-3">
-          <label for="Direccion" class="form-label fw-bold">Direccion</label>
-          <input
-            type="text"
-            id="direccion"
-            class="form-control"
-            formControlName="direccion"
-            placeholder="direccion"
-          />
-          <div *ngIf="oInstalacionForm?.get('direccion')?.errors" class="text-danger">
-            <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('required')">Debes introducir un Direccion.</small>
-            <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('minlength')">El Direccion es demasiado corto.</small>
-            <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('maxlength')">El Direccion es demasiado largo.</small>
-          </div>
+          <label for="potenciaPanel" class="form-label fw-bold">Cantidad de paneles</label>
+        <input
+        type="text"
+        id="paneles"
+        class="form-control"
+        formControlName="paneles"
+        placeholder="Cantidad de paneles"
+        [class.is-invalid]="panelesControl?.invalid && panelesControl?.touched"
+      />
+      
+      @if (panelesControl?.invalid && panelesControl?.touched) {
+        <div class="invalid-feedback">
+          Solo se permiten números enteros positivos.
         </div>
-
-        <div class="mb-3">
-          <label for="codigoPostal" class="form-label fw-bold">Codigo Postal</label>
-          <input
-            type="text"
-            id="codigoPostal"
-            class="form-control"
-            formControlName="codigoPostal"
-            placeholder="Codigo Postal"
-          />
-          <div *ngIf="oInstalacionForm?.get('codigoPostal')?.errors" class="text-danger">
-            <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Codigo Postal.</small>
-            <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('minlength')">El Codigo Postal es demasiado corto.</small>
-            <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('maxlength')">El Codigo Postal es demasiado largo.</small>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="municipio" class="form-label fw-bold">municipio</label>
-          <input
-            type="text"
-            id="municipio"
-            class="form-control"
-            formControlName="municipio"
-            placeholder="municipio"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label for="refCatas" class="form-label fw-bold">Referencia Catastral</label>
-          <input
-            type="text"
-            id="refCatas"
-            class="form-control"
-            formControlName="refCatas"
-            placeholder="refCatas"
-          />
-        </div>
-
-
-
-        <div class="mb-3">
-          <label for="email" class="form-label fw-bold">Potencia1</label>
-          <input
-            type="email"
-            id="potencia1"
-            class="form-control"
-            formControlName="potencia1"
-            placeholder="potencia1"
-          />
-          <div *ngIf="oInstalacionForm?.get('potencia1')?.errors" class="text-danger">
-            <small *ngIf="oInstalacionForm?.get('potencia1')?.hasError('required')">Debes introducir un correo.</small>
-            <small *ngIf="oInstalacionForm?.get('potencia1')?.hasError('email')">El formato del correo es incorrecto.</small>
-          </div>
-        </div>
-
-
-        <div class="mb-3">
-          <label for="telefono" class="form-label fw-bold">potencia2</label>
-          <input
-            type="text"
-            id="potencia2"
-            class="form-control"
-            formControlName="potencia2"
-            placeholder="potencia2"
-          />
-          <div *ngIf="oInstalacionForm?.get('potencia2')?.errors" class="text-danger">
-            <small *ngIf="oInstalacionForm?.get('potencia2')?.hasError('required')">Debes introducir un telefono.</small>
-            <small *ngIf="oInstalacionForm?.get('potencia2')?.hasError('potencia2')">El formato del telefono es incorrecto.</small>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="tension" class="form-label fw-bold">Tensión</label>
-          <select
-            id="tension"
-            class="form-control"
-            formControlName="tension"
-          >
-            <option value="" disabled selected>Selecciona una tensión</option>
-            <option value="230">230</option>
-            <option value="400">400</option>
-          </select>
-          
-        </div>
+      }
+    </div>
         
 
-        <div class="mb-3">
-          <label for="uso" class="form-label fw-bold">Uso</label>
-          <select
-            id="uso"
-            class="form-control"
-            formControlName="uso"
-          >
-            <option value="" disabled selected>Selecciona un uso</option>
-            <option value="Vivienda Habitual">Vivienda Habitual</option>
-            <option value="Vivienda No Habitualab">Vivienda No Habitual</option>
-            <option value="Local Comercial">Local Comercial</option>
-            <option value="Garaje">Garaje</option>
-            <option value="Otros">Otros</option>
-          </select>
-         
-        </div>
+      <div class="mb-3">
+        <label for="potenciaPanel" class="form-label fw-bold">potenciaPanel</label>
+        <input
+          type="text"
+          id="potenciaPanel"
+          class="form-control"
+          formControlName="potenciaPanel"
+          placeholder="potenciaPanel"
+          [class.is-invalid]="potenciaPanelControl?.invalid && potenciaPanelControl?.touched"
+        />
+        
+        @if (potenciaPanelControl?.invalid && potenciaPanelControl?.touched) {
+          <div class="invalid-feedback">
+            Solo se permiten números enteros positivos.
+          </div>
+        }
+      </div>
+      
+
+      <div class="mb-3">
+        <label for="potenciaTotal" class="form-label fw-bold">potenciaTotal</label>
+        <input
+          type="text"
+          id="potenciaTotal"
+          class="form-control"
+          formControlName="potenciaTotal"
+          placeholder="potenciaTotal"
+          [class.is-invalid]="potenciaTotalControl?.invalid && potenciaTotalControl?.touched"
+        />
+        
+        @if (potenciaTotalControl?.invalid && potenciaTotalControl?.touched) {
+          <div class="invalid-feedback">
+            Solo se permiten números enteros positivos.
+          </div>
+        }
+      </div>
+
+      
+
+
+      <div class="mb-3">
+        <label for="precioKw" class="form-label fw-bold">precioKw</label>
+        <input
+          type="text"
+          id="precioKw"
+          class="form-control"
+          formControlName="precioKw"
+          placeholder="precioKw"
+          [class.is-invalid]="precioKwControl?.invalid && precioKwControl?.touched"
+        />
+        
+        @if (precioKwControl?.invalid && precioKwControl?.touched) {
+          <div class="invalid-feedback">
+            Solo se permiten números enteros positivos.
+          </div>
+        }
+      </div>
+
+        
         
 
         <div class="text-center">

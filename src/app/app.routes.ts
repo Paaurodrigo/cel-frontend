@@ -55,5 +55,5 @@ export const routes: Routes = [
   {path: 'admin/instalacion/create', component: InstalacionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent,canActivate: [AdminGuard]}
-  //{ path: 'admin/instalacion/plist/xtipocuenta/:id', component : InmuebleXsocioAdminPlistRoutedComponent},
+ 
 ];

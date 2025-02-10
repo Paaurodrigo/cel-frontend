@@ -110,6 +110,14 @@ delete(id: number) {
   return this.oHttp.delete('http://localhost:8085/inmueble/' + id);
 }
 
+getInmueblesSinSocio(): Observable<IInmueble[]> {
+  return this.oHttp.get<IInmueble[]>('http://localhost:8085/inmueble/sin-socio');
+}
+
+update1(oInmueble: IInmueble): Observable<IInmueble> {
+  return this.oHttp.put<IInmueble>('http://localhost:8085/inmueble/' + oInmueble.id, oInmueble);
+}
+
 
 
 }

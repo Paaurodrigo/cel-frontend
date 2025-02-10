@@ -32,6 +32,12 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
   strFiltro: string = '';
   //
   arrBotonera: string[] = [];
+
+  oInmueblesSinSocio: IInmueble[] = [];
+  bMostrarDesplegable: boolean = false;
+  inmuebleSeleccionado: IInmueble | null = null;
+
+
   //
   private debounceSubject = new Subject<string>();
 
@@ -50,16 +56,26 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
     });
     // get id from route admin/Inmueble/plist/xSocio/:id
     this.oActivatedRoute.params.subscribe((params) => {
-      this.oSocioService.get(params['id']).subscribe({
+      const socioId = params['id'];
+      console.log("ID del socio obtenido de la URL:", socioId); // 👀 Verificar si el ID es correcto
+    
+      if (!socioId) {
+        console.error("Error: El ID del socio no está en la URL.");
+        return;
+      }
+    
+      this.oSocioService.get(socioId).subscribe({
         next: (oSocio: ISocio) => {
+          console.log("Socio recibido del backend:", oSocio); // 👀 Ver si el backend devuelve un socio correcto
           this.oSocio = oSocio;
           this.getPage();
         },
         error: (err: HttpErrorResponse) => {
-          console.log(err);
+          console.error("Error al obtener el socio:", err);
         },
       });
     });
+    
    }
 
    ngOnInit() {
@@ -67,6 +83,8 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
   }
 
   getPage() {
+    console.log("Obteniendo inmuebles para el socio con ID:", this.oSocio.id);
+  
     this.oInmuebleService
       .getPageXSocio(
         this.nPage,
@@ -78,17 +96,15 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
       )
       .subscribe({
         next: (oPageFromServer: IPage<IInmueble>) => {
+          console.log("Inmuebles recibidos del backend:", oPageFromServer); // 👀 Ver si devuelve los inmuebles
           this.oPage = oPageFromServer;
-          this.arrBotonera = this.oBotoneraService.getBotonera(
-            this.nPage,
-            oPageFromServer.totalPages
-          );
         },
         error: (err) => {
-          console.log(err);
+          console.error("Error al obtener los inmuebles:", err);
         },
       });
   }
+  
 
   edit(oInmueble: IInmueble) {
     //navegar a la página de edición
@@ -140,5 +156,47 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
   filter(event: KeyboardEvent) {
     this.debounceSubject.next(this.strFiltro);
   }
+
+  getInmueblesSinSocio() {
+    this.oInmuebleService.getInmueblesSinSocio().subscribe({
+      next: (inmuebles: IInmueble[]) => {
+        this.oInmueblesSinSocio = inmuebles;
+        this.bMostrarDesplegable = true; // Mostrar el desplegable
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  
+
+  asignarInmueble() {
+    const socioId = this.oSocio.id; // Asegurar que tenemos el ID del socio
+  
+    if (!this.inmuebleSeleccionado || !socioId) {
+      console.error("Error: No se puede asignar, datos inválidos.");
+      return;
+    }
+  
+    // Si el inmueble no tiene socio, lo inicializamos
+    if (!this.inmuebleSeleccionado.socio) {
+      this.inmuebleSeleccionado.socio = {} as ISocio;
+    }
+  
+    this.inmuebleSeleccionado.socio.id = socioId; // Asignamos el ID del socio correctamente
+    this.oInmuebleService.update(this.inmuebleSeleccionado).subscribe({
+      next: () => {
+        this.bMostrarDesplegable = false;
+        this.getPage();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  
+  
+  
+  
 
 }
