@@ -22,6 +22,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { SharedByemailRoutedComponent } from './shared/shared.byemail.routed/shared.byemail.routed.component';
 import { MiembroGuard } from './guards/miembro.guard';
 import { SharedRegistrerRoutedComponent } from './shared/shared.registrer.routed/shared.registrer.routed.component';
+import { InmuebleXinstalacionAdminPlistRoutedComponent } from './component/inmueble/inmueble.xinstalacion.admin.plist.routed/inmueble.xinstalacion.admin.plist.routed.component';
 
 export const routes: Routes = [
 
@@ -54,6 +55,6 @@ export const routes: Routes = [
   {path: 'admin/instalacion/edit/:id', component: InstalacionAdminEditRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/instalacion/create', component: InstalacionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent,canActivate: [AdminGuard]},
-  {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent,canActivate: [AdminGuard]}
- 
+  {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/inmueble/plist/xinstalacion/:id', component :InmuebleXinstalacionAdminPlistRoutedComponent,canActivate: [AdminGuard]}
 ];

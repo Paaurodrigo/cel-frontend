@@ -37,7 +37,6 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
   bMostrarDesplegable: boolean = false;
   inmuebleSeleccionado: IInmueble | null = null;
 
-
   //
   private debounceSubject = new Subject<string>();
 

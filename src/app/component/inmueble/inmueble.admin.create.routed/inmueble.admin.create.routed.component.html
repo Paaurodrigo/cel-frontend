@@ -9,29 +9,21 @@
     </div>
     <div class="card-body">
       <form [formGroup]="oInmuebleForm!" (ngSubmit)="onSubmit()" novalidate>
-        
+
         <!-- Campo Cups -->
         <div class="mb-3">
-          <label for="cups" class="form-label fw-bold">Cups</label>
-          <input
-            type="text"
-            id="cups"
-            class="form-control"
-            formControlName="cups"
-            placeholder="CUPS"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Cups</mat-label>
+            <input matInput type="text" id="cups" formControlName="cups" placeholder="CUPS">
+          </mat-form-field>
         </div>
 
         <!-- Campo Dirección -->
         <div class="mb-3">
-          <label for="direccion" class="form-label fw-bold">Dirección</label>
-          <input
-            type="text"
-            id="direccion"
-            class="form-control"
-            formControlName="direccion"
-            placeholder="Dirección"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Dirección</mat-label>
+            <input matInput type="text" id="direccion" formControlName="direccion" placeholder="Dirección">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('direccion')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('required')">Debes introducir una Dirección.</small>
             <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('minlength')">La Dirección es demasiado corta.</small>
@@ -41,14 +33,10 @@
 
         <!-- Campo Código Postal -->
         <div class="mb-3">
-          <label for="codigoPostal" class="form-label fw-bold">Código Postal</label>
-          <input
-            type="text"
-            id="codigoPostal"
-            class="form-control"
-            formControlName="codigoPostal"
-            placeholder="Código Postal"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Código Postal</mat-label>
+            <input matInput type="text" id="codigoPostal" formControlName="codigoPostal" placeholder="Código Postal">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('codigoPostal')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Código Postal.</small>
             <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('minlength')">El Código Postal es demasiado corto.</small>
@@ -58,38 +46,26 @@
 
         <!-- Campo Municipio -->
         <div class="mb-3">
-          <label for="municipio" class="form-label fw-bold">Municipio</label>
-          <input
-            type="text"
-            id="municipio"
-            class="form-control"
-            formControlName="municipio"
-            placeholder="Municipio"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Municipio</mat-label>
+            <input matInput type="text" id="municipio" formControlName="municipio" placeholder="Municipio">
+          </mat-form-field>
         </div>
 
         <!-- Campo Referencia Catastral -->
         <div class="mb-3">
-          <label for="refCatas" class="form-label fw-bold">Referencia Catastral</label>
-          <input
-            type="text"
-            id="refCatas"
-            class="form-control"
-            formControlName="refCatas"
-            placeholder="Referencia Catastral"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Referencia Catastral</mat-label>
+            <input matInput type="text" id="refCatas" formControlName="refCatas" placeholder="Referencia Catastral">
+          </mat-form-field>
         </div>
 
         <!-- Campo Potencia 1 -->
         <div class="mb-3">
-          <label for="potencia1" class="form-label fw-bold">Potencia 1</label>
-          <input
-            type="text"
-            id="potencia1"
-            class="form-control"
-            formControlName="potencia1"
-            placeholder="Potencia 1"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Potencia 1</mat-label>
+            <input matInput type="text" id="potencia1" formControlName="potencia1" placeholder="Potencia 1">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('potencia1')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('potencia1')?.hasError('required')">Debes introducir la Potencia 1.</small>
           </div>
@@ -97,14 +73,10 @@
 
         <!-- Campo Potencia 2 -->
         <div class="mb-3">
-          <label for="potencia2" class="form-label fw-bold">Potencia 2</label>
-          <input
-            type="text"
-            id="potencia2"
-            class="form-control"
-            formControlName="potencia2"
-            placeholder="Potencia 2"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Potencia 2</mat-label>
+            <input matInput type="text" id="potencia2" formControlName="potencia2" placeholder="Potencia 2">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('potencia2')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('potencia2')?.hasError('required')">Debes introducir la Potencia 2.</small>
           </div>
@@ -112,45 +84,37 @@
 
         <!-- Campo Tensión -->
         <div class="mb-3">
-          <label for="tension" class="form-label fw-bold">Tensión</label>
-          <select
-            id="tension"
-            class="form-control"
-            formControlName="tension"
-          >
-            <option value="" disabled selected>Selecciona una tensión</option>
-            <option value="230">230</option>
-            <option value="400">400</option>
-          </select>
+          <mat-form-field appearance="fill">
+            <mat-label>Tensión</mat-label>
+            <select matNativeControl formControlName="tension">
+              <option value="" disabled selected>Selecciona una tensión</option>
+              <option value="230">230</option>
+              <option value="400">400</option>
+            </select>
+          </mat-form-field>
         </div>
 
         <!-- Campo Uso -->
         <div class="mb-3">
-          <label for="uso" class="form-label fw-bold">Uso</label>
-          <select
-            id="uso"
-            class="form-control"
-            formControlName="uso"
-          >
-            <option value="" disabled selected>Selecciona un uso</option>
-            <option value="Vivienda Habitual">Vivienda Habitual</option>
-            <option value="Vivienda No Habitual">Vivienda No Habitual</option>
-            <option value="Local Comercial">Local Comercial</option>
-            <option value="Garaje">Garaje</option>
-            <option value="Otros">Otros</option>
-          </select>
+          <mat-form-field appearance="fill">
+            <mat-label>Uso</mat-label>
+            <select matNativeControl formControlName="uso">
+              <option value="" disabled selected>Selecciona un uso</option>
+              <option value="Vivienda Habitual">Vivienda Habitual</option>
+              <option value="Vivienda No Habitual">Vivienda No Habitual</option>
+              <option value="Local Comercial">Local Comercial</option>
+              <option value="Garaje">Garaje</option>
+              <option value="Otros">Otros</option>
+            </select>
+          </mat-form-field>
         </div>
 
         <!-- Campo Recomendación -->
         <div class="mb-3">
-          <label for="recomendacion" class="form-label fw-bold">Recomendación</label>
-          <input
-            type="text"
-            id="recomendacion"
-            class="form-control"
-            formControlName="recomendacion"
-            placeholder="Recomendación"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Recomendación</mat-label>
+            <input matInput type="text" id="recomendacion" formControlName="recomendacion" placeholder="Recomendación">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('recomendacion')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('recomendacion')?.hasError('required')">Debes introducir una Recomendación.</small>
           </div>
@@ -158,29 +122,21 @@
 
         <!-- Campo Consumo Anual -->
         <div class="mb-3">
-          <label for="consumoanual" class="form-label fw-bold">Consumo Anual</label>
-          <input
-            type="text"
-            id="consumoanual"
-            class="form-control"
-            formControlName="consumoanual"
-            placeholder="Consumo Anual"
-          />
-          <div *ngIf="oInmuebleForm?.get('consumoanual')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('consumoanual')?.hasError('required')">Debes introducir el Consumo Anual.</small>
+          <mat-form-field appearance="fill">
+            <mat-label>Consumo Anual</mat-label>
+            <input matInput type="text" id="consumoAnual" formControlName="consumoAnual" placeholder="Consumo Anual">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('consumoAnual')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('consumoAnual')?.hasError('required')">Debes introducir el Consumo Anual.</small>
           </div>
         </div>
 
         <!-- Campo Intención -->
         <div class="mb-3">
-          <label for="intencion" class="form-label fw-bold">Intención</label>
-          <input
-            type="text"
-            id="intencion"
-            class="form-control"
-            formControlName="intencion"
-            placeholder="Intención"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Intención</mat-label>
+            <input matInput type="text" id="intencion" formControlName="intencion" placeholder="Intención">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('intencion')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('intencion')?.hasError('required')">Debes introducir una Intención.</small>
           </div>
@@ -188,14 +144,10 @@
 
         <!-- Campo Hábitos -->
         <div class="mb-3">
-          <label for="habitos" class="form-label fw-bold">Hábitos</label>
-          <input
-            type="text"
-            id="habitos"
-            class="form-control"
-            formControlName="habitos"
-            placeholder="Hábitos"
-          />
+          <mat-form-field appearance="fill">
+            <mat-label>Hábitos</mat-label>
+            <input matInput type="text" id="habitos" formControlName="habitos" placeholder="Hábitos">
+          </mat-form-field>
           <div *ngIf="oInmuebleForm?.get('habitos')?.errors" class="text-danger">
             <small *ngIf="oInmuebleForm?.get('habitos')?.hasError('required')">Debes introducir los Hábitos.</small>
           </div>
@@ -205,13 +157,13 @@
         <div formGroupName="socio">
           <div class="row mt-4">
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="fill">
                 <mat-label>Socio</mat-label>
                 <input matInput formControlName="nombre" placeholder="Nombre del socio" />
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="fill">
                 <mat-label>Primer Apellido</mat-label>
                 <input matInput formControlName="apellido1" placeholder="Primer Apellido" />
               </mat-form-field>
@@ -223,7 +175,7 @@
             </div>
           </div>
         </div>
-
+       
         <!-- Botones -->
         <div class="text-center">
           <button class="btn btn-warning mt-4 mx-1" [routerLink]="['/admin', 'inmueble', 'plist']">
@@ -232,7 +184,7 @@
           <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
             <i class="bi bi-x-lg"></i> Reset
           </button>
-          <button class="btn btn-success mt-4 mx-1" type="submit" (click)="onSubmit()">
+          <button class="btn btn-success mt-4 mx-1" type="submit" [disabled]="isSubmitting">
             <i class="bi bi-floppy"></i> Guardar
           </button>
         </div>
@@ -240,3 +192,4 @@
     </div>
   </div>
 </div>
+<button type="button" (click)="rellenarFormulario()">Rellenar Formulario</button>

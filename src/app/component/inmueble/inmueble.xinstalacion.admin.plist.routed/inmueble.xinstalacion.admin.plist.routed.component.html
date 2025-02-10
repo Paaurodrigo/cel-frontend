@@ -4,7 +4,7 @@
       <div class="card shadow-sm">
         <div class="card-header bg-dark text-white text-center">
           <h2 class="mb-0">
-            <i class="bi bi-list"></i> Lista de inmuebles <i class="bi bi-person-circle"></i>
+            <i class="bi bi-list"></i> Lista de inmuebles de la instalacion '{{ oInstalacion.nombre }}' 
           </h2>
         </div>
         <div class="card-body">
@@ -122,7 +122,7 @@
                 </tr>
                 } @empty {
                 <tr>
-                  <td colspan="7" class="text-center">No hay inmuebles</td>
+                  <td colspan="10" class="text-center">No hay inmuebles</td>
                 </tr>
                 }
               </tbody>

@@ -77,6 +77,38 @@ getPageXSocio(
   return this.oHttp.get<IPage<IInmueble>>(URL, httpOptions);
 }
 
+getPageXInstalacion(
+  page: number,
+  size: number,
+  field: string,
+  dir: string,
+  filtro: string,
+  instalacion: number
+): Observable<IPage<IInmueble>> {
+  let URL: string = '';
+  URL += this.serverURL + '/xinstalacion/' + instalacion;
+  if (!page) {
+    page = 0;
+  }
+  URL += '?page=' + page;
+  if (!size) {
+    size = 10;
+  }
+  URL += '&size=' + size;
+  if (field) {
+    URL += '&sort=' + field;
+    if (dir === 'asc') {
+      URL += ',asc';
+    } else {
+      URL += ',desc';
+    }
+  }
+  if (filtro) {
+    URL += '&filter=' + filtro;
+  }
+  return this.oHttp.get<IPage<IInmueble>>(URL, httpOptions);
+}
+
 
 get(id: number): Observable<IInmueble> {
   let URL: string = '';
