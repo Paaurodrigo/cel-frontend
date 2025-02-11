@@ -1,70 +1,165 @@
-<div class="container mt-4">
-  <h2>Crear Conexión</h2>
-  <form [formGroup]="oConexionForm" (ngSubmit)="onSubmit()">
-    <!-- Campo Potencia -->
-    <div class="form-group">
-      <label for="potencia">Potencia</label>
-      <input type="number" class="form-control" id="potencia" formControlName="potencia">
-      <div *ngIf="oConexionForm.get('potencia')?.invalid && oConexionForm.get('potencia')?.touched" class="text-danger">
-        La potencia es obligatoria y debe ser un número positivo.
-      </div>
-    </div>
+<div class="container mt-5 d-flex align-items-center justify-content-center">
+  <div class="row">
+    <div class="col text-center">
+      <h2 class="my-2">
+        <i class="bi bi-plus-square"></i>
+        Creación de contratos
+        <i class="bi bi-person-circle"></i>
+      </h2>
+      <form [formGroup]="oConexionForm!" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row mt-4">
+          <mat-form-field>
+            <mat-label>Fecha</mat-label>
+            <input
+              matInput
+              formControlName="fecha"
+              placeholder="Pon aquí tu fecha"
+            />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oConexionForm?.get('fecha')?.hasError('required')){
+            <mat-error> El campo fecha es obligatorio </mat-error>
+            } @if (oConexionForm?.get('fecha')?.hasError('minlength')){
+            <mat-error> El fecha debe ser mas largo </mat-error>
+            } @if (oConexionForm?.get('fecha')?.hasError('maxlength')){
+            <mat-error> El fecha debe ser mas corto </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="row mt-4">
+          <mat-form-field>
+            <mat-label>porcentaje</mat-label>
+            <input
+              matInput
+              formControlName="porcentaje"
+              placeholder="Pon aqui tu porcentaje"
+            />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oConexionForm?.get('porcentaje')?.hasError('required')) {
+            <mat-error>Debes introducir una porcentaje</mat-error>
+            } @if (oConexionForm?.get('porcentaje')?.hasError('minlength')) {
+            <mat-error>Debes introducir una porcentaje mas larga</mat-error>
+            } @if (oConexionForm?.get('porcentaje')?.hasError('maxlength')) {
+            <mat-error>Debes introducir una porcentaje mas corta</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="row mt-4">
+          <mat-form-field>
+            <mat-label>potencia</mat-label>
+            <input
+              matInput
+              formControlName="potencia"
+              placeholder="Pon aqui tu potencia"
+            />
+            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
+            @if (oConexionForm?.get('potencia')?.hasError('required')) {
+            <mat-error>Debes introducir una potencia</mat-error>
+            } @if (oConexionForm?.get('potencia')?.hasError('minlength')) {
+            <mat-error>Debes introducir una potencia mas larga</mat-error>
+            } @if (oConexionForm?.get('potencia')?.hasError('maxlength')) {
+            <mat-error>Debes introducir una potencia mas corta</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div formGroupName="inmueble">
+          <div class="row mt-4">
+              <mat-form-field>
+                  <mat-label>Seleccione el inmueble</mat-label>
+                  <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary" (click)="showInmuebleSelectorModal()">
+                          <i class="bi bi-search"></i>
+                          Buscar
+                      </button>
+                  </div>
+                  <div class="d-flex justify-content-start">
+                      {{oInmueble.cups}}
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    {{oInmueble.direccion}}
+                  </div>
+                  <input matInput formControlName="cups" />
+                  <input matInput formControlName="id" />
+                  <input matInput formControlName="direccion" />
+              </mat-form-field>
+          </div>
+        </div>
+        <div formGroupName="instalacion">
+          <div class="row mt-4">
+              <mat-form-field>
+                  <mat-label>Seleccione la instalacion</mat-label>
+                  <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary" (click)="showInstalacionSelectorModal()">
+                          <i class="bi bi-search"></i>
+                          Buscar
+                      </button>
+                  </div>
+                  <div class="d-flex justify-content-start">
+                      {{oInstalacion.id}}
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    {{oInstalacion.nombre}}
+                  </div>
+                  <input matInput formControlName="nombre" />
+                  <input matInput formControlName="id" />
+                  
+              </mat-form-field>
+          </div>
+        </div>
+        <br />
+        <button
+          class="btn btn-warning mt-4 mx-1"
+          [routerLink]="['/admin', 'conexion', 'plist']"
+        >
+          <i class="bi bi-list"></i>
+          Ir a listado de Conexions
+        </button>
 
-    <!-- Campo Fecha -->
-    <div class="form-group">
-      <label for="fecha">Fecha</label>
-      <input type="date" class="form-control" id="fecha" formControlName="fecha">
-      <div *ngIf="oConexionForm.get('fecha')?.invalid && oConexionForm.get('fecha')?.touched" class="text-danger">
-        La fecha es obligatoria.
-      </div>
-    </div>
+        <button class="btn btn-secondary mt-4 mx-1" (click)="onReset()">
+          <i class="bi bi-x-lg"></i>
+          Reset
+        </button>
 
-    <!-- Campo Porcentaje -->
-    <div class="form-group">
-      <label for="porcentaje">Porcentaje</label>
-      <input type="number" class="form-control" id="porcentaje" formControlName="porcentaje">
-      <div *ngIf="oConexionForm.get('porcentaje')?.invalid && oConexionForm.get('porcentaje')?.touched" class="text-danger">
-        El porcentaje es obligatorio y debe estar entre 0 y 100.
-      </div>
+        <button class="btn btn-primary mt-4 mx-1" type="submit" [disabled]="!oConexionForm?.valid">
+          <i class="bi bi-floppy"></i>
+          Guardar
+      </button>
+      </form>
     </div>
+  </div>
+</div>
 
-   
-   <div formGroupName="inmueble">
-    <div class="row mt-4">
-      <div class="col">
-        <mat-form-field appearance="fill">
-          <mat-label>Socio</mat-label>
-          <input matInput formControlName="nombre" placeholder="Nombre del socio" />
-        </mat-form-field>
+<div
+  class="modal fade"
+  [id]="'mimodal'"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Conexion Realizada</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModal()"
+        ></button>
       </div>
-      <div class="col">
-        <mat-form-field appearance="fill">
-          <mat-label>Primer Apellido</mat-label>
-          <input matInput formControlName="apellido1" placeholder="Primer Apellido" />
-        </mat-form-field>
+      <div class="modal-body">
+        <p>{{ strMessage }}</p>
       </div>
-      <div class="col-auto d-flex align-items-end">
-        <button class="btn btn-primary" (click)="showSocioSelectorModal()">
-          <i class="bi bi-search"></i> Buscar
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="hideModal()"
+        >
+          Cerrar
         </button>
       </div>
     </div>
   </div>
-  
-
-    <!-- Campo Instalación ID -->
-    <div class="form-group">
-      <label for="instalacionId">Instalación</label>
-      <select class="form-control" id="instalacionId" formControlName="instalacionId">
-        <option *ngFor="let instalacion of instalaciones " [value]="instalacion.id">{{ instalacion.nombre }}</option>
-      </select>
-      <div *ngIf="oConexionForm.get('instalacionId')?.invalid && oConexionForm.get('instalacionId')?.touched" class="text-danger">
-        La instalación es obligatoria.
-      </div>
-    </div>
-
-    <!-- Botones -->
-    <button type="submit" class="btn btn-primary" [disabled]="oConexionForm.invalid">Conectar</button>
-    <button type="button" class="btn btn-secondary ml-2" (click)="onReset()">Resetear</button>
-  </form>
 </div>

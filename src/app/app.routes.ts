@@ -27,6 +27,9 @@ import { InmuebleClientCreateRoutedComponent } from './component/inmueble/inmueb
 import { InmuebleClientPlistRoutedComponent } from './component/inmueble/inmueble.client.plist.routed/inmueble.client.plist.routed.component';
 import { InmuebleClientViewRoutedComponent } from './component/inmueble/inmueble.client.view.routed/inmueble.client.view.routed.component';
 import { ConexionAdminCreateRoutedComponent } from './component/conexion/conexion.admin.create.routed/conexion.admin.create.routed.component';
+import { ConexionAdminPlistRoutedComponent } from './component/conexion/conexion.admin.plist.routed/conexion.admin.plist.routed.component';
+import { ConexionAdminDeleteRoutedComponent } from './component/conexion/conexion.admin.delete.routed/conexion.admin.delete.routed.component';
+import { ConexionAdminViewRoutedComponent } from './component/conexion/conexion.admin.view.routed/conexion.admin.view.routed.component';
 
 export const routes: Routes = [
 
@@ -52,6 +55,7 @@ export const routes: Routes = [
   {path: 'admin/inmueble/create', component:InmuebleAdminCreateRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/view/:id', component:InmuebleAdminViewRoutedComponent,canActivate: [AdminGuard]},
 
+
   {path: 'client/inmueble/create', component: InmuebleClientCreateRoutedComponent,canActivate: [MiembroGuard]},
   {path: 'client/inmueble/view/:id', component:InmuebleClientViewRoutedComponent,canActivate: [MiembroGuard]},
   {path: 'client/inmueble/plist', component: InmuebleClientPlistRoutedComponent,canActivate: [MiembroGuard]},
@@ -69,8 +73,9 @@ export const routes: Routes = [
 
 
 
-{path: 'admin/conexion/new', component: ConexionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
-
-
+{ path: 'admin/conexion/new', component: ConexionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
+{ path: 'admin/conexion/plist', component: ConexionAdminPlistRoutedComponent,canActivate: [AdminGuard] },
+{ path: 'admin/conexion/delete/:id', component: ConexionAdminDeleteRoutedComponent,canActivate: [AdminGuard] },
+{ path: 'admin/conexion/view/:id', component: ConexionAdminViewRoutedComponent,canActivate: [AdminGuard]},
 
 ];

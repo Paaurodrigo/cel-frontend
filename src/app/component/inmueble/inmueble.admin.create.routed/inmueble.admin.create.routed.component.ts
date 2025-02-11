@@ -54,19 +54,22 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   
   createForm() {
     this.oInmuebleForm = this.fb.group({
-      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]], 
+      cups: ['', [
+        Validators.required,
+        Validators.pattern(/^ES[A-Z0-9]{20}$/)
+      ]], 
       direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      codigoPostal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+      codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       refCatas: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      potencia1: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-      potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-      tension: [''],
+      potencia1: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      potencia2: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      tension: ['',[Validators.required, Validators.pattern(/^\d{5}$/)]],
       uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      recomendacion: ['', Validators.required], 
-      consumoAnual: ['', Validators.required],
-      intencion: ['', Validators.required],
-      habitos: ['', Validators.required],
+      recomendacion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]], 
+      consumoAnual: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+      intencion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      habitos: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       socio: this.fb.group({
         id: ['', Validators.required],  // Asegúrate de que `id` esté presente
         nombre: [''], 

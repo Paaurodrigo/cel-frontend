@@ -85,6 +85,7 @@
           <mat-form-field class="w-100">
             <mat-label>Telefono</mat-label>
             <input matInput formControlName="telefono" placeholder="Escribe tu telefono" class="form-control" />
+            <mat-hint align="start">9 dígitos</mat-hint>
           </mat-form-field>
         </div>
 
@@ -92,6 +93,7 @@
           <mat-form-field class="w-100">
             <mat-label>Código Postal</mat-label>
             <input matInput formControlName="codigopostal" placeholder="Escribe tu código postal" class="form-control" />
+            <mat-hint align="start">5 dígitos</mat-hint>
           </mat-form-field>
         </div>
 
@@ -127,10 +129,19 @@
             }
           </mat-form-field>
 
-          <button class="btn btn-info" type="button" (click)="comprobarDni()">
-            Comprobar DNI
-          </button>
+          <div>
+           
+            <button class="btn btn-info" type="button" (click)="comprobarDni()">
+              Comprobar DNI
+            </button>
+          
+            <!-- <p>
+              <i *ngIf="dniValido === true" class="bi bi-check-circle" style="color: green;"></i>
+              <i *ngIf="dniValido === false" class="bi bi-x-circle" style="color: red;"></i>
+            </p> -->
 
+          </div>
+          
           
 
         

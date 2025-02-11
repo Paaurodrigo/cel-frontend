@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { TrimPipe } from '../../../pipe/trim.pipe';
@@ -10,137 +10,179 @@ import { SocioselectorComponent } from '../../socio/socioselector/socioselector.
 import { IInstalacion } from '../../../model/instalacion.interface';
 import { IInmueble } from '../../../model/inmueble.interface';
 import { InmuebleselectorComponent } from '../../inmueble/inmueble.selector/inmuebleselector.component';
+import { InstalacionselectorComponent } from '../../instalacion/instalacion.selector/isntalacionselector.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
+
+declare let bootstrap: any;
 @Component({
   selector: 'app-conexion.admin.create.routed',
   templateUrl: './conexion.admin.create.routed.component.html',
   styleUrls: ['./conexion.admin.create.routed.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TrimPipe, RouterModule,ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule,  // Agrega este módulo
+    MatInputModule,      // Agrega este módulo para los inputs dentro del form field
+    ReactiveFormsModule, // Si usas formularios reactivos
+    FormsModule,         // Si usas ngModel
+    CommonModule,
+    RouterModule         
+  ],
 })
 export class ConexionAdminCreateRoutedComponent implements OnInit {
- oInstalacion: IInstalacion = {} as IInstalacion;
- oInmueble: IInmueble = {} as IInmueble;
-    oConexionForm!: FormGroup; // Formulario reactivo
-    oConexion: IConexion | null = null;
-    strMessage: string = '';
-    myModal: any;
-    readonly dialog = inject(MatDialog);
-  
-    constructor(
-      private oConexionService: ConexionService,
-      private oRouter: Router,
-      private fb: FormBuilder,
-      
-    ) {}
-  
-    ngOnInit(): void {
-      this.createForm();
-      this.oConexionForm.markAllAsTouched(); // Marcar todos los campos como tocados para mostrar errores si existen
+ 
+  id: number = 0;
+  oConexionForm: FormGroup | undefined = undefined;
+  oInstalacionForm: FormGroup | undefined = undefined;
+  oConexion: IConexion | null = null;
+  oInmueble: IInmueble = {} as IInmueble;
+  oInstalacion: IInstalacion = {} as IInstalacion;
+  readonly dialog = inject(MatDialog);
+  strMessage: string = '';
+
+  myModal: any;
+
+  form: FormGroup = new FormGroup({});
+
+  constructor(
+    private oConexionService: ConexionService,
+    private oRouter: Router
+  ) {}
+
+  ngOnInit() {
+    this.createForm();
+    this.oConexionForm?.markAllAsTouched();
+  }
+
+  createForm() {
+    this.oConexionForm = new FormGroup({
+      fecha: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+      ]),
+      porcentaje: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(50),
+      ]),
+      potencia: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(50),
+      ]),
+      instalacion: new FormGroup({
+        id: new FormControl('', [Validators.required]),
+        nombre: new FormControl(''),
+      }),
+      inmueble: new FormGroup({
+        id: new FormControl('', [Validators.required]),
+        cups: new FormControl(''),
+        direccion: new FormControl(''),
+      })
+    });
+  }
+
+  updateForm() {
+    this.oConexionForm?.controls['id'].setValue(this.oConexion?.id);
+    this.oConexionForm?.controls['fecha'].setValue(this.oConexion?.fecha);
+    this.oConexionForm?.controls['porcentaje'].setValue(this.oConexion?.porcentaje);
+    this.oConexionForm?.controls['potencia'].setValue(this.oConexion?.potencia);
+    this.oInstalacionForm?.controls['Instalacion'].setValue({
+      id: null,
+      nombre: null,
+    });
+    this.oConexionForm?.controls['Inmueble'].setValue({
+      id: null,
+      cups: null,
+      direccion: null,
      
-    }
+    });
 
-    
-  
-    // Crear el formulario reactivo
-    createForm(): void {
-      this.oConexionForm = this.fb.group({
-        potencia: ['', [Validators.required, Validators.min(0)]], // Potencia debe ser un número positivo
-        fecha: ['', [Validators.required]], // Fecha es obligatoria
-        porcentaje: ['', [Validators.required, Validators.min(0), Validators.max(100)]], // Porcentaje entre 0 y 100
-        instalacion: this.fb.group({
-          id: ['', Validators.required],  
-          nombre: ['',Validators.required]
-        }),
-        inmueble: this.fb.group({
-          id: ['', Validators.required],  // Asegúrate de que `id` esté presente
-          cups: [''], 
-          direccion: ['']
-        })
-      });
-    }
+  }
 
+  showModal(mensaje: string) {
+    this.strMessage = mensaje;
+    this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
+      keyboard: false,
+    });
+    this.myModal.show();
+  }
+  onReset() {
+    this.updateForm();
+    return false;
+  }
 
-   
+  hideModal = () => {
+    this.myModal.hide();
+    this.oRouter.navigate(['/admin/inmueble/plist/xinstalacion/' + this.oConexion?.instalacion?.id]);
+  }
 
-
-
-
-
-
-
-
-  
-    // Resetear el formulario
-    onReset(): void {
-      this.oConexionForm.reset();
-    }
-  
-    // Mostrar un modal con un mensaje
-    showModal(mensaje: string): void {
-      this.strMessage = mensaje;
-      const dialogRef = this.dialog.open(SocioselectorComponent, {
-        width: '300px',
-        data: { message: this.strMessage },
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          console.log('El modal se cerró', result);
-        }
-      });
-    }
-
-    showInmueblesSelectorModal() {
-      const dialogRef = this.dialog.open(InmuebleselectorComponent, {
-        height: '500px',
-        maxHeight: '800px',
-        width: '80%',
-        maxWidth: '90%',
-        
-  
-  
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        if (result !== undefined) {
-          console.log(result);
-          this.oConexionForm?.controls['conexion'].setValue({
-            id: result.id,
-            titulo: result.titulo,
-            descripcion: result.descripcion,
-          });
-        }
-      });
-      return false;
-    }
-  
-
-
-    // Enviar el formulario
-    onSubmit(): void {
-      if (this.oConexionForm.invalid) {
-        alert('Formulario inválido. Por favor, revisa los campos marcados.');
-        return;
-      }
-  
-      this.oConexionService.create(this.oConexionForm.value).subscribe({
+  onSubmit() {
+    if (!this.oConexionForm?.valid) {
+      this.showModal('Formulario no válido');
+      return;
+    } else {
+      this.oConexionService.create1(this.oConexionForm?.value).subscribe({
         next: (oConexion: IConexion) => {
           this.oConexion = oConexion;
-          alert('Conexión creada con éxito');
-          this.oRouter.navigate(['/admin/conexion/plist']);
+          this.showModal('Conexion creada con el id: ' + this.oConexion.id);
         },
-        error: (err) => {
-          if (err.status === 400) {
-            this.showModal('Datos inválidos. Revisa los campos.');
-          } else if (err.status === 500) {
-            this.showModal('Error interno del servidor. Inténtalo más tarde.');
-          } else {
-            this.showModal('Error desconocido. Consulta con el administrador.');
-          }
-          console.error(err);
+        error: (error) => {
+          this.showModal('Error al crear la conexion');
+          console.error(error);
         },
       });
     }
   }
+  
+  showInmuebleSelectorModal() {
+    const dialogRef = this.dialog.open(InmuebleselectorComponent, {
+      height: '500px',
+      maxHeight: '800px',
+      width: '80%',
+      maxWidth: '90%',
+      
+
+
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        console.log(result);
+        this.oConexionForm?.controls['inmueble'].setValue({
+          id: result.id,
+          cups: result.cups,
+          direccion: result.direccion,
+        });
+      }
+    });
+    return false;
+  }
+
+  showInstalacionSelectorModal() {
+    const dialogRef = this.dialog.open(InstalacionselectorComponent, {
+      height: '500px',
+      maxHeight: '800px',
+      width: '80%',
+      maxWidth: '90%',
+      
+
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        console.log(result);
+        this.oConexionForm?.controls['instalacion'].setValue({
+          id: result.id,
+          nombre: result.nombre,
+            
+        });
+      }
+    });
+    return false;
+  }
+}

@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col text-center">
+      <h2 class="my-4">
+        <i class="bi bi-list"></i>
+        Selector de tipo de instalacion
+        <i class="bi bi-credit-card-fill"></i>
+      </h2>
+      <!-- Tarjetas de tipos de instalacion -->
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+        <div class="col" *ngFor="let instalacion of oPage?.content; trackBy: trackById">
+          <div class="card h-100 shadow-lg border-light hover-effect">
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title fw-bold">{{ instalacion.id }}</h5>
+                <p class="card-text text-muted">{{ instalacion.nombre| trim: 100 }}</p>
+              </div>
+              <button type="button" class="btn btn-success w-100 mt-3" (click)="select(instalacion)">
+                <i class="bi bi-check2-circle me-2"></i> Seleccionar
+              </button>
+            </div>
+            <div class="card-footer bg-transparent text-muted text-center">
+              <small>DNI: {{ instalacion.nombre }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
