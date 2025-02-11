@@ -1,62 +1,89 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { TrimPipe } from '../../../pipe/trim.pipe';
 import { IConexion } from '../../../model/conexion.interface';
 import { ConexionService } from '../../../service/conexion.service';
 import { SocioselectorComponent } from '../../socio/socioselector/socioselector.component';
+import { IInstalacion } from '../../../model/instalacion.interface';
+import { IInmueble } from '../../../model/inmueble.interface';
+import { InmuebleselectorComponent } from '../../inmueble/inmueble.selector/inmuebleselector.component';
 
 @Component({
   selector: 'app-conexion.admin.create.routed',
   templateUrl: './conexion.admin.create.routed.component.html',
   styleUrls: ['./conexion.admin.create.routed.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TrimPipe, RouterModule],
+  imports: [CommonModule, FormsModule, TrimPipe, RouterModule,ReactiveFormsModule],
 })
 export class ConexionAdminCreateRoutedComponent implements OnInit {
-  oConexionForm!: FormGroup; // ¡Sin inicializar aquí!
-  oConexion: IConexion | null = null;
-  strMessage: string = '';
-  myModal: any;
-  readonly dialog = inject(MatDialog);
-  constructor( private oConexionService: ConexionService,
-    private oRouter: Router,
-    private fb: FormBuilder) { }
-
-    ngOnInit() {
+ oInstalacion: IInstalacion = {} as IInstalacion;
+ oInmueble: IInmueble = {} as IInmueble;
+    oConexionForm!: FormGroup; // Formulario reactivo
+    oConexion: IConexion | null = null;
+    strMessage: string = '';
+    myModal: any;
+    readonly dialog = inject(MatDialog);
+  
+    constructor(
+      private oConexionService: ConexionService,
+      private oRouter: Router,
+      private fb: FormBuilder,
+      
+    ) {}
+  
+    ngOnInit(): void {
       this.createForm();
-       this.oConexionForm?.markAllAsTouched();
-     }
+      this.oConexionForm.markAllAsTouched(); // Marcar todos los campos como tocados para mostrar errores si existen
+     
+    }
 
-     createForm() {
+    
+  
+    // Crear el formulario reactivo
+    createForm(): void {
       this.oConexionForm = this.fb.group({
-        potencia: ['', [Validators.minLength(3), Validators.maxLength(50)]], 
-        fecha: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-        porcentaje: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+        potencia: ['', [Validators.required, Validators.min(0)]], // Potencia debe ser un número positivo
+        fecha: ['', [Validators.required]], // Fecha es obligatoria
+        porcentaje: ['', [Validators.required, Validators.min(0), Validators.max(100)]], // Porcentaje entre 0 y 100
+        instalacion: this.fb.group({
+          id: ['', Validators.required],  
+          nombre: ['',Validators.required]
+        }),
         inmueble: this.fb.group({
+          id: ['', Validators.required],  // Asegúrate de que `id` esté presente
           cups: [''], 
           direccion: ['']
-        }),
-        instalacion: this.fb.group({
-          id: [''], 
-          nombre: ['']
         })
       });
     }
 
-    onReset(): void {
-      this.oConexionForm?.reset(); // Usa el método reset de Angular
-    }
 
+   
+
+
+
+
+
+
+
+
+  
+    // Resetear el formulario
+    onReset(): void {
+      this.oConexionForm.reset();
+    }
+  
+    // Mostrar un modal con un mensaje
     showModal(mensaje: string): void {
       this.strMessage = mensaje;
       const dialogRef = this.dialog.open(SocioselectorComponent, {
         width: '300px',
         data: { message: this.strMessage },
       });
-    
+  
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           console.log('El modal se cerró', result);
@@ -64,19 +91,44 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       });
     }
 
+    showInmueblesSelectorModal() {
+      const dialogRef = this.dialog.open(InmuebleselectorComponent, {
+        height: '500px',
+        maxHeight: '800px',
+        width: '80%',
+        maxWidth: '90%',
+        
+  
+  
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        if (result !== undefined) {
+          console.log(result);
+          this.oConexionForm?.controls['conexion'].setValue({
+            id: result.id,
+            titulo: result.titulo,
+            descripcion: result.descripcion,
+          });
+        }
+      });
+      return false;
+    }
+  
 
-    onSubmit() {
 
-      if (this.oConexionForm?.invalid) {
-       
+    // Enviar el formulario
+    onSubmit(): void {
+      if (this.oConexionForm.invalid) {
         alert('Formulario inválido. Por favor, revisa los campos marcados.');
         return;
       }
-    
-      this.oConexionService.create(this.oConexionForm?.value).subscribe({
+  
+      this.oConexionService.create(this.oConexionForm.value).subscribe({
         next: (oConexion: IConexion) => {
           this.oConexion = oConexion;
-          alert('Conexion creado con éxito');
+          alert('Conexión creada con éxito');
           this.oRouter.navigate(['/admin/conexion/plist']);
         },
         error: (err) => {
@@ -91,5 +143,4 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
         },
       });
     }
-  
-}
+  }

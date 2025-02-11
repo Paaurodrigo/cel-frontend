@@ -1,3 +1,70 @@
-<p>
-  conexion.admin.create.routed works!
-</p>
+<div class="container mt-4">
+  <h2>Crear Conexión</h2>
+  <form [formGroup]="oConexionForm" (ngSubmit)="onSubmit()">
+    <!-- Campo Potencia -->
+    <div class="form-group">
+      <label for="potencia">Potencia</label>
+      <input type="number" class="form-control" id="potencia" formControlName="potencia">
+      <div *ngIf="oConexionForm.get('potencia')?.invalid && oConexionForm.get('potencia')?.touched" class="text-danger">
+        La potencia es obligatoria y debe ser un número positivo.
+      </div>
+    </div>
+
+    <!-- Campo Fecha -->
+    <div class="form-group">
+      <label for="fecha">Fecha</label>
+      <input type="date" class="form-control" id="fecha" formControlName="fecha">
+      <div *ngIf="oConexionForm.get('fecha')?.invalid && oConexionForm.get('fecha')?.touched" class="text-danger">
+        La fecha es obligatoria.
+      </div>
+    </div>
+
+    <!-- Campo Porcentaje -->
+    <div class="form-group">
+      <label for="porcentaje">Porcentaje</label>
+      <input type="number" class="form-control" id="porcentaje" formControlName="porcentaje">
+      <div *ngIf="oConexionForm.get('porcentaje')?.invalid && oConexionForm.get('porcentaje')?.touched" class="text-danger">
+        El porcentaje es obligatorio y debe estar entre 0 y 100.
+      </div>
+    </div>
+
+   
+   <div formGroupName="inmueble">
+    <div class="row mt-4">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Socio</mat-label>
+          <input matInput formControlName="nombre" placeholder="Nombre del socio" />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Primer Apellido</mat-label>
+          <input matInput formControlName="apellido1" placeholder="Primer Apellido" />
+        </mat-form-field>
+      </div>
+      <div class="col-auto d-flex align-items-end">
+        <button class="btn btn-primary" (click)="showSocioSelectorModal()">
+          <i class="bi bi-search"></i> Buscar
+        </button>
+      </div>
+    </div>
+  </div>
+  
+
+    <!-- Campo Instalación ID -->
+    <div class="form-group">
+      <label for="instalacionId">Instalación</label>
+      <select class="form-control" id="instalacionId" formControlName="instalacionId">
+        <option *ngFor="let instalacion of instalaciones " [value]="instalacion.id">{{ instalacion.nombre }}</option>
+      </select>
+      <div *ngIf="oConexionForm.get('instalacionId')?.invalid && oConexionForm.get('instalacionId')?.touched" class="text-danger">
+        La instalación es obligatoria.
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <button type="submit" class="btn btn-primary" [disabled]="oConexionForm.invalid">Conectar</button>
+    <button type="button" class="btn btn-secondary ml-2" (click)="onReset()">Resetear</button>
+  </form>
+</div>

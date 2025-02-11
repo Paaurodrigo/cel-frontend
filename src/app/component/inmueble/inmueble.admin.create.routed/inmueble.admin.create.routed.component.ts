@@ -15,6 +15,7 @@ import { IInmueble } from '../../../model/inmueble.interface';
 import { InmuebleService } from '../../../service/inmueble.service';
 import { SocioselectorComponent } from '../../socio/socioselector/socioselector.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 declare let bootstrap: any;
 
@@ -29,6 +30,7 @@ declare let bootstrap: any;
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule,
+    CommonModule
   ],
 
  
