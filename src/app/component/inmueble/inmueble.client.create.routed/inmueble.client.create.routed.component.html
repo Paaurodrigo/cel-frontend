@@ -1,0 +1,173 @@
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card w-50 shadow-lg">
+    <div class="card-header text-center">
+      <h2 class="my-2">
+        <i class="bi bi-plus-square"></i>
+        Creación de Inmueble
+        <i class="bi bi-person-circle"></i>
+      </h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="oInmuebleForm!" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Campo Cups -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Cups</mat-label>
+            <input matInput type="text" id="cups" formControlName="cups" placeholder="CUPS">
+          </mat-form-field>
+        </div>
+
+        <!-- Campo Dirección -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Dirección</mat-label>
+            <input matInput type="text" id="direccion" formControlName="direccion" placeholder="Dirección">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('direccion')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('required')">Debes introducir una Dirección.</small>
+            <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('minlength')">La Dirección es demasiado corta.</small>
+            <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('maxlength')">La Dirección es demasiado larga.</small>
+          </div>
+        </div>
+
+        <!-- Campo Código Postal -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Código Postal</mat-label>
+            <input matInput type="text" id="codigoPostal" formControlName="codigoPostal" placeholder="Código Postal">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('codigoPostal')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Código Postal.</small>
+            <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('minlength')">El Código Postal es demasiado corto.</small>
+            <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('maxlength')">El Código Postal es demasiado largo.</small>
+          </div>
+        </div>
+
+        <!-- Campo Municipio -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Municipio</mat-label>
+            <input matInput type="text" id="municipio" formControlName="municipio" placeholder="Municipio">
+          </mat-form-field>
+        </div>
+
+        <!-- Campo Referencia Catastral -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Referencia Catastral</mat-label>
+            <input matInput type="text" id="refCatas" formControlName="refCatas" placeholder="Referencia Catastral">
+          </mat-form-field>
+        </div>
+
+        <!-- Campo Potencia 1 -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Potencia 1</mat-label>
+            <input matInput type="text" id="potencia1" formControlName="potencia1" placeholder="Potencia 1">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('potencia1')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('potencia1')?.hasError('required')">Debes introducir la Potencia 1.</small>
+          </div>
+        </div>
+
+        <!-- Campo Potencia 2 -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Potencia 2</mat-label>
+            <input matInput type="text" id="potencia2" formControlName="potencia2" placeholder="Potencia 2">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('potencia2')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('potencia2')?.hasError('required')">Debes introducir la Potencia 2.</small>
+          </div>
+        </div>
+
+        <!-- Campo Tensión -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Tensión</mat-label>
+            <select matNativeControl formControlName="tension">
+              <option value="" disabled selected>Selecciona una tensión</option>
+              <option value="230">230</option>
+              <option value="400">400</option>
+            </select>
+          </mat-form-field>
+        </div>
+
+        <!-- Campo Uso -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Uso</mat-label>
+            <select matNativeControl formControlName="uso">
+              <option value="" disabled selected>Selecciona un uso</option>
+              <option value="Vivienda Habitual">Vivienda Habitual</option>
+              <option value="Vivienda No Habitual">Vivienda No Habitual</option>
+              <option value="Local Comercial">Local Comercial</option>
+              <option value="Garaje">Garaje</option>
+              <option value="Otros">Otros</option>
+            </select>
+          </mat-form-field>
+        </div>
+
+        <!-- Campo Recomendación -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Recomendación</mat-label>
+            <input matInput type="text" id="recomendacion" formControlName="recomendacion" placeholder="Recomendación">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('recomendacion')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('recomendacion')?.hasError('required')">Debes introducir una Recomendación.</small>
+          </div>
+        </div>
+
+        <!-- Campo Consumo Anual -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Consumo Anual</mat-label>
+            <input matInput type="text" id="consumoAnual" formControlName="consumoAnual" placeholder="Consumo Anual">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('consumoAnual')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('consumoAnual')?.hasError('required')">Debes introducir el Consumo Anual.</small>
+          </div>
+        </div>
+
+        <!-- Campo Intención -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Intención</mat-label>
+            <input matInput type="text" id="intencion" formControlName="intencion" placeholder="Intención">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('intencion')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('intencion')?.hasError('required')">Debes introducir una Intención.</small>
+          </div>
+        </div>
+
+        <!-- Campo Hábitos -->
+        <div class="mb-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Hábitos</mat-label>
+            <input matInput type="text" id="habitos" formControlName="habitos" placeholder="Hábitos">
+          </mat-form-field>
+          <div *ngIf="oInmuebleForm?.get('habitos')?.errors" class="text-danger">
+            <small *ngIf="oInmuebleForm?.get('habitos')?.hasError('required')">Debes introducir los Hábitos.</small>
+          </div>
+        </div>
+
+       
+        <!-- Botones -->
+        <div class="text-center">
+          <button class="btn btn-warning mt-4 mx-1" [routerLink]="['/admin', 'inmueble', 'plist']">
+            <i class="bi bi-list"></i> Ir a listado de Inmuebles
+          </button>
+          <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
+            <i class="bi bi-x-lg"></i> Reset
+          </button>
+          <button class="btn btn-success mt-4 mx-1" type="submit" [disabled]="isSubmitting">
+            <i class="bi bi-floppy"></i> Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<button type="button" (click)="rellenarFormulario()">Rellenar Formulario</button>

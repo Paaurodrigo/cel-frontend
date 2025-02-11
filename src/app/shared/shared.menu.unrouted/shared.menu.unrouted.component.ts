@@ -15,7 +15,8 @@ export class SharedMenuUnroutedComponent implements OnInit {
   userNombre: string = '';
 userApellido: string = '';
 userEmail: string = '';
-isAdmin: boolean = false;  // Variable para determinar si el usuario es administrador
+userRole: string = '';
+
   constructor(
     private oRouter: Router,
     private oSessionService: SessionService
@@ -25,23 +26,36 @@ isAdmin: boolean = false;  // Variable para determinar si el usuario es administ
         this.strRuta = oEvent.url;
       }
     });
+   
+   
+  }
+
+
+
+ 
+  
+
+  ngOnInit() {
     this.activeSession = this.oSessionService.isSessionActive();
     if (this.activeSession) {
       this.userEmail = this.oSessionService.getSessionEmail();
       this.userNombre = this.oSessionService.getSessionNombre();
       this.userApellido = this.oSessionService.getSessionApellido1();
+      this.userRole = this.oSessionService.getSessionRole();
+
+  
 
     }
-  }
-
-  ngOnInit() {
     this.oSessionService.onLogin().subscribe({
       next: () => {        
         this.activeSession = true;
         this.userEmail = this.oSessionService.getSessionEmail();
         this.userNombre = this.oSessionService.getSessionNombre();
         this.userApellido = this.oSessionService.getSessionApellido1();
-      },
+        this.userRole = this.oSessionService.getSessionRole();
+     
+    },
+      
     });
     this.oSessionService.onLogout().subscribe({
       next: () => {
@@ -49,8 +63,12 @@ isAdmin: boolean = false;  // Variable para determinar si el usuario es administ
         this.userEmail = '';
         this.userNombre = '';
         this.userApellido = '';
+        this.userRole = ""; // Reinicia el valor al cerrar sesión
+    
       },
     });
 
   }
+
+  
 }

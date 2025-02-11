@@ -21,7 +21,7 @@ export class MiembroGuard implements CanActivate {
             // llamar al servidor para obtener el rol del Socio
             return this.oSocioService.getSocioByEmail(email).pipe(
                 map((data: ISocio) => {
-                    if (data.tiposocio.descripcion === 'Auditor') {
+                    if (data.tiposocio.descripcion === 'miembro') {
                         return true;
                     } else {
                         this.oRouter.navigate(['/login']);

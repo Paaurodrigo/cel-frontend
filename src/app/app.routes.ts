@@ -23,6 +23,10 @@ import { SharedByemailRoutedComponent } from './shared/shared.byemail.routed/sha
 import { MiembroGuard } from './guards/miembro.guard';
 import { SharedRegistrerRoutedComponent } from './shared/shared.registrer.routed/shared.registrer.routed.component';
 import { InmuebleXinstalacionAdminPlistRoutedComponent } from './component/inmueble/inmueble.xinstalacion.admin.plist.routed/inmueble.xinstalacion.admin.plist.routed.component';
+import { InmuebleClientCreateRoutedComponent } from './component/inmueble/inmueble.client.create.routed/inmueble.client.create.routed.component';
+import { InmuebleClientPlistRoutedComponent } from './component/inmueble/inmueble.client.plist.routed/inmueble.client.plist.routed.component';
+import { InmuebleClientViewRoutedComponent } from './component/inmueble/inmueble.client.view.routed/inmueble.client.view.routed.component';
+import { ConexionAdminCreateRoutedComponent } from './component/conexion/conexion.admin.create.routed/conexion.admin.create.routed.component';
 
 export const routes: Routes = [
 
@@ -47,6 +51,10 @@ export const routes: Routes = [
   {path: 'admin/inmueble/edit/:id', component:InmuebleAdminEditRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/create', component:InmuebleAdminCreateRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/view/:id', component:InmuebleAdminViewRoutedComponent,canActivate: [AdminGuard]},
+
+  {path: 'client/inmueble/create', component: InmuebleClientCreateRoutedComponent,canActivate: [MiembroGuard]},
+  {path: 'client/inmueble/view/:id', component:InmuebleClientViewRoutedComponent,canActivate: [MiembroGuard]},
+  {path: 'client/inmueble/plist', component: InmuebleClientPlistRoutedComponent,canActivate: [MiembroGuard]},
   
 
 
@@ -56,5 +64,13 @@ export const routes: Routes = [
   {path: 'admin/instalacion/create', component: InstalacionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent,canActivate: [AdminGuard]},
-  {path: 'admin/inmueble/plist/xinstalacion/:id', component :InmuebleXinstalacionAdminPlistRoutedComponent,canActivate: [AdminGuard]}
+  {path: 'admin/inmueble/plist/xinstalacion/:id', component :InmuebleXinstalacionAdminPlistRoutedComponent,canActivate: [AdminGuard]},
+
+
+
+
+{path: 'admin/conexion/new', component: ConexionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
+
+
+
 ];

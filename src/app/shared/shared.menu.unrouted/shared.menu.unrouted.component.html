@@ -15,12 +15,20 @@
     <!-- Contenido del navbar -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
       <!-- Enlaces de navegación -->
-      <div class="navbar-nav">
-        <a class="nav-link" [class.active]="strRuta == 'admin/socio/plist'" href="admin/socio/plist">Usuarios</a>
-        <a class="nav-link" [class.active]="strRuta == 'admin/inmueble/plist'" href="admin/inmueble/plist">Inmuebles</a>
-        <a class="nav-link" [class.active]="strRuta == 'admin/instalacion/plist'" href="admin/instalacion/plist">Instalaciones</a>
-        <a class="nav-link" [class.active]="strRuta == 'admin/instalacion/plist'" href="admin/instalacion/plist">Nueva Conexion</a>
+      <div class="navbar-nav" >
+        <a class="nav-link" [class.active]="strRuta == 'admin/socio/plist'" routerLink="/admin/socio/plist">Usuarios</a>
+        <a class="nav-link" [class.active]="strRuta == 'admin/inmueble/plist'" routerLink="/admin/inmueble/plist">Inmuebles</a>
+        <a class="nav-link" [class.active]="strRuta == 'admin/instalacion/plist'" routerLink="/admin/instalacion/plist">Instalaciones</a>
+        <a class="nav-link" [class.active]="strRuta == 'admin/conexion/new'" routerLink="/admin/conexion/new">Nueva Conexión</a>
       </div>
+      
+     
+        <a class="nav-link" [class.active]="strRuta == 'miembro/inmueble'" routerLink="client/inmueble/plist">Mis Inmuebles</a>
+        
+      
+      
+
+
 
       <!-- Sección de usuario -->
 <div class="navbar-nav">
@@ -29,7 +37,7 @@
   } @else {
     <div class="dropdown">
       <button class="btn btn-light dropdown-toggle fw-semibold text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-person-circle"></i> {{userNombre}} {{userApellido}}
+        <i class="bi bi-person-circle"></i> {{userNombre}} {{userApellido}} {{userRole}}
       </button>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
         <li><a class="dropdown-item" [routerLink]="'/byemail/' + userEmail">Mi Perfil</a></li>

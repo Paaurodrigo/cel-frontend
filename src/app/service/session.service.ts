@@ -52,7 +52,22 @@ export class SessionService {
             return '';
         }
     }
-
+  
+    getSessionRole(): string {
+        const token = this.getToken();
+        if (token) {
+            if (this.isSessionActive()) {
+                let parsedToken: IJwt;
+                parsedToken = this.parseJwt(token);
+                return parsedToken.role;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+      
     getSessionNombre(): string {
         const token = this.getToken();
         if (token) {
@@ -60,6 +75,21 @@ export class SessionService {
                 let parsedToken: IJwt;
                 parsedToken = this.parseJwt(token);
                 return parsedToken.nombre; // si arriba derecha no quiero el mail quiero otra cosa, lo pongo ahi
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    getSessionId(): string {
+        const token = this.getToken();
+        if (token) {
+            if (this.isSessionActive()) {
+                let parsedToken: IJwt;
+                parsedToken = this.parseJwt(token);
+                return parsedToken.id; // si arriba derecha no quiero el mail quiero otra cosa, lo pongo ahi
             } else {
                 return '';
             }
