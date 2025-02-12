@@ -54,20 +54,17 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   
   createForm() {
     this.oInmuebleForm = this.fb.group({
-      cups: ['', [
-        Validators.required,
-        Validators.pattern(/^ES[A-Z0-9]{20}$/)
-      ]], 
+      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]],
       direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       refCatas: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      potencia1: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
-      potencia2: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
-      tension: ['',[Validators.required, Validators.pattern(/^\d{5}$/)]],
+      potencia1: ['',[Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
+      potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
+      tension: ['',[Validators.required, Validators.pattern(/^\d{3}$/)]],
       uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       recomendacion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]], 
-      consumoAnual: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+      consumoAnual: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
       intencion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       habitos: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       socio: this.fb.group({

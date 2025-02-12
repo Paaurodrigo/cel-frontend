@@ -75,8 +75,7 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
       potencia1: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
       potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
       tension: [''],
-      uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      recomendacion: ['', Validators.required], 
+      uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]], 
       consumoAnual: ['', Validators.required],
       intencion: ['', Validators.required],
       habitos: ['', Validators.required],
@@ -225,7 +224,6 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
       potencia2: 4,
       tension: 230,
       uso: 'Residencial',
-      recomendacion: 'Ahorro energético',
       consumoAnual: 2500,
       intencion: 'Reducir consumo',
       habitos: 'Uso moderado'

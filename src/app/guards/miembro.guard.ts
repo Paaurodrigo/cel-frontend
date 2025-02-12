@@ -23,7 +23,9 @@ export class MiembroGuard implements CanActivate {
                 map((data: ISocio) => {
                     if (data.tiposocio.descripcion === 'miembro') {
                         return true;
-                    } else {
+                    }else if (data.tiposocio.descripcion === 'admin') {
+                        return false;     
+                    }else{
                         this.oRouter.navigate(['/login']);
                         return false;
                     }
