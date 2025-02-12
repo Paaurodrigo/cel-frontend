@@ -2,7 +2,7 @@
   <div class="container">
    <!-- Logo con imagen -->
 <a class="navbar-brand d-flex align-items-center" href="/">
-  <img src="../../../images/cel.png" alt="Logo Comunidad Energética" width="50" height="50" class="me-2">
+  <!-- <img src="../../../images/cel.png" alt="Logo Comunidad Energética" width="50" height="50" class="me-2"> -->
   <span class="fw-bold text-primary">Comunidad Energética</span>
 </a>
 
@@ -15,20 +15,20 @@
     <!-- Contenido del navbar -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
       <!-- Enlaces de navegación -->
+
+      
       <div class="navbar-nav" >
-        <a class="nav-link" [class.active]="strRuta == 'admin/socio/plist'" routerLink="/admin/socio/plist">Usuarios</a>
+
+        @if(userRole=="admin"){
+        <a class="nav-link" [class.active]="strRuta == 'admin/socio/plist'" routerLink="/admin/socio/plist">Socios</a>
         <a class="nav-link" [class.active]="strRuta == 'admin/inmueble/plist'" routerLink="/admin/inmueble/plist">Inmuebles</a>
         <a class="nav-link" [class.active]="strRuta == 'admin/instalacion/plist'" routerLink="/admin/instalacion/plist">Instalaciones</a>
         <a class="nav-link" [class.active]="strRuta == 'admin/conexion/plist'" routerLink="/admin/conexion/plist">Conexiones</a>
+        }@else{
+          <a class="nav-link" [class.active]="strRuta == 'client/inmueble/plist'" routerLink="client/inmueble/plist">Mis Inmuebles</a>
+        }
       </div>
       
-     
-        <a class="nav-link" [class.active]="strRuta == 'miembro/inmueble'" routerLink="client/inmueble/plist">Mis Inmuebles</a>
-        
-      
-      
-
-
 
       <!-- Sección de usuario -->
 <div class="navbar-nav">

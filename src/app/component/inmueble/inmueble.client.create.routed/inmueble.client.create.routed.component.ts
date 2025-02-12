@@ -69,7 +69,7 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
     this.oInmuebleForm = this.fb.group({
       cups: ['', [Validators.minLength(3), Validators.maxLength(50)]], 
       direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      codigoPostal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+      codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       refCatas: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       potencia1: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],

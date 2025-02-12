@@ -36,6 +36,8 @@ export class InmuebleClientPlistRoutedComponent implements OnInit {
   //
  socioId:number=0;
 //
+
+oSocio: ISocio = {} as ISocio;
   private debounceSubject = new Subject<string>();
 
   constructor( private oInmuebleService: InmuebleService,

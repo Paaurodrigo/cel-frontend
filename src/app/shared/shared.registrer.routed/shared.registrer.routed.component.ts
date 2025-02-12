@@ -49,7 +49,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       fotoDni: [null],  // Campo para la foto del DNI
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      codigopostal: [''],
+      codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
     });
   }
 

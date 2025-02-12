@@ -40,10 +40,10 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   createForm() {
     this.oInstalacionForm = this.fb.group({
       nombre: ['', [Validators.minLength(3), Validators.maxLength(50)]], // Ahora no es obligatorio
-      paneles: ['',[Validators.required, Validators.pattern(/^\d{5}$/)]],
+      paneles: ['',[Validators.minLength(2), Validators.maxLength(50)]],
       potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]],
 potenciaTotal: ['', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]],
-      precioKw: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
+      precioKw: ['',[Validators.minLength(2), Validators.maxLength(50)]],
      
     });
   }

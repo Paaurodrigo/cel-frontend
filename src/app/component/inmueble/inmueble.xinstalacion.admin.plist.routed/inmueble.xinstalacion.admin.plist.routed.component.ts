@@ -88,16 +88,16 @@ export class InmuebleXinstalacionAdminPlistRoutedComponent implements OnInit {
 
   edit(oInmueble: IInmueble) {
     //navegar a la página de edición
-    this.oRouter.navigate(['admin/Inmueble/edit', oInmueble.id]);
+    this.oRouter.navigate(['admin/inmueble/edit', oInmueble.id]);
   }
 
   view(oInmueble: IInmueble) {
     //navegar a la página de edición
-    this.oRouter.navigate(['admin/Inmueble/view', oInmueble.id]);
+    this.oRouter.navigate(['admin/inmueble/view', oInmueble.id]);
   }
 
   remove(oInmueble: IInmueble) {
-    this.oRouter.navigate(['admin/Inmueble/delete/', oInmueble.id]);
+    this.oRouter.navigate(['admin/inmueble/delete/', oInmueble.id]);
   }
 
   goToPage(p: number) {
