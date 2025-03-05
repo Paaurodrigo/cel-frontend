@@ -38,6 +38,7 @@ export class InmuebleClientPlistRoutedComponent implements OnInit {
 //
 
 oSocio: ISocio = {} as ISocio;
+
   private debounceSubject = new Subject<string>();
 
   constructor( private oInmuebleService: InmuebleService,
@@ -68,6 +69,7 @@ oSocio: ISocio = {} as ISocio;
           console.log(err);
         },
       });
+ 
   }
 
   view(oInmueble: IInmueble) {
@@ -75,7 +77,24 @@ oSocio: ISocio = {} as ISocio;
     this.oRouter.navigate(['client/inmueble/view/', oInmueble.id]);
   }
 
+  getUsoIcon(uso: string): string {
+    const icons: { [key: string]: string } = {
+      residencial: 'bi-house-door',
+      comercial: 'bi-shop',
+      industrial: 'bi-buildings',
+    };
+    return icons[uso] || 'bi-question-circle';
+  }
 
+  getUsoBadgeClass(uso: string): string {
+    const classes: { [key: string]: string } = {
+      residencial: 'bg-success text-white',
+      comercial: 'bg-warning text-dark',
+      industrial: 'bg-info text-dark',
+    };
+    return classes[uso] || 'bg-secondary text-white'; // Valor por defecto
+  }
+  
   goToPage(p: number) {
     if (p) {
       this.nPage = p - 1;

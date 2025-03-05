@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +13,8 @@ import { InmuebleselectorComponent } from '../../inmueble/inmueble.selector/inmu
 import { InstalacionselectorComponent } from '../../instalacion/instalacion.selector/isntalacionselector.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 declare let bootstrap: any;
 @Component({
@@ -27,7 +28,11 @@ declare let bootstrap: any;
     ReactiveFormsModule, // Si usas formularios reactivos
     FormsModule,         // Si usas ngModel
     CommonModule,
-    RouterModule         
+    RouterModule,
+    MatNativeDateModule,  
+    MatDatepickerModule,
+
+
   ],
 })
 export class ConexionAdminCreateRoutedComponent implements OnInit {
@@ -47,7 +52,8 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
 
   constructor(
     private oConexionService: ConexionService,
-    private oRouter: Router
+    private oRouter: Router,
+   
   ) {}
 
   ngOnInit() {
@@ -60,11 +66,6 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       fecha: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(50),
-      ]),
-      porcentaje: new FormControl('', [
-        Validators.required,
-        Validators.minLength(1),
         Validators.maxLength(50),
       ]),
       potencia: new FormControl('', [
@@ -83,6 +84,8 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       })
     });
   }
+
+  
 
   updateForm() {
     this.oConexionForm?.controls['id'].setValue(this.oConexion?.id);
@@ -116,10 +119,11 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
 
   hideModal = () => {
     this.myModal.hide();
-    this.oRouter.navigate(['/admin/inmueble/plist/xinstalacion/' + this.oConexion?.instalacion?.id]);
+    this.oRouter.navigate(['/admin/conexion/byinstalacion/plist/' + this.oConexion?.instalacion?.id]);
   }
 
   onSubmit() {
+    console.log("Datos antes de enviar:", this.oConexionForm?.value);
     if (!this.oConexionForm?.valid) {
       this.showModal('Formulario no válido');
       return;

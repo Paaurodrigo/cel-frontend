@@ -1,0 +1,47 @@
+/* Estilos generales */
+.container-fluid {
+    max-width: 1400px;
+  }
+  
+  /* Estilos para la tarjeta */
+  .card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Estilos para el encabezado */
+  .card-header {
+    background-color: #dc3545; /* Color de fondo para el encabezado */
+  }
+  
+  /* Estilos para la tabla */
+  .table th {
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .table td {
+    font-size: 1rem;
+    color: #212529;
+    font-weight: 500;
+  }
+  
+  /* Estilos para los botones */
+  .btn {
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }

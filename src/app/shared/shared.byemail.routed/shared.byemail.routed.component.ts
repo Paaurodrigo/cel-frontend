@@ -23,9 +23,6 @@ export class SharedByemailRoutedComponent implements OnInit {
     this.email = this.oActivatedRoute.snapshot.params['email'];
     this.getOne();
   }
-
-  
-  
     
   
   getOne() {

@@ -1,0 +1,64 @@
+/* Estilos para las tarjetas */
+.hover-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Estilos para los detalles */
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.25rem;
+  }
+  
+  .detail-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+  
+  .detail-value {
+    font-size: 0.95rem;
+    color: #2c3e50;
+  }
+  
+  /* Estilos para la paginación */
+  .page-link {
+    color: #495057;
+    border-radius: 0.25rem;
+    margin: 0 2px;
+  }
+  
+  .page-link.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+  }
+  
+  /* Estilos para los botones de acción */
+  .btn-outline-primary, .btn-outline-info, .btn-outline-secondary, .btn-outline-danger {
+    border-width: 1px;
+  }
+  
+  .btn-outline-primary:hover, .btn-outline-info:hover, .btn-outline-secondary:hover, .btn-outline-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+  }
+  
+  /* Estilos para la barra de búsqueda */
+  .input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+  }
+  
+  .input-group-text {
+    background-color: #fff;
+  }

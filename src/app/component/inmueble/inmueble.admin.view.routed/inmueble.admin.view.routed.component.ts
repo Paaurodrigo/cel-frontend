@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { IInmueble } from '../../../model/inmueble.interface';
 import { ActivatedRoute } from '@angular/router';
 import { InmuebleService } from '../../../service/inmueble.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-inmueble.admin.view.routed',
   templateUrl: './inmueble.admin.view.routed.component.html',
-  styleUrls: ['./inmueble.admin.view.routed.component.css']
+  styleUrls: ['./inmueble.admin.view.routed.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class InmuebleAdminViewRoutedComponent implements OnInit {
 
@@ -21,6 +24,25 @@ export class InmuebleAdminViewRoutedComponent implements OnInit {
    
     
   }
+  getUsoIcon(uso: string): string {
+    const icons: { [key: string]: string } = {
+      residencial: 'bi-house-door',
+      comercial: 'bi-shop',
+      industrial: 'bi-buildings',
+    };
+    return icons[uso] || 'bi-question-circle';
+  }
+
+  getUsoBadgeClass(uso: string): string {
+    const classes: { [key: string]: string } = {
+      residencial: 'bg-success text-white',
+      comercial: 'bg-warning text-dark',
+      industrial: 'bg-info text-dark',
+    };
+    return classes[uso] || 'bg-secondary text-white'; // Valor por defecto
+  }
+  
+  
 
   getOne() {
     this.oInmuebleService.getOne(this.id).subscribe({

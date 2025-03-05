@@ -47,7 +47,6 @@ export class SharedLoginRoutedComponent implements OnInit {
       this.oLoginService.login(this.loginForm.value.email, hashedPassword).subscribe({
         next: (token: string) => {
           console.log('Token recibido:', token);
-          alert('Inicio de sesión exitoso');
 
           this.oSessionService.login(token);
           this.oRouter.navigate(['/']);

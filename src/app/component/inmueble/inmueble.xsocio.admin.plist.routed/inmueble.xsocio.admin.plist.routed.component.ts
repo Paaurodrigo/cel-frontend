@@ -126,6 +126,24 @@ export class InmuebleXsocioAdminPlistRoutedComponent implements OnInit {
     }
     return false;
   }
+  getUsoIcon(uso: string): string {
+    const icons: { [key: string]: string } = {
+      residencial: 'bi-house-door',
+      comercial: 'bi-shop',
+      industrial: 'bi-buildings',
+    };
+    return icons[uso] || 'bi-question-circle';
+  }
+
+  getUsoBadgeClass(uso: string): string {
+    const classes: { [key: string]: string } = {
+      residencial: 'bg-success text-white',
+      comercial: 'bg-warning text-dark',
+      industrial: 'bg-info text-dark',
+    };
+    return classes[uso] || 'bg-secondary text-white'; // Valor por defecto
+  }
+
 
   goToNext() {
     this.nPage++;

@@ -1,68 +1,76 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { TrimPipe } from '../../../pipe/trim.pipe';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
+import { IConexion } from '../../../model/conexion.interface';
 import { IPage } from '../../../model/model.interface';
+import { TrimPipe } from '../../../pipe/trim.pipe';
 import { BotoneraService } from '../../../service/botonera.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IInstalacion } from '../../../model/instalacion.interface';
-import { InstalacionService } from '../../../service/instalacion.service';
-
+import { ConexionService } from '../../../service/conexion.service';
 
 @Component({
-  selector: 'app-Instalacionselector',
-  templateUrl: './instalacionselector.component.html',
-  styleUrls: ['./instalacionselector.component.css'],
+  selector: 'app-conexion.byinstalacion.admin.plist.routed',
+  templateUrl: './conexion.byintalacion.admin.plist.routed.component.html',
+  styleUrls: ['./conexion.byintalacion.admin.plist.routed.component.css'],
   standalone: true,
   imports: [CommonModule, FormsModule, TrimPipe, RouterModule],
 })
-export class InstalacionselectorComponent implements OnInit {
-  oPage: IPage<IInstalacion> | null = null;
+export class ConexionByInstalacionAdminPlistRoutedComponent implements OnInit {
+
+  
+   
+  oPage: IPage<IConexion> | null = null;
   //
   nPage: number = 0; // 0-based server count
-  nRpp: number = 6;
+  nRpp: number = 10;
   //
   strField: string = '';
-  strDir: string = 'desc';
+  strDir: string = '';
+
+  id_instalacion:number=0
   //
   strFiltro: string = '';
   //
   arrBotonera: string[] = [];
   //
   private debounceSubject = new Subject<string>();
-  //
-  readonly dialogRef = inject(MatDialogRef<InstalacionselectorComponent>);
-  readonly data = inject(MAT_DIALOG_DATA);
-
   constructor(
-    private oInstalacionService: InstalacionService,
+    private oConexionService: ConexionService,
     private oBotoneraService: BotoneraService,
-    private oRouter: Router
+    private oRouter: Router,
+    private oActivatedRoute: ActivatedRoute
   ) {
     this.debounceSubject.pipe(debounceTime(10)).subscribe((value) => {
       this.getPage();
     });
   }
+
   ngOnInit() {
+    this.id_instalacion = Number(this.oActivatedRoute.snapshot.paramMap.get('id'));
+    console.log('ID Instalación:', this.id_instalacion);
     this.getPage();
   }
 
   getPage() {
-    this.oInstalacionService
-      .getPage(
-        this.nPage,
-        this.nRpp,
-        this.strField,
-        this.strDir,
-        this.strFiltro
+    // O como tengas la referencia a la instalación
+    console.log('ID Instalación en getPage:', this.id_instalacion);
+
+    this.oConexionService
+      .getPageXInstalacion(
+        this.nPage,       // Página
+        this.nRpp,        // Número de resultados por página
+        this.strField,    // Campo para ordenar
+        this.strDir,      // Dirección de orden (asc/desc)
+        this.strFiltro,   // Filtro de búsqueda
+        this.id_instalacion    // Aquí pasas el id_instalacion
       )
       .subscribe({
-        next: (oPageFromServer: IPage<IInstalacion>) => {
+        next: (oPageFromServer: IPage<IConexion>) => {
           this.oPage = oPageFromServer;
           this.arrBotonera = this.oBotoneraService.getBotonera(
             this.nPage,
+            
             oPageFromServer.totalPages
           );
         },
@@ -70,12 +78,13 @@ export class InstalacionselectorComponent implements OnInit {
           console.log(err);
         },
       });
-
   }
+  
 
-  select(oInstalacion: IInstalacion) {
-    console.log("Instalacion seleccionado antes de cerrar:", oInstalacion);
-    this.dialogRef.close(oInstalacion);
+
+  view(oConexion: IConexion) {
+    //navegar a la página de edición
+    this.oRouter.navigate(['admin/conexion/view', oConexion.id]);
   }
 
 
@@ -116,11 +125,4 @@ export class InstalacionselectorComponent implements OnInit {
   filter(event: KeyboardEvent) {
     this.debounceSubject.next(this.strFiltro);
   }
-
-  trackById(index: number, item: any): number {
-    return item.id;  // Usamos el id para hacer el seguimiento de cada elemento
-  }
-
 }
-
-

@@ -58,6 +58,51 @@ export class ConexionService {
       }
       return this.oHttp.get<IPage<IConexion>>(URL, httpOptions);
     }
+
+    getPageXInstalacion(
+      page: number,
+      size: number,
+      field: string,
+      dir: string,
+      filtro: string,
+      id_instalacion: number
+    ): Observable<IPage<IConexion>> {
+      let URL: string = '';
+      URL += this.serverURL + '/by-instalacion';
+    
+      if (!page) {
+        page = 0;
+      }
+      URL += '?page=' + page;
+    
+      if (!size) {
+        size = 10;
+      }
+      URL += '&size=' + size;
+    
+      if (field) {
+        URL += '&sort=' + field;
+        if (dir === 'asc') {
+          URL += ',asc';
+        } else {
+          URL += ',desc';
+        }
+      }
+    
+      if (filtro) {
+        URL += '&filter=' + filtro;
+      }
+    
+      if (id_instalacion) {
+        URL += '&id_instalacion=' + id_instalacion;
+      }
+    
+      console.log('Llamando al servidor con URL:', URL);
+      
+      return this.oHttp.get<IPage<IConexion>>(URL, httpOptions);
+    }
+    
+    
     update(oConexion: IConexion): Observable<IConexion> {
       let URL: string = '';
       URL += this.serverURL;

@@ -5,10 +5,10 @@
         <div class="card-header bg-primary text-white py-3">
           <div class="d-flex justify-content-between align-items-center">
             <h2 class="mb-0 fs-4 fw-bold">
-              <i class="bi bi-buildings me-2"></i> Gestión de Inmuebles
+              <i class="bi bi-diagram-3 me-2"></i> Conexiones de la Instalación
             </h2>
-            <a href="admin/inmueble/create" class="btn btn-light">
-              <i class="bi bi-plus-lg me-1"></i> Nuevo Inmueble
+            <a href="admin/conexion/new" class="btn btn-light">
+              <i class="bi bi-plus-lg me-1"></i> Nueva Conexión
             </a>
           </div>
         </div>
@@ -24,7 +24,7 @@
                 <input 
                   type="text" 
                   class="form-control border-start-0 ps-0" 
-                  placeholder="Buscar por cualquier campo..." 
+                  placeholder="Buscar por fecha, inmueble..." 
                   (keyup)="filter($event)" 
                   [(ngModel)]="strFiltro"
                 />
@@ -40,6 +40,17 @@
                   <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 50" (click)="goToRpp(50)">50</button>
                   <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 100" (click)="goToRpp(100)">100</button>
                 </div>
+                <div class="dropdown ms-2">
+                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-sort-alpha-down me-1"></i> Ordenar
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                    <li><button class="dropdown-item" (click)="sort('id')">Fecha</button></li>
+                    <li><button class="dropdown-item" (click)="sort('porcentaje')">Porcentaje</button></li>
+                    <li><button class="dropdown-item" (click)="sort('potencia')">Potencia</button></li>
+                    <li><button class="dropdown-item" (click)="sort('inmueble')">Inmueble</button></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -49,62 +60,70 @@
             <table class="table table-hover align-middle">
               <thead class="table-light">
                 <tr>
-                  <th class="sortable" (click)="sort('cups')">
+                  <th class="sortable" (click)="sort('id')">
                     <div class="d-flex align-items-center">
-                      <span>CUPS</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'cups' && strDir === 'desc', 'bi-caret-up-fill': strField === 'cups' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'cups'}"></i>
+                      <span>Fecha</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'id' && strDir === 'desc', 'bi-caret-up-fill': strField === 'id' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'id'}"></i>
                     </div>
                   </th>
-                  <th class="sortable" (click)="sort('direccion')">
+                  <th class="sortable" (click)="sort('porcentaje')">
                     <div class="d-flex align-items-center">
-                      <span>Dirección</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'direccion' && strDir === 'desc', 'bi-caret-up-fill': strField === 'direccion' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'direccion'}"></i>
+                      <span>Porcentaje</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'porcentaje' && strDir === 'desc', 'bi-caret-up-fill': strField === 'porcentaje' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'porcentaje'}"></i>
                     </div>
                   </th>
-                  <th class="sortable" (click)="sort('municipio')">
+                  <th class="sortable" (click)="sort('potencia')">
                     <div class="d-flex align-items-center">
-                      <span>Municipio</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'municipio' && strDir === 'desc', 'bi-caret-up-fill': strField === 'municipio' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'municipio'}"></i>
+                      <span>Potencia</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'potencia' && strDir === 'desc', 'bi-caret-up-fill': strField === 'potencia' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'potencia'}"></i>
                     </div>
                   </th>
-                  <th class="sortable" (click)="sort('uso')">
+                  <th class="sortable" (click)="sort('inmueble')">
                     <div class="d-flex align-items-center">
-                      <span>Uso</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'uso' && strDir === 'desc', 'bi-caret-up-fill': strField === 'uso' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'uso'}"></i>
+                      <span>Inmueble</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'inmueble' && strDir === 'desc', 'bi-caret-up-fill': strField === 'inmueble' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'inmueble'}"></i>
                     </div>
                   </th>
                   <th class="text-center">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                @for (inmueble of oPage?.content; track inmueble.cups) {
-                <tr class="cursor-pointer hover-row" (click)="view(inmueble)">
-                  <td class="fw-medium">{{ inmueble.cups }}</td>
+                @for (conexion of oPage?.content; track conexion.id) {
+                <tr class="cursor-pointer hover-row" (click)="view(conexion)">
                   <td>
-                    <div>{{ inmueble.direccion }}</div>
-                    <small class="text-muted">CP: {{ inmueble.codigoPostal }}</small>
+                    <span class="badge bg-light text-dark border">
+                      <i class="bi bi-calendar-event me-1"></i>
+                      {{ conexion.fecha | slice:0:10 }}
+                    </span>
                   </td>
-                  <td>{{ inmueble.municipio }}</td>
                   <td>
-                    <span class="badge rounded-pill bg-light text-dark border">{{ inmueble.uso }}</span>
+                    <div class="progress" style="height: 20px;">
+                      <div class="progress-bar bg-success" role="progressbar" 
+                           [style.width]="conexion.porcentaje + '%'"
+                           [attr.aria-valuenow]="conexion.porcentaje" 
+                           aria-valuemin="0" 
+                           aria-valuemax="100">
+                        {{ conexion.porcentaje }}%
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge bg-info-subtle text-info">
+                      <i class="bi bi-lightning-charge me-1"></i>
+                      {{ conexion.potencia }} kW
+                    </span>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-building me-2 text-muted"></i>
+                      <span>{{ conexion.inmueble.cups }}</span>
+                    </div>
                   </td>
                   <td>
                     <div class="d-flex justify-content-center gap-2">
-                      <button type="button" class="btn btn-sm btn-outline-primary" (click)="$event.stopPropagation(); view(inmueble)" title="Ver detalles">
+                      <button type="button" class="btn btn-sm btn-action" (click)="$event.stopPropagation(); view(conexion)" title="Ver detalles">
                         <i class="bi bi-eye"></i>
                       </button>
-                      <a class="btn btn-sm btn-outline-info" href="admin/socio/view/{{ inmueble.socio?.id }}" (click)="$event.stopPropagation()" title="Ver socio">
-                        <i class="bi bi-person"></i>
-                      </a>
-                      <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
-                        <i class="bi bi-three-dots-vertical"></i>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="admin/inmueble/edit/{{ inmueble.id }}"><i class="bi bi-pencil me-2"></i>Editar</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-graph-up me-2"></i>Ver consumo</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
-                      </ul>
                     </div>
                   </td>
                 </tr>
@@ -113,8 +132,8 @@
                   <td colspan="5" class="text-center py-4">
                     <div class="d-flex flex-column align-items-center">
                       <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
-                      <p class="mt-2 mb-0">No se encontraron inmuebles</p>
-                      <small class="text-muted">Intente cambiar los filtros o crear un nuevo inmueble</small>
+                      <p class="mt-2 mb-0">No hay conexiones para esta instalación</p>
+                      <small class="text-muted">Puede crear una nueva conexión usando el botón superior</small>
                     </div>
                   </td>
                 </tr>
@@ -132,7 +151,7 @@
                 <button type="button" class="btn-close ms-2" aria-label="Close" style="font-size: 0.65rem;" (click)="strFiltro='';"></button>
               </span>
               } @else {
-              <span class="text-muted small">Mostrando todos los registros</span>
+              <span class="text-muted small">Mostrando todas las conexiones de esta instalación</span>
               }
             </div>
             <div class="text-muted small">

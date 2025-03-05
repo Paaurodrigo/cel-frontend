@@ -30,6 +30,7 @@ import { ConexionAdminCreateRoutedComponent } from './component/conexion/conexio
 import { ConexionAdminPlistRoutedComponent } from './component/conexion/conexion.admin.plist.routed/conexion.admin.plist.routed.component';
 import { ConexionAdminDeleteRoutedComponent } from './component/conexion/conexion.admin.delete.routed/conexion.admin.delete.routed.component';
 import { ConexionAdminViewRoutedComponent } from './component/conexion/conexion.admin.view.routed/conexion.admin.view.routed.component';
+import { ConexionByInstalacionAdminPlistRoutedComponent } from './component/conexion/conexion.byinstalacion.admin.plist.routed/conexion.byintalacion.admin.plist.routed.component';
 
 export const routes: Routes = [
 
@@ -77,5 +78,8 @@ export const routes: Routes = [
 { path: 'admin/conexion/plist', component: ConexionAdminPlistRoutedComponent,canActivate: [AdminGuard] },
 { path: 'admin/conexion/delete/:id', component: ConexionAdminDeleteRoutedComponent,canActivate: [AdminGuard] },
 { path: 'admin/conexion/view/:id', component: ConexionAdminViewRoutedComponent,canActivate: [AdminGuard]},
+{ path: 'admin/conexion/byinstalacion/plist/:id', component: ConexionByInstalacionAdminPlistRoutedComponent,canActivate: [AdminGuard] },
+
+
 
 ];

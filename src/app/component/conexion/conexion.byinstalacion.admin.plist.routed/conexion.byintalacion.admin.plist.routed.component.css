@@ -62,48 +62,6 @@
     transform: translateY(-2px);
   }
   
-  .btn-action-secondary {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    color: #6c757d;
-    transition: all 0.2s;
-  }
-  
-  .btn-action-secondary:hover {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    color: white;
-    transform: translateY(-2px);
-  }
-  
-  .btn-action-danger {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    color: #dc3545;
-    transition: all 0.2s;
-  }
-  
-  .btn-action-danger:hover {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: white;
-    transform: translateY(-2px);
-  }
-  
   /* Estilos para los badges */
   .badge {
     font-weight: 500;

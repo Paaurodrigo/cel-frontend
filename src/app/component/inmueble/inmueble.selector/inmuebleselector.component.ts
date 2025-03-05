@@ -22,7 +22,7 @@ export class InmuebleselectorComponent implements OnInit {
   oPage: IPage<IInmueble> | null = null;
   //
   nPage: number = 0; // 0-based server count
-  nRpp: number = 10;
+  nRpp: number = 6;
   //
   strField: string = '';
   strDir: string = 'desc';

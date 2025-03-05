@@ -1,94 +1,171 @@
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10 col-md-12">
+     
 
-<div class="row justify-content-center m-3">
-  <div class="col-lg-7 col-md-10 col-sm-12">
-    <h1 class="my-5 text-center">
-      <i class="bi bi-card-list"></i>
-      Detalle de socio
-      <i class="bi bi-person-circle"></i>
-    </h1>
-    <br />
-    <table class="table table-striped table-bordered my-5 text-center">
-      <tbody>
-        <tr class="text-center">
-          <th scope="row" class="bg-danger text-white text-end pe-5">Id</th>
-          <td class="text-start ps-5">{{ oSocio.id }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            DNI
-          </th>
-          <td class="text-start ps-5">{{ oSocio.dni }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Nombre
-          </th>
-          <td class="text-start ps-5">{{ oSocio.nombre }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Primer Apellido
-          </th>
-          <td class="text-start ps-5">{{ oSocio.apellido1 }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Segundo Apellido
-          </th>
-          <td class="text-start ps-5">{{ oSocio.apellido2 }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Correo
-          </th>
-          <td class="text-start ps-5">{{ oSocio.email }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Telefono
-          </th>
-          <td class="text-start ps-5">{{ oSocio.telefono }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Direccion Fiscal
-          </th>
-          <td class="text-start ps-5">{{ oSocio.direccionfiscal }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Codigo Postal
-          </th>
-          <td class="text-start ps-5">{{ oSocio.codigopostal}}</td>
-        </tr>
-      
-       
-        
+      <!-- Tarjeta principal -->
+      <div class="card shadow-sm border-0 rounded-3 mb-4">
+        <div class="card-header bg-white border-0 py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 class="fs-4 fw-bold mb-0">
+              <i class="bi bi-person-circle me-2"></i> Detalle de Socio
+            </h1>
+            <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-2 rounded-pill">
+              ID: {{ oSocio.id }}
+            </span>
+          </div>
+        </div>
 
-       
+        <div class="card-body">
+          <div class="row">
+            <!-- Información personal -->
+            <div class="col-lg-8">
+              <div class="detail-section">
+                <h3 class="detail-section-title">
+                  <i class="bi bi-person me-2"></i>Información Personal
+                </h3>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="detail-item">
+                      <span class="detail-label">DNI</span>
+                      <span class="detail-value">{{ oSocio.dni }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-item">
+                      <span class="detail-label">Nombre</span>
+                      <span class="detail-value">{{ oSocio.nombre }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-item">
+                      <span class="detail-label">Primer Apellido</span>
+                      <span class="detail-value">{{ oSocio.apellido1 }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-item">
+                      <span class="detail-label">Segundo Apellido</span>
+                      <span class="detail-value">{{ oSocio.apellido2 }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-      </tbody>
-    </table>
-  </div>
+              <div class="detail-section">
+                <h3 class="detail-section-title">
+                  <i class="bi bi-envelope me-2"></i>Contacto
+                </h3>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="detail-item">
+                      <span class="detail-label">Correo Electrónico</span>
+                      <span class="detail-value">{{ oSocio.email }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-item">
+                      <span class="detail-label">Teléfono</span>
+                      <span class="detail-value">{{ oSocio.telefono }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
- 
-  <div style="text-align: center;">
-    <img [src]="fotoDni" alt="Foto del DNI" class="img-thumbnail" style="max-width: 300px; max-height: 100%;" />
-  </div>
+              <div class="detail-section">
+                <h3 class="detail-section-title">
+                  <i class="bi bi-geo-alt me-2"></i>Dirección
+                </h3>
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <div class="detail-item">
+                      <span class="detail-label">Dirección Fiscal</span>
+                      <span class="detail-value">{{ oSocio.direccionfiscal }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="detail-item">
+                      <span class="detail-label">Código Postal</span>
+                      <span class="detail-value">{{ oSocio.codigopostal }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <!-- Foto del DNI -->
+            <div class="col-lg-4">
+              <div class="document-card">
+                <h3 class="document-title">
+                  <i class="bi bi-card-image me-2"></i>Documento de Identidad
+                </h3>
+                <div class="document-image-container">
+                  <img [src]="fotoDni" alt="Foto del DNI" class="document-image" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div class="d-flex justify-content-center mt-4">
-    <a class="btn btn-warning mt-4 mx-1" href="admin/socio/plist">
-      <i class="bi bi-list"></i>
-      Ir a listado de socios
-    </a>
-    <a class="btn btn-primary mt-4 mx-1" href="admin/socio/edit/{{ oSocio.id }}">
-      <i class="bi bi-pencil"></i>
-      Editar
-    </a>
-    <a class="btn btn-danger mt-4 mx-1" href="admin/socio/delete/{{ oSocio.id }}">
-      <i class="bi bi-trash"></i>
-      Borrar
-    </a>
+        <!-- Acciones -->
+        <div class="card-footer bg-white py-3 border-0">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="mb-3 mb-md-0">
+              <a class="btn btn-outline-secondary" href="admin/socio/plist">
+                <i class="bi bi-arrow-left me-2"></i>Volver al listado
+              </a>
+            </div>
+            <div class="d-flex gap-2">
+              <a class="btn btn-primary" href="admin/socio/edit/{{ oSocio.id }}">
+                <i class="bi bi-pencil me-2"></i>Editar
+              </a>
+              <a class="btn btn-danger" href="admin/socio/delete/{{ oSocio.id }}">
+                <i class="bi bi-trash me-2"></i>Borrar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas adicionales -->
+      <div class="row g-4">
+        <!-- Tarjeta de inmuebles -->
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+              <h3 class="fs-5 fw-bold mb-0">
+                <i class="bi bi-buildings me-2"></i>Inmuebles Asociados
+              </h3>
+            </div>
+            <div class="card-body text-center py-4">
+              <i class="bi bi-house-check fs-1 text-muted"></i>
+              <p class="mt-3 mb-0">Consulte los inmuebles asociados a este socio</p>
+              <a class="btn btn-sm btn-outline-primary mt-3" href="admin/inmueble/plist/xsocio/{{oSocio.id }}">
+                <i class="bi bi-search me-1"></i>Ver inmuebles
+               
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de actividad -->
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+              <h3 class="fs-5 fw-bold mb-0">
+                <i class="bi bi-activity me-2"></i>Actividad Reciente
+              </h3>
+            </div>
+            <div class="card-body text-center py-4">
+              <i class="bi bi-clock-history fs-1 text-muted"></i>
+              <p class="mt-3 mb-0">Consulte la actividad reciente de este socio</p>
+              <button class="btn btn-sm btn-outline-primary mt-3">
+                <i class="bi bi-list-ul me-1"></i>Ver actividad
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
