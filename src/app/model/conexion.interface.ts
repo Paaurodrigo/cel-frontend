@@ -9,4 +9,5 @@ export interface IConexion {
     porcentaje: number
     inmueble: IInmueble
     instalacion: IInstalacion
+    firma: string
   }

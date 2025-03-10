@@ -21,61 +21,45 @@
          
         </div>
         <div class="mb-3">
-          <label for="potenciaPanel" class="form-label fw-bold">Cantidad de paneles</label>
-        <input
-        type="text"
-        id="paneles"
-        class="form-control"
-        formControlName="paneles"
-        placeholder="Cantidad de paneles"
-        [class.is-invalid]="panelesControl?.invalid && panelesControl?.touched"
-      />
-      
-      @if (panelesControl?.invalid && panelesControl?.touched) {
-        <div class="invalid-feedback">
-          Solo se permiten números enteros positivos.
+          <label for="paneles" class="form-label fw-bold">Cantidad de paneles</label>
+          <input
+            type="number"
+            id="paneles"
+            class="form-control"
+            formControlName="paneles"
+            placeholder="Cantidad de paneles"
+            [class.is-invalid]="panelesControl?.invalid && panelesControl?.touched"
+            min="1"
+            step="1"
+          />
+          @if (panelesControl?.invalid && panelesControl?.touched) {
+            <div class="invalid-feedback">
+              Solo se permiten números enteros positivos.
+            </div>
+          }
         </div>
-      }
-    </div>
         
-
-      <div class="mb-3">
-        <label for="potenciaPanel" class="form-label fw-bold">potenciaPanel</label>
-        <input
-          type="text"
-          id="potenciaPanel"
-          class="form-control"
-          formControlName="potenciaPanel"
-          placeholder="potenciaPanel"
-          [class.is-invalid]="potenciaPanelControl?.invalid && potenciaPanelControl?.touched"
-        />
+        <div class="mb-3">
+          <label for="potenciaPanel" class="form-label fw-bold">Potencia del panel (W)</label>
+          <input
+            type="number"
+            id="potenciaPanel"
+            class="form-control"
+            formControlName="potenciaPanel"
+            placeholder="Ejemplo: 350.5"
+            [class.is-invalid]="potenciaPanelControl?.invalid && potenciaPanelControl?.touched"
+            min="0.1"
+            step="0.001"
+          />
+          @if (potenciaPanelControl?.invalid && potenciaPanelControl?.touched) {
+            <div class="invalid-feedback">
+              Solo se permiten valores numéricos con hasta 3 decimales.
+            </div>
+          }
+        </div>
         
-        @if (potenciaPanelControl?.invalid && potenciaPanelControl?.touched) {
-          <div class="invalid-feedback">
-            Solo se permiten números enteros positivos.
-          </div>
-        }
-      </div>
-      
-
-      <div class="mb-3">
-        <label for="potenciaTotal" class="form-label fw-bold">potenciaTotal</label>
-        <input
-          type="text"
-          id="potenciaTotal"
-          class="form-control"
-          formControlName="potenciaTotal"
-          placeholder="potenciaTotal"
-          [class.is-invalid]="potenciaTotalControl?.invalid && potenciaTotalControl?.touched"
-        />
         
-        @if (potenciaTotalControl?.invalid && potenciaTotalControl?.touched) {
-          <div class="invalid-feedback">
-            Solo se permiten números enteros positivos.
-          </div>
-        }
-      </div>
-
+        
       
 
 

@@ -24,13 +24,16 @@ declare let bootstrap: any;
   ],
 })
 export class InstalacionAdminCreateRoutedComponent implements OnInit {
-  oInstalacionForm: FormGroup | undefined = undefined;
+  oInstalacionForm: FormGroup;
   oInstalacion: IInstalacion | null = null;
   strMessage: string = '';
   myModal: any;
   constructor( private oInstalacionService: InstalacionService,
     private oRouter: Router,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder
+  ) {
+    this.oInstalacionForm = this.fb.group({}); // Inicialización vacía para evitar errores
+   }
 
   ngOnInit() {
     this.createForm();
@@ -39,14 +42,37 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
 
   createForm() {
     this.oInstalacionForm = this.fb.group({
-      nombre: ['', [Validators.minLength(3), Validators.maxLength(50)]], // Ahora no es obligatorio
-      paneles: ['',[Validators.minLength(2), Validators.maxLength(50)]],
-      potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]],
-potenciaTotal: ['', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]],
-      precioKw: ['',[Validators.minLength(2), Validators.maxLength(50)]],
-     
+      nombre: ['', [Validators.minLength(3), Validators.maxLength(50)]],
+      paneles: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]], // Solo enteros positivos
+      potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]], // Decimales permitidos
+      precioKw: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]], // Solo números enteros positivos
+
+    });
+  
+    this.oInstalacionForm.get('paneles')?.valueChanges.subscribe(() => {
+      this.calcularPotenciaTotal();
+    });
+  
+    this.oInstalacionForm.get('potenciaPanel')?.valueChanges.subscribe(() => {
+      this.calcularPotenciaTotal();
     });
   }
+  
+  calcularPotenciaTotal() {
+    const paneles = parseInt(this.oInstalacionForm?.get('paneles')?.value) || 0;
+    const potenciaPanel = parseFloat(this.oInstalacionForm?.get('potenciaPanel')?.value) || 0;
+  
+    if (!isNaN(paneles) && !isNaN(potenciaPanel) && paneles > 0 && potenciaPanel > 0) {
+      const potenciaTotal = (paneles * potenciaPanel) / 1000; // Convertimos de W a kW
+      this.oInstalacionForm?.patchValue({ 
+        potenciaTotal: potenciaTotal.toFixed(3),
+        potenciaDisponible: potenciaTotal.toFixed(3) // Inicialmente igual a potenciaTotal
+      });
+    }
+  }
+  
+  
+  
   
   
   showModal(mensaje: string): void {
@@ -71,23 +97,22 @@ potenciaTotal: ['', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]],
       return;
     }
   
-    this.oInstalacionService.create(this.oInstalacionForm?.value).subscribe({
+    const formData = this.oInstalacionForm.value;
+  
+    // Asegurar que potenciaTotal y potenciaDisponible sean correctos antes de enviar
+    formData.potenciaTotal = formData.potenciaTotal ? parseFloat(formData.potenciaTotal) : (formData.paneles * formData.potenciaPanel) / 1000;
+    formData.potenciaDisponible = formData.potenciaDisponible ? parseFloat(formData.potenciaDisponible) : formData.potenciaTotal;
+  
+    this.oInstalacionService.create(formData).subscribe({
       next: (oInstalacion: IInstalacion) => {
         this.oInstalacion = oInstalacion;
-        this.showModal(`Instalacion creado correctamente con el nombre: ${this.oInstalacion.nombre}`);
+        this.showModal(`Instalación creada correctamente con el nombre: ${this.oInstalacion.nombre}`);
       },
-      error: (err) => {
-        if (err.status === 400) {
-          this.showModal('Datos inválidos. Revisa los campos.');
-        } else if (err.status === 500) {
-          this.showModal('Error interno del servidor. Inténtalo más tarde.');
-        } else {
-          this.showModal('Error desconocido. Consulta con el administrador.');
-        }
-        console.error(err);
-      },
+      error: (err) => console.error(err),
     });
   }
+  
+  
   
 
   get panelesControl() {

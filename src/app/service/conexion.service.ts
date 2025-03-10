@@ -23,11 +23,21 @@ export class ConexionService {
       return this.oHttp.put<IConexion>('http://localhost:8085/conexion/new', formData);
     }
 
+    getInstalacionById(id: number): Observable<any> {
+      const URL = `${serverURL}/instalacion/${id}`; // Ajusta según la ruta correcta del backend
+      return this.oHttp.get<any>(URL, httpOptions);
+    }
+    
     create1(oConexion: IConexion): Observable<IConexion> {
       const URL: string = `${serverURL}/conexion/new`; 
       return this.oHttp.post<IConexion>(URL, oConexion, httpOptions);
     }
 
+    confirmarFirma(conexionId: number, firmaBase64: string) {
+      return this.oHttp.post(`http://localhost:8085/conexion/${conexionId}/firmar`, { firma: firmaBase64 });
+    }
+    
+    
     getPage(
       page: number,
       size: number,
@@ -125,5 +135,11 @@ export class ConexionService {
       URL += '/' + id;
       return this.oHttp.get<IConexion>(URL);
     }
+
+    enviarCorreo(conexion: any): Observable<any> {
+      console.log('Enviando JSON:', JSON.stringify(conexion));  // 👈 Log para depurar el JSON
+      return this.oHttp.post(`${this.serverURL}/enviar-correo`, conexion);
+    }
+    
 }
 

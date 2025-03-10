@@ -8,6 +8,7 @@ import { IPage } from '../../../model/model.interface';
 import { TrimPipe } from '../../../pipe/trim.pipe';
 import { BotoneraService } from '../../../service/botonera.service';
 import { ConexionService } from '../../../service/conexion.service';
+import { PdfService } from '../../../service/pdf.service';
 
 @Component({
   selector: 'app-conexion.admin.plist.routed',
@@ -18,7 +19,7 @@ import { ConexionService } from '../../../service/conexion.service';
 })
 export class ConexionAdminPlistRoutedComponent implements OnInit {
 
-   
+  instalacionId: number = 1; // Puedes cambiarlo dinámicamente
   oPage: IPage<IConexion> | null = null;
   //
   nPage: number = 0; // 0-based server count
@@ -30,17 +31,23 @@ export class ConexionAdminPlistRoutedComponent implements OnInit {
   strFiltro: string = '';
   //
   arrBotonera: string[] = [];
+
+  
   //
   private debounceSubject = new Subject<string>();
   constructor(
     private oConexionService: ConexionService,
     private oBotoneraService: BotoneraService,
-    private oRouter: Router
+    private oRouter: Router,
+    
   ) {
     this.debounceSubject.pipe(debounceTime(10)).subscribe((value) => {
       this.getPage();
     });
   }
+
+  
+
 
   ngOnInit() {
     this.getPage();
@@ -69,7 +76,7 @@ export class ConexionAdminPlistRoutedComponent implements OnInit {
     this.oRouter.navigate(['admin/conexion/view', oConexion.id]);
   }
 
-
+  
 
   goToPage(p: number) {
     if (p) {

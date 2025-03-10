@@ -1,0 +1,18 @@
+
+<div class="container mt-4">
+  <h2 class="mb-3">Autorizar Conexión</h2>
+  <p>Firma para autorizar la conexión:</p>
+
+  <div class="firma-container">
+    <signature-pad [options]="signaturePadOptions" #signaturePad></signature-pad>
+  </div>
+
+  <div class="mt-3">
+    <button class="btn btn-danger me-2" (click)="limpiarFirma()">Borrar Firma</button>
+    <button class="btn btn-primary me-2" (click)="guardarFirma()">Guardar Firma</button>
+  </div>
+
+  <button class="btn btn-success mt-3" (click)="firmarConexion()" [disabled]="!firmaGuardada">
+    Enviar Firma
+  </button>
+</div>

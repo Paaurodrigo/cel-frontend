@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { SessionService } from '../../service/session.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-shared-menu-unrouted',
   templateUrl: './shared.menu.unrouted.component.html',
   styleUrls: ['./shared.menu.unrouted.component.css'],
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   standalone: true,
 })
 export class SharedMenuUnroutedComponent implements OnInit {
@@ -16,10 +17,11 @@ export class SharedMenuUnroutedComponent implements OnInit {
 userApellido: string = '';
 userEmail: string = '';
 userRole: string = '';
-
+isDarkMode: boolean = false;
   constructor(
     private oRouter: Router,
-    private oSessionService: SessionService
+    private oSessionService: SessionService,
+    private renderer: Renderer2
   ) {
     this.oRouter.events.subscribe((oEvent) => {
       if (oEvent instanceof NavigationEnd) {
@@ -36,6 +38,12 @@ userRole: string = '';
   
 
   ngOnInit() {
+    const savedMode = localStorage.getItem('darkMode');
+    this.isDarkMode = savedMode === 'true';
+    this.updateDarkMode();
+  
+    console.log("Modo oscuro guardado:", this.isDarkMode);
+
     this.activeSession = this.oSessionService.isSessionActive();
     if (this.activeSession) {
       this.userEmail = this.oSessionService.getSessionEmail();
@@ -69,6 +77,28 @@ userRole: string = '';
     });
 
   }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    console.log('🔄 Estado cambiado a:', this.isDarkMode);
+    this.updateDarkMode();
+  }
+  
+  
+  updateDarkMode() {
+    const body = document.body;
+  
+    if (this.isDarkMode) {
+      body.classList.add('dark-mode');
+      console.log('🌓 Modo oscuro activado - Clases actuales:', body.classList.value);
+    } else {
+      body.classList.remove('dark-mode');
+      console.log('☀️ Modo claro activado - Clases actuales:', body.classList.value);
+    }
+  }
+  
+  
+  
 
   
 }
