@@ -51,7 +51,7 @@ export class InstalacionselectorComponent implements OnInit {
 
   getPage() {
     this.oInstalacionService
-      .getPage(
+      .getInstalacionesDisponibles(
         this.nPage,
         this.nRpp,
         this.strField,

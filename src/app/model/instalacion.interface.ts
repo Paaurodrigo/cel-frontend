@@ -7,5 +7,6 @@ export interface IInstalacion {
     potenciaDisponible: number;
     precioKw: number;
     conexiones?: any;
+    direccion: string;
 
 }

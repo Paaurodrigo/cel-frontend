@@ -40,9 +40,9 @@ isDarkMode: boolean = false;
   ngOnInit() {
     const savedMode = localStorage.getItem('darkMode');
     this.isDarkMode = savedMode === 'true';
-    this.updateDarkMode();
+
   
-    console.log("Modo oscuro guardado:", this.isDarkMode);
+    
 
     this.activeSession = this.oSessionService.isSessionActive();
     if (this.activeSession) {
@@ -78,24 +78,11 @@ isDarkMode: boolean = false;
 
   }
 
-  toggleDarkMode() {
-    this.isDarkMode = !this.isDarkMode;
-    console.log('🔄 Estado cambiado a:', this.isDarkMode);
-    this.updateDarkMode();
-  }
+ 
   
   
-  updateDarkMode() {
-    const body = document.body;
   
-    if (this.isDarkMode) {
-      body.classList.add('dark-mode');
-      console.log('🌓 Modo oscuro activado - Clases actuales:', body.classList.value);
-    } else {
-      body.classList.remove('dark-mode');
-      console.log('☀️ Modo claro activado - Clases actuales:', body.classList.value);
-    }
-  }
+  
   
   
   

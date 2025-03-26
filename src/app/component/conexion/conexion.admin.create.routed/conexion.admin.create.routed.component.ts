@@ -131,15 +131,17 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       this.oConexionService.create1(this.oConexionForm?.value).subscribe({
         next: (oConexion: IConexion) => {
           this.oConexion = oConexion;
-          this.showModal('Conexion creada con el id: ' + this.oConexion.id);
+          this.showModal('Conexión creada con el id: ' + this.oConexion.id);
         },
         error: (error) => {
-          this.showModal('Error al crear la conexion');
+          const mensajeError = error?.error?.message || 'Error al crear la conexión';
+          this.showModal(mensajeError);
           console.error(error);
         },
       });
     }
   }
+  
   
   showInmuebleSelectorModal() {
     const dialogRef = this.dialog.open(InmuebleselectorComponent, {

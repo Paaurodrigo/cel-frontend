@@ -28,6 +28,7 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   oInstalacion: IInstalacion | null = null;
   strMessage: string = '';
   myModal: any;
+  sugerencias: any[] = [];
   constructor( private oInstalacionService: InstalacionService,
     private oRouter: Router,
     private fb: FormBuilder
@@ -46,6 +47,8 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       paneles: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]], // Solo enteros positivos
       potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]], // Decimales permitidos
       precioKw: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]], // Solo números enteros positivos
+      direccion: ['', [Validators.required, Validators.minLength(3)]],
+
 
     });
   
@@ -56,6 +59,27 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
     this.oInstalacionForm.get('potenciaPanel')?.valueChanges.subscribe(() => {
       this.calcularPotenciaTotal();
     });
+  }
+
+  onSearchDireccion(): void {
+    const direccion = this.oInstalacionForm.get('direccion')?.value;
+    if (direccion.length < 3) {
+      this.sugerencias = [];
+      return;
+    }
+  
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=es&limit=5&q=${encodeURIComponent(direccion)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        this.sugerencias = data;
+      });
+  }
+  
+  seleccionarDireccion(sugerencia: any): void {
+    this.oInstalacionForm.patchValue({
+      direccion: sugerencia.display_name
+    });
+    this.sugerencias = [];
   }
   
   calcularPotenciaTotal() {
