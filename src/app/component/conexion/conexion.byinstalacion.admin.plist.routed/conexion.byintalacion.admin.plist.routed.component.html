@@ -2,322 +2,329 @@
   <div class="row mb-4">
     <div class="col-12">
       <div class="card shadow border-0 rounded-3">
+        <!-- Header con información principal -->
         <div class="card-header bg-white border-0 py-3">
-          
           <div class="d-flex justify-content-between align-items-center">
             <h1 class="fs-4 fw-bold mb-0">
               <i class="bi bi-solar-panel me-2"></i> Detalle de Instalación
             </h1>
-           
-            <button (click)="downloadPdf()" class="btn btn-primary">
-              <i class="bi bi-file-earmark-pdf"></i> Descargar Acuerdo PDF
-            </button>
-            <span class="badge bg-success-subtle text-success fs-6 px-3 py-2 rounded-pill">
-              {{ instalacion.potenciaTotal }} kW
-            </span>
+            <div class="d-flex align-items-center gap-3">
+              <button (click)="downloadPdf()" class="btn btn-primary">
+                <i class="bi bi-file-earmark-pdf"></i> Descargar Acuerdo PDF
+              </button>
+              
+            </div>
           </div>
         </div>
 
-        <div class="card-body">
-          <div class="row">
-            <!-- Información de la instalación -->
+        <!-- Cuerpo con información detallada -->
+        <div class="card-body pb-0">
+          <!-- Tarjeta de resumen principal -->
+          <div class="row mb-4">
             <div class="col-12">
-              <div class="detail-section">
-                <h3 class="detail-section-title">
-                  <i class="bi bi-info-circle me-2"></i>Información General
-                </h3>
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <div class="detail-item">
-                      <span class="detail-label">Nombre</span>
-                      <span class="detail-value">{{ instalacion.nombre }}</span>
+              <div class="card bg-light border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <div class="row align-items-center">
+                    <!-- Nombre de la instalación y dirección -->
+                    <div class="col-md-4 mb-3 mb-md-0">
+                      <h2 class="fs-3 fw-bold text-primary mb-1">{{ instalacion.nombre }}</h2>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-geo-alt me-1"></i> {{ instalacion.direccion || 'Sin dirección registrada' }}
+                      </p>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="detail-item">
-                      <span class="detail-label">Paneles</span>
-                      <span class="detail-value">{{ instalacion.paneles }}</span>
+          
+                    <!-- CAU en el centro -->
+                    <div class="col-md-4 mb-3 mb-md-0 text-center">
+                      <div class="display-6 fw-bold text-secondary mb-0">{{ instalacion.cau }}</div>
+                          <div class="small text-muted">CAU</div>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="detail-section">
-                <h3 class="detail-section-title">
-                  <i class="bi bi-lightning-charge me-2"></i>Características Técnicas
-                </h3>
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <div class="detail-item">
-                      <span class="detail-label">Potencia por Panel</span>
-                      <span class="detail-value">{{ instalacion.potenciaPanel }} W</span>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="detail-item">
-                      <span class="detail-label">Potencia Total</span>
-                      <span class="detail-value">{{ instalacion.potenciaTotal }} kW</span>
-                    </div>
-                  </div>
-                 
-                  <div class="col-md-4">
-                    <div class="detail-item">
-                      <span class="detail-label">Potencia Disponible</span>
-                      <span class="detail-value">{{ instalacion.potenciaDisponible }} kW</span>
-                      
-                      <!-- Barra de progreso con porcentaje -->
-                      <div class="progress mt-2" style="height: 20px;">
-                        <div class="progress-bar bg-success" role="progressbar" 
-                             [style.width]="getPotenciaDisponiblePorcentaje() + '%'"
-                             [attr.aria-valuenow]="getPotenciaDisponiblePorcentaje()" 
-                             aria-valuemin="0" 
-                             aria-valuemax="100">
-                          {{ getPotenciaDisponiblePorcentaje() }}%
+          
+                    <!-- Paneles y potencia -->
+                    <div class="col-md-4">
+                      <div class="d-flex justify-content-md-end">
+                        <div class="text-center me-4">
+                          <div class="display-6 fw-bold text-primary mb-0">{{ instalacion.paneles }}</div>
+                          <div class="small text-muted">Paneles</div>
+                        </div>
+                        <div class="text-center">
+                          <div class="display-6 fw-bold text-primary mb-0">{{ instalacion.potenciaTotal }}</div>
+                          <div class="small text-muted">kW Totales</div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
-                  
                 </div>
               </div>
-
-              <div class="detail-section">
-                <h3 class="detail-section-title">
-                  <i class="bi bi-currency-euro me-2"></i>Información Económica
-                </h3>
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <div class="detail-item">
-                      <span class="detail-label">Precio kWp</span>
-                      <span class="detail-value">{{ instalacion.precioKw }} €/kWp</span>
+            </div>
+          </div>
+          
+          <!-- Tarjetas de información detallada -->
+          <div class="row g-4 mb-4">
+            <!-- Características técnicas -->
+            <div class="col-md-12">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-primary bg-opacity-10 py-3 border-0">
+                  <h3 class="fs-5 fw-bold mb-0 text-primary">
+                    <i class="bi bi-lightning-charge me-2"></i>Características Técnicas
+                  </h3>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-3">
+                      <div class="tech-stat-card text-center p-3 rounded bg-light">
+                        <div class="tech-stat-icon mb-2">
+                          <i class="bi bi-lightning text-success fs-3"></i> <!-- 🔋 Potencia disponible -->
+                        </div>
+                        <div class="tech-stat-value fw-bold fs-4">{{ instalacion.potenciaDisponible }} kW</div>
+                        <div class="tech-stat-label small text-muted">Potencia Disponible</div>
+                      </div>
                     </div>
+                    <div class="col-3">
+                      <div class="tech-stat-card text-center p-3 rounded bg-light">
+                        <div class="tech-stat-icon mb-2">
+                          <i class="bi bi-battery-charging text-primary fs-3"></i> <!-- 🔋 Potencia por panel -->
+                        </div>
+                        <div class="tech-stat-value fw-bold fs-4">{{ instalacion.potenciaPanel }} W</div>
+                        <div class="tech-stat-label small text-muted">Potencia por Panel</div>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="tech-stat-card text-center p-3 rounded bg-light">
+                        <div class="tech-stat-icon mb-2">
+                          <i class="bi bi-diagram-3 text-info fs-3"></i> <!-- 📊 Conexiones totales -->
+                        </div>
+                        <div class="tech-stat-value fw-bold fs-4">{{ instalacion.conexiones }} kW</div>
+                        <div class="tech-stat-label small text-muted">Conexiones Totales</div>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="tech-stat-card text-center p-3 rounded bg-light">
+                        <div class="tech-stat-icon mb-2">
+                          <i class="bi bi-currency-euro text-warning fs-4"></i> <!-- ⚡ Potencia total -->
+                        </div>
+                        <div class="tech-stat-value fw-bold fs-4">{{ instalacion.precioKw }} €</div>
+                        <div class="tech-stat-label small text-muted">Precio kW</div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                  <!-- Potencia disponible con visualización mejorada -->
+                  <div class="mt-4">
+                    
+                    <div class="progress" style="height: 24px; border-radius: 12px; background-color: #e9ecef;">
+                      <div class="progress-bar bg-success" role="progressbar" 
+                           [style.width]="getPotenciaDisponiblePorcentaje() + '%'"
+                           [attr.aria-valuenow]="getPotenciaDisponiblePorcentaje()" 
+                           aria-valuemin="0" 
+                           aria-valuemax="100">
+                        <span class="fw-bold">{{ getPotenciaDisponiblePorcentaje() }}%</span>
+                      </div>
+                    </div>
+                   
                   </div>
                 </div>
               </div>
             </div>
+            
+            <!-- Información económica y general -->
+            
           </div>
-        </div>
-
-        <!-- Acciones -->
-        <div class="card-footer bg-white py-3 border-0">
-          <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="mb-3 mb-md-0">
-              <a class="btn btn-outline-secondary" href="admin/instalacion/plist">
-                <i class="bi bi-arrow-left me-2"></i>Volver al listado
-              </a>
-            </div>
-            <div class="d-flex gap-2">
-              <a class="btn btn-primary" href="admin/instalacion/edit/{{ instalacion.id }}">
-                <i class="bi bi-pencil me-2"></i>Editar
-              </a>
-              <a class="btn btn-danger" href="admin/instalacion/delete/{{ instalacion.id }}">
-                <i class="bi bi-trash me-2"></i>Eliminar
+          
+    
+          <!-- Sección de conexiones (mantenida igual) -->
+          <div class="card-header bg-primary text-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="mb-0 fs-4 fw-bold">
+                <i class="bi bi-diagram-3 me-2"></i> Conexiones de la Instalación {{ instalacion.nombre }}
+              </h2>
+              <a href="admin/conexion/add/{{ instalacion.id }}" class="btn btn-light">
+                <i class="bi bi-plus-lg me-1"></i> Nueva Conexión
               </a>
             </div>
           </div>
-        </div>
-  
-
-        <div class="card-header bg-primary text-white py-3">
-          <div class="d-flex justify-content-between align-items-center">
-            <h2 class="mb-0 fs-4 fw-bold">
-              <i class="bi bi-diagram-3 me-2"></i> Conexiones de la Instalación {{ instalacion.nombre }}
-            </h2>
-            <a href="admin/conexion/new" class="btn btn-light">
-              <i class="bi bi-plus-lg me-1"></i> Nueva Conexión
-            </a>
-          </div>
-        </div>
-        
-        <div class="card-body">
-          <!-- Filtros y controles -->
-          <div class="row mb-4">
-            <div class="col-md-6">
-              <div class="input-group">
-                <span class="input-group-text bg-white border-end-0">
-                  <i class="bi bi-search"></i>
-                </span>
-                <input 
-                  type="text" 
-                  class="form-control border-start-0 ps-0" 
-                  placeholder="Buscar por fecha, inmueble..." 
-                  (keyup)="filter($event)" 
-                  [(ngModel)]="strFiltro"
-                />
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="bi bi-funnel"></i>
-                </button>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="d-flex justify-content-md-end mt-3 mt-md-0">
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 10" (click)="goToRpp(10)">10</button>
-                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 50" (click)="goToRpp(50)">50</button>
-                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 100" (click)="goToRpp(100)">100</button>
-                </div>
-                <div class="dropdown ms-2">
-                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-sort-alpha-down me-1"></i> Ordenar
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
-                    <li><button class="dropdown-item" (click)="sort('id')">Fecha</button></li>
-                    <li><button class="dropdown-item" (click)="sort('porcentaje')">Porcentaje</button></li>
-                    <li><button class="dropdown-item" (click)="sort('potencia')">Potencia</button></li>
-                    <li><button class="dropdown-item" (click)="sort('inmueble')">Inmueble</button></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tabla de datos -->
-          <div class="table-responsive">
-            <table class="table table-hover align-middle">
-              <thead class="table-light">
-                <tr>
-                  <th class="sortable" (click)="sort('id')">
-                    <div class="d-flex align-items-center">
-                      <span>Fecha</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'id' && strDir === 'desc', 'bi-caret-up-fill': strField === 'id' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'id'}"></i>
-                    </div>
-                  </th>
-                  <th class="sortable" (click)="sort('porcentaje')">
-                    <div class="d-flex align-items-center">
-                      <span>Porcentaje</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'porcentaje' && strDir === 'desc', 'bi-caret-up-fill': strField === 'porcentaje' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'porcentaje'}"></i>
-                    </div>
-                  </th>
-                  <th class="sortable" (click)="sort('potencia')">
-                    <div class="d-flex align-items-center">
-                      <span>Potencia</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'potencia' && strDir === 'desc', 'bi-caret-up-fill': strField === 'potencia' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'potencia'}"></i>
-                    </div>
-                  </th>
-                  <th class="sortable" (click)="sort('inmueble')">
-                    <div class="d-flex align-items-center">
-                      <span>Inmuebles</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'inmueble' && strDir === 'desc', 'bi-caret-up-fill': strField === 'inmueble' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'inmueble'}"></i>
-                    </div>
-                  </th>
-                  <th class="sortable">
-                    <div class="d-flex align-items-center">
-                      <span>Firma</span>
-                    </div>
-                  </th>
-                  <th class="text-center">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                @for (conexion of oPage?.content; track conexion.id) {
-                <tr>
-                  <td>
-                    <span class=" text-dark ">
-                      <i class="bi bi-calendar-event me-1"></i>
-                      {{ conexion.fecha | slice:0:10 }}
-                    </span>
-                  </td>
-                  <td>
-                    <div class="progress" style="height: 20px;">
-                      <div class="progress-bar bg-success" role="progressbar" 
-                           [style.width]="conexion.porcentaje + '%'"
-                           [attr.aria-valuenow]="conexion.porcentaje" 
-                           aria-valuemin="0" 
-                           aria-valuemax="100">
-                        {{ conexion.porcentaje }}%
+          
+          <!-- El resto del código permanece igual -->
+          <div class="card-body">
+            <!-- Tabla de datos -->
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th class="sortable" (click)="sort('id')">
+                      <div class="d-flex align-items-center">
+                        <span>Fecha</span>
+                        <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'id' && strDir === 'desc', 'bi-caret-up-fill': strField === 'id' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'id'}"></i>
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <i class="bi bi-lightning-charge me-1"></i>
-                      <span>{{ conexion.potencia }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex align-items-center">
-                      <i class="bi bi-building me-2 text-muted"></i>
-                      <span>{{ conexion.inmueble.cups }}</span>
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <span *ngIf="conexion.firma; else noFirma" class="text-success fw-bold fs-4">✅</span>
-                    <ng-template #noFirma>
-                      <span class="text-danger fw-bold fs-4">❌</span>
-                    </ng-template>
-                  </td>
-                  <td>
-                    <div class="d-flex justify-content-center gap-2">
-                      <button type="button" class="btn btn-sm btn-action" (click)="$event.stopPropagation(); view(conexion)" title="Ver detalles">
-                        <i class="bi bi-eye"></i>
-                      </button>
-                      <a class="btn btn-outline-primary"
-                      (click)="enviarCorreo(conexion)"
-                      [ngClass]="{'disabled text-muted': conexion.firma}"
-                     >
-                     <i class="bi bi-envelope-plus" [ngClass]="{'text-muted': conexion.firma}"></i>
-                   </a>                 
-              
-                    </div>
-                  </td>
-                </tr>
-                } @empty {
-                <tr>
-                  <td colspan="6" class="text-center py-4">
-                    <div class="d-flex flex-column align-items-center">
-                      <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
-                      <p class="mt-2 mb-0">No hay conexiones para esta instalación</p>
-                      <small class="text-muted">Puede crear una nueva conexión usando el botón superior</small>
-                    </div>
-                  </td>
-                </tr>
-                }
-              </tbody>              
-            </table>
-          </div>
-
-          <!-- Información de paginación -->
-          <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
-            <div class="mb-3 mb-md-0">
-              @if (strFiltro.length > 0) {
-              <span class="badge bg-light text-dark border">
-                <i class="bi bi-funnel me-1"></i> Filtrando por: {{ strFiltro }}
-                <button type="button" class="btn-close ms-2" aria-label="Close" style="font-size: 0.65rem;" (click)="strFiltro='';"></button>
-              </span>
-              } @else {
-              <span class="text-muted small">Mostrando todas las conexiones de esta instalación</span>
-              }
+                    </th>
+                    <th class="sortable" (click)="sort('porcentaje')">
+                      <div class="d-flex align-items-center">
+                        <span>Porcentaje</span>
+                        <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'porcentaje' && strDir === 'desc', 'bi-caret-up-fill': strField === 'porcentaje' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'porcentaje'}"></i>
+                      </div>
+                    </th>
+                    <th class="sortable" (click)="sort('potencia')">
+                      <div class="d-flex align-items-center">
+                        <span>Potencia</span>
+                        <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'potencia' && strDir === 'desc', 'bi-caret-up-fill': strField === 'potencia' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'potencia'}"></i>
+                      </div>
+                    </th>
+                    <th class="sortable" (click)="sort('inmueble')">
+                      <div class="d-flex align-items-center">
+                        <span>Inmuebles</span>
+                        <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'inmueble' && strDir === 'desc', 'bi-caret-up-fill': strField === 'inmueble' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'inmueble'}"></i>
+                      </div>
+                    </th>
+                    <th class="sortable">
+                      <div class="d-flex align-items-center">
+                        <span>Firma</span>
+                      </div>
+                    </th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (conexion of oPage?.content; track conexion.id) {
+                  <tr>
+                    <td>
+                      <span class=" text-dark ">
+                        <i class="bi bi-calendar-event me-1"></i>
+                        {{ conexion.fecha | slice:0:10 }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="progress" style="height: 20px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                        [style.width]="(conexion.porcentaje * 100) + '%'"
+                        [attr.aria-valuenow]="conexion.porcentaje * 100" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                     {{ (conexion.porcentaje * 100) | number : '1.0-0' }}%
+                   </div>
+                   
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-lightning-charge me-1"></i>
+                        <span>{{ conexion.potencia }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-building me-2 text-muted"></i>
+                        <span>{{ conexion.inmueble.cups }}</span>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <span *ngIf="conexion.firma; else noFirma" class="text-success fw-bold fs-4">✅</span>
+                      <ng-template #noFirma>
+                        <span class="text-danger fw-bold fs-4">❌</span>
+                      </ng-template>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-sm btn-action" (click)="$event.stopPropagation(); view(conexion)" title="Ver detalles">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <a class="btn btn-outline-primary"
+                        (click)="enviarCorreo(conexion)"
+                        [ngClass]="{'disabled text-muted': conexion.firma}"
+                       >
+                       <i class="bi bi-envelope-plus" [ngClass]="{'text-muted': conexion.firma}"></i>
+                     </a>                 
+                
+                      </div>
+                    </td>
+                  </tr>
+                  } @empty {
+                  <tr>
+                    <td colspan="6" class="text-center py-4">
+                      <div class="d-flex flex-column align-items-center">
+                        <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
+                        <p class="mt-2 mb-0">No hay conexiones para esta instalación</p>
+                        <small class="text-muted">Puede crear una nueva conexión usando el botón superior</small>
+                      </div>
+                    </td>
+                  </tr>
+                  }
+                </tbody>              
+              </table>
             </div>
-            <div class="text-muted small">
-              Mostrando {{ oPage?.numberOfElements | number : "1.0-0" }} de {{ oPage?.totalElements | number : "1.0-0" }} registros
+  
+  
+  
+  
+            <!-- Información de paginación -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
+             
+              <div class="text-muted small">
+                Mostrando {{ oPage?.numberOfElements | number : "1.0-0" }} de {{ oPage?.totalElements | number : "1.0-0" }} registros
+              </div>
+            </div>
+  
+  
+            <!-- Paginación -->
+            <nav class="mt-4" aria-label="Navegación de páginas">
+              <ul class="pagination justify-content-center">
+                <li class="page-item" [class.disabled]="nPage - -1 === 1">
+                  <a class="page-link" (click)="goToPrev()" href="#" aria-label="Anterior">
+                    <i class="bi bi-chevron-left"></i>
+                  </a>
+                </li>
+                <li class="page-item" *ngFor="let pag of arrBotonera">
+                  @if(pag === '...') {
+                  <a class="page-link disabled">{{ pag }}</a>
+                  } @else {
+                  <a class="page-link" href="#" (click)="goToPage(-(-pag))" [class.active]="nPage - -1 === -(-pag)">{{ pag }}</a>
+                  }
+                </li>
+                <li class="page-item" [class.disabled]="nPage - -1 === oPage?.totalPages">
+                  <a class="page-link" (click)="goToNext()" href="#" aria-label="Siguiente">
+                    <i class="bi bi-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+  
+          </div>
+          
+          <!-- Mapa de ubicación -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card border-0 shadow-sm">
+                <div class="card-header bg-info bg-opacity-10 py-3 border-0">
+                  <h3 class="fs-5 fw-bold mb-0 text-info">
+                    <i class="bi bi-geo-alt me-2"></i> Ubicación de la Instalación
+                  </h3>
+                </div>
+                <div class="card-body p-0">
+                  <div id="map" style="height: 300px;" class="rounded-bottom"></div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <!-- Paginación -->
-          <nav class="mt-4" aria-label="Navegación de páginas">
-            <ul class="pagination justify-content-center">
-              <li class="page-item" [class.disabled]="nPage - -1 === 1">
-                <a class="page-link" (click)="goToPrev()" href="#" aria-label="Anterior">
-                  <i class="bi bi-chevron-left"></i>
-                </a>
-              </li>
-              <li class="page-item" *ngFor="let pag of arrBotonera">
-                @if(pag === '...') {
-                <a class="page-link disabled">{{ pag }}</a>
-                } @else {
-                <a class="page-link" href="#" (click)="goToPage(-(-pag))" [class.active]="nPage - -1 === -(-pag)">{{ pag }}</a>
-                }
-              </li>
-              <li class="page-item" [class.disabled]="nPage - -1 === oPage?.totalPages">
-                <a class="page-link" (click)="goToNext()" href="#" aria-label="Siguiente">
-                  <i class="bi bi-chevron-right"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
         </div>
-      </div>
+
+       <!-- Acciones finales -->
+<div class="card-footer bg-white border-top-0 pt-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center">
+    <a class="btn btn-outline-secondary px-4 py-2 fw-medium" href="admin/instalacion/plist">
+      <i class="bi bi-arrow-left me-2"></i>Volver al listado
+    </a>
+    <div class="d-flex gap-2 mt-3 mt-md-0">
+      <a class="btn btn-outline-primary px-4 py-2 fw-medium" href="admin/instalacion/edit/{{ instalacion.id }}">
+        <i class="bi bi-pencil me-2"></i>Editar
+      </a>
+      <a class="btn btn-outline-danger px-4 py-2 fw-medium" href="admin/instalacion/delete/{{ instalacion.id }}">
+        <i class="bi bi-trash me-2"></i>Eliminar
+      </a>
     </div>
   </div>
 </div>
+
+        
+      </div>
+    </div>
+  </div>
+  

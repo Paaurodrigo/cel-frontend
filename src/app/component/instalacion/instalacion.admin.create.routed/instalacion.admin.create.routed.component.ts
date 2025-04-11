@@ -7,8 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 declare let bootstrap: any;
+
 @Component({
   selector: 'app-instalacion.admin.create.routed',
   templateUrl: './instalacion.admin.create.routed.component.html',
@@ -29,76 +31,93 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   strMessage: string = '';
   myModal: any;
   sugerencias: any[] = [];
-  constructor( private oInstalacionService: InstalacionService,
+
+  direccionSubject: Subject<string> = new Subject<string>();
+
+  constructor(
+    private oInstalacionService: InstalacionService,
     private oRouter: Router,
     private fb: FormBuilder
   ) {
-    this.oInstalacionForm = this.fb.group({}); // Inicialización vacía para evitar errores
-   }
+    this.oInstalacionForm = this.fb.group({});
+  }
 
   ngOnInit() {
     this.createForm();
     this.oInstalacionForm?.markAllAsTouched();
+
+    // ✅ Photon API con debounce
+    this.direccionSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(direccion => {
+      if (!direccion || direccion.length < 3) {
+        this.sugerencias = [];
+        return;
+      }
+
+      fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5`)
+  .then(res => res.json())
+  .then(data => {
+    this.sugerencias = data.features;
+  })
+  .catch(err => {
+    console.error('Error al buscar direcciones:', err);
+    this.sugerencias = [];
+  });
+    });
   }
 
   createForm() {
     this.oInstalacionForm = this.fb.group({
       nombre: ['', [Validators.minLength(3), Validators.maxLength(50)]],
-      paneles: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]], // Solo enteros positivos
-      potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]], // Decimales permitidos
-      precioKw: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]], // Solo números enteros positivos
+      paneles: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
+      potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
+      precioKw: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
       direccion: ['', [Validators.required, Validators.minLength(3)]],
+      cau: ['', [Validators.minLength(3), Validators.maxLength(35)]],
+    });
 
-
-    });
-  
-    this.oInstalacionForm.get('paneles')?.valueChanges.subscribe(() => {
-      this.calcularPotenciaTotal();
-    });
-  
-    this.oInstalacionForm.get('potenciaPanel')?.valueChanges.subscribe(() => {
-      this.calcularPotenciaTotal();
-    });
+    this.oInstalacionForm.get('paneles')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
+    this.oInstalacionForm.get('potenciaPanel')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
   }
 
+  // ✅ Usamos Subject para que escuche cambios del input
   onSearchDireccion(): void {
     const direccion = this.oInstalacionForm.get('direccion')?.value;
-    if (direccion.length < 3) {
-      this.sugerencias = [];
-      return;
-    }
-  
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=es&limit=5&q=${encodeURIComponent(direccion)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        this.sugerencias = data;
-      });
+    this.direccionSubject.next(direccion);
   }
-  
+
   seleccionarDireccion(sugerencia: any): void {
+    const direccionCompleta = [
+      sugerencia.properties.name,
+      sugerencia.properties.postcode,
+      sugerencia.properties.city,
+      sugerencia.properties.state,
+      sugerencia.properties.country
+    ].filter(Boolean).join(', '); // Filtra los undefined y junta con comas
+  
     this.oInstalacionForm.patchValue({
-      direccion: sugerencia.display_name
+      direccion: direccionCompleta
     });
+  
     this.sugerencias = [];
   }
   
+
   calcularPotenciaTotal() {
     const paneles = parseInt(this.oInstalacionForm?.get('paneles')?.value) || 0;
     const potenciaPanel = parseFloat(this.oInstalacionForm?.get('potenciaPanel')?.value) || 0;
-  
+
     if (!isNaN(paneles) && !isNaN(potenciaPanel) && paneles > 0 && potenciaPanel > 0) {
-      const potenciaTotal = (paneles * potenciaPanel) / 1000; // Convertimos de W a kW
-      this.oInstalacionForm?.patchValue({ 
+      const potenciaTotal = (paneles * potenciaPanel) / 1000;
+      this.oInstalacionForm?.patchValue({
         potenciaTotal: potenciaTotal.toFixed(3),
-        potenciaDisponible: potenciaTotal.toFixed(3) // Inicialmente igual a potenciaTotal
+        potenciaDisponible: potenciaTotal.toFixed(3)
       });
     }
   }
-  
-  
-  
-  
-  
+
   showModal(mensaje: string): void {
     this.strMessage = mensaje;
     this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
@@ -113,20 +132,25 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   }
 
   onReset(): void {
-    this.oInstalacionForm?.reset(); // Usa el método reset de Angular
+    this.oInstalacionForm?.reset();
   }
+
   onSubmit() {
     if (this.oInstalacionForm?.invalid) {
       this.showModal('Formulario inválido. Por favor, revisa los campos marcados.');
       return;
     }
-  
+
     const formData = this.oInstalacionForm.value;
-  
-    // Asegurar que potenciaTotal y potenciaDisponible sean correctos antes de enviar
-    formData.potenciaTotal = formData.potenciaTotal ? parseFloat(formData.potenciaTotal) : (formData.paneles * formData.potenciaPanel) / 1000;
-    formData.potenciaDisponible = formData.potenciaDisponible ? parseFloat(formData.potenciaDisponible) : formData.potenciaTotal;
-  
+
+    formData.potenciaTotal = formData.potenciaTotal
+      ? parseFloat(formData.potenciaTotal)
+      : (formData.paneles * formData.potenciaPanel) / 1000;
+
+    formData.potenciaDisponible = formData.potenciaDisponible
+      ? parseFloat(formData.potenciaDisponible)
+      : formData.potenciaTotal;
+
     this.oInstalacionService.create(formData).subscribe({
       next: (oInstalacion: IInstalacion) => {
         this.oInstalacion = oInstalacion;
@@ -135,9 +159,6 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       error: (err) => console.error(err),
     });
   }
-  
-  
-  
 
   get panelesControl() {
     return this.oInstalacionForm?.get('paneles');
@@ -151,9 +172,7 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
     return this.oInstalacionForm?.get('potenciaTotal');
   }
 
-
   get precioKwControl() {
     return this.oInstalacionForm?.get('precioKw');
   }
-
 }

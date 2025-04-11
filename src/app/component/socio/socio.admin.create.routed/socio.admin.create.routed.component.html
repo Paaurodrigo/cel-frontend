@@ -116,38 +116,36 @@
           </div>
       </div>
         
-        <div class="mb-3">
-          <mat-form-field class="w-100">
-            <mat-label>DNI</mat-label>
-            <input matInput formControlName="dni" placeholder="Escribe tu DNI" class="form-control"
-              (input)="onDniChange()" />
-            <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
-            @if (oSocioForm.get('dni')?.hasError('required')) {
+      <div class="mb-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>DNI</mat-label>
+          <input matInput
+            formControlName="dni"
+            placeholder="Escribe tu DNI"
+            class="form-control"
+            (input)="onDniChange()"
+            [ngClass]="{
+              'is-valid': dniValido === true,
+              'is-invalid': dniValido === false
+            }"
+          />
+          <mat-icon matSuffix *ngIf="dniValido === true" color="primary"></mat-icon>
+          <mat-icon matSuffix *ngIf="dniValido === false" color="warn"></mat-icon>
+      
+          <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
+      
+          @if (oSocioForm.get('dni')?.hasError('required')) {
             <mat-error>Debes introducir un DNI</mat-error>
-            } @if (oSocioForm.get('dni')?.hasError('pattern')) {
+          }
+          @if (oSocioForm.get('dni')?.hasError('pattern')) {
             <mat-error>Formato incorrecto. Debe ser 8 dígitos y 1 letra</mat-error>
-            }
-          </mat-form-field>
-
-          <div>
-           
-            <button class="btn btn-info" type="button" (click)="comprobarDni()">
-              Comprobar DNI
-            </button>
-          
-            <!-- <p>
-              <i *ngIf="dniValido === true" class="bi bi-check-circle" style="color: green;"></i>
-              <i *ngIf="dniValido === false" class="bi bi-x-circle" style="color: red;"></i>
-            </p> -->
-
-          </div>
-          
-          
-
-        
-
-
-        </div>
+          }
+          @if (dniValido === false && !oSocioForm.get('dni')?.hasError('pattern')) {
+            <mat-error>La letra del DNI no es correcta</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      
 
 
         <div>

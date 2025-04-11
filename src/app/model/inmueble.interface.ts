@@ -16,5 +16,6 @@ export interface IInmueble {
     intencion: string;
     recomendacion:string;
     socio: ISocio;
+    comercializadora: string;
 }
   

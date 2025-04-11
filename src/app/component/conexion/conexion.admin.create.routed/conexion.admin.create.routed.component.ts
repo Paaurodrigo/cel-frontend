@@ -34,6 +34,7 @@ declare let bootstrap: any;
 
 
   ],
+  providers: [DatePipe] // <-- AÑADE ESTA LÍNEA
 })
 export class ConexionAdminCreateRoutedComponent implements OnInit {
  
@@ -53,7 +54,7 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
   constructor(
     private oConexionService: ConexionService,
     private oRouter: Router,
-   
+    private datePipe: DatePipe // <- aquí
   ) {}
 
   ngOnInit() {
@@ -128,7 +129,17 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       this.showModal('Formulario no válido');
       return;
     } else {
-      this.oConexionService.create1(this.oConexionForm?.value).subscribe({
+      const formData = this.oConexionForm.value;
+  
+      // 👉 Formatear la fecha quitando la Z
+      const fechaFormateada = this.datePipe.transform(formData.fecha, 'yyyy-MM-ddTHH:mm:ss');
+  
+      const datosAEnviar = {
+        ...formData,
+        fecha: fechaFormateada // <-- sin la Z
+      };
+  
+      this.oConexionService.create1(datosAEnviar).subscribe({
         next: (oConexion: IConexion) => {
           this.oConexion = oConexion;
           this.showModal('Conexión creada con el id: ' + this.oConexion.id);
@@ -141,6 +152,7 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       });
     }
   }
+  
   
   
   showInmuebleSelectorModal() {

@@ -12,10 +12,23 @@
 
         <!-- Campo Cups -->
         <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Cups</mat-label>
-            <input matInput type="text" id="cups" formControlName="cups" placeholder="CUPS">
+          <mat-form-field class="w-100">
+            <mat-label>CUPS</mat-label>
+            <input matInput
+              formControlName="cups"
+              placeholder="Introduce el CUPS"
+              class="form-control"
+              (input)="onCupsChange()"
+              [ngClass]="{
+                'is-valid': cupsValido === true,
+                'is-invalid': cupsValido === false
+              }"
+            />
+            <mat-icon matSuffix *ngIf="cupsValido === true" color="primary"></mat-icon>
+            <mat-icon matSuffix *ngIf="cupsValido === false" color="warn"></mat-icon>
+            <mat-hint align="start">Formato: ES + 16 dígitos</mat-hint>
           </mat-form-field>
+          
         </div>
 
         <!-- Campo Dirección -->
@@ -93,6 +106,20 @@
             </select>
           </mat-form-field>
         </div>
+ <!-- Campo Comercializadora -->
+        <mat-form-field appearance="fill">
+          <mat-label>Comercializadora</mat-label>
+          <select matNativeControl formControlName="comercializadora">
+            <option value="" disabled selected>Selecciona una comercializadora</option>
+            <option value="Iberdrola">Iberdrola</option>
+            <option value="Endesa">Endesa</option>
+            <option value="Naturgy">Naturgy</option>
+            <option value="Repsol">Repsol</option>
+            <option value="EDP">EDP</option>
+            <option value="Otra">Otra</option>
+          </select>
+        </mat-form-field>
+        
 
         <!-- Campo Uso -->
         <div class="mb-3">
@@ -153,19 +180,20 @@
           </div>
         </div>
 
+
         <!-- Selector de Socio -->
         <div formGroupName="socio">
           <div class="row mt-4">
             <div class="col">
               <mat-form-field appearance="fill">
                 <mat-label>Socio</mat-label>
-                <input matInput formControlName="nombre" placeholder="Nombre del socio" />
+                <input [readonly]="true" matInput formControlName="nombre" placeholder="Nombre del socio" />
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field appearance="fill">
                 <mat-label>Primer Apellido</mat-label>
-                <input matInput formControlName="apellido1" placeholder="Primer Apellido" />
+                <input [readonly]="true" matInput formControlName="apellido1" placeholder="Primer Apellido" />
               </mat-form-field>
             </div>
             <div class="col-auto d-flex align-items-end">

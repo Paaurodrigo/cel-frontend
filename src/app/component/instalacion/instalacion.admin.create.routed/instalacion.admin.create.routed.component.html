@@ -20,6 +20,19 @@
           />
          
         </div>
+
+        <div class="mb-3">
+          <label for="cau" class="form-label fw-bold">cau</label>
+          <input
+            type="text"
+            id="cau"
+            class="form-control"
+            formControlName="cau"
+            placeholder="cau"
+          />
+         
+        </div>
+
         <div class="mb-3 position-relative">
           <label for="direccion" class="form-label fw-bold">Dirección</label>
           <input
@@ -37,10 +50,12 @@
               *ngFor="let sugerencia of sugerencias"
               (click)="seleccionarDireccion(sugerencia)"
             >
-              {{ sugerencia.display_name }}
+            {{ sugerencia.properties.name }}, {{ sugerencia.properties.city }}, {{ sugerencia.properties.state }}, {{ sugerencia.properties.country }}
+
             </li>
           </ul>
         </div>
+        
         
         <div class="mb-3">
           <label for="paneles" class="form-label fw-bold">Cantidad de paneles</label>

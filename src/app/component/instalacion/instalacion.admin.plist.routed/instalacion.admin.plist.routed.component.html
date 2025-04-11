@@ -60,6 +60,12 @@
             <table class="table table-hover align-middle">
               <thead class="table-light">
                 <tr>
+                  <th class="sortable" (click)="sort('cau')">
+                    <div class="d-flex align-items-center">
+                      <span>CAU</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'cau' && strDir === 'desc', 'bi-caret-up-fill': strField === 'cau' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'cau'}"></i>
+                    </div>
+                  </th>
                   <th class="sortable" (click)="sort('nombre')">
                     <div class="d-flex align-items-center">
                       <span>Nombre</span>
@@ -102,6 +108,7 @@
               <tbody>
                 @for (instalacion of oPage?.content; track instalacion.id) {
                 <tr class="cursor-pointer hover-row" (click)="view(instalacion)">
+                  <td class="fw-medium">{{ instalacion.cau }}</td>
                   <td class="fw-medium">{{ instalacion.nombre }}</td>
                   <td>
                     <span class="badge bg-light text-dark border">

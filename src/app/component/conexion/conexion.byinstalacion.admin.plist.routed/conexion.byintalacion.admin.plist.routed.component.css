@@ -1,111 +1,107 @@
+/* Estilos generales */
+.container-fluid {
+  max-width: 1400px;
+}
+
+/* Estilos para tarjetas */
+.card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+  border-bottom: none;
+}
+
+/* Estilos para estadísticas técnicas */
+.tech-stat-card {
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.tech-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.tech-stat-icon {
+  height: 50px;
+  width: 50px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+.tech-stat-value {
+  color: #2c3e50;
+}
+
+/* Estilos para estadísticas económicas */
+.eco-stat-item {
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.eco-stat-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para la barra de progreso */
+.progress {
+  overflow: visible;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.progress-bar {
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+  transition: width 1s ease;
+}
+
+/* Estilos para botones */
+.btn {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el mapa */
+#map {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
 /* Estilos para la tabla */
-.table {
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
+.table th.sortable {
+  cursor: pointer;
+}
+
+.table th.sortable:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos responsivos */
+@media (max-width: 767.98px) {
+  .display-6 {
+    font-size: 1.75rem;
   }
   
-  .table th {
-    font-weight: 600;
-    border-top: 0;
-    padding: 1rem 0.75rem;
+  .display-5 {
+    font-size: 2rem;
   }
-  
-  .sortable {
-    cursor: pointer;
-  }
-  
-  .sortable:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-  }
-  
-  /* Estilos para las filas */
-  .hover-row:hover {
-    background-color: rgba(13, 110, 253, 0.05);
-    transition: background-color 0.15s ease-in-out;
-  }
-  
-  .cursor-pointer {
-    cursor: pointer;
-  }
-  
-  /* Estilos para la barra de progreso */
-  .progress {
-    background-color: #e9ecef;
-    border-radius: 50rem;
-  }
-  
-  .progress-bar {
-    border-radius: 50rem;
-    min-width: 2rem;
-  }
-  
-  /* Estilos para los botones de acción */
-  .btn-action {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    color: #0d6efd;
-    transition: all 0.2s;
-  }
-  
-  .btn-action:hover {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    color: white;
-    transform: translateY(-2px);
-  }
-  
-  /* Estilos para los badges */
-  .badge {
-    font-weight: 500;
-    padding: 0.35em 0.65em;
-  }
-  
-  .badge i {
-    font-size: 0.85em;
-  }
-  
-  /* Estilos para la paginación */
-  .page-link {
-    color: #495057;
-    border-radius: 0.25rem;
-    margin: 0 2px;
-  }
-  
-  .page-link.active {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    color: white;
-  }
-  
-  /* Estilos para el dropdown */
-  .dropdown-menu {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.375rem;
-  }
-  
-  .dropdown-item {
-    padding: 0.5rem 1rem;
-  }
-  
-  .dropdown-item:hover {
-    background-color: rgba(13, 110, 253, 0.05);
-  }
-  
-  /* Estilos para la barra de búsqueda */
-  .input-group .form-control:focus {
-    box-shadow: none;
-    border-color: #dee2e6;
-  }
-  
-  .input-group-text {
-    background-color: #fff;
-  }
+}

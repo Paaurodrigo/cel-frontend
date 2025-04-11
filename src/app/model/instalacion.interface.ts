@@ -8,5 +8,5 @@ export interface IInstalacion {
     precioKw: number;
     conexiones?: any;
     direccion: string;
-
+    cau: string;
 }
