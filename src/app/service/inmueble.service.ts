@@ -138,8 +138,11 @@ getOne(id: number): Observable<IInmueble> {
   return this.oHttp.get<IInmueble>('http://localhost:8085/inmueble/' + id);
 }
 
-delete(id: number) {
-  return this.oHttp.delete('http://localhost:8085/inmueble/' + id);
+
+
+delete(id: number, force: boolean = false) {
+  const options = force ? { params: { force: 'true' } } : {};
+  return this.oHttp.delete('http://localhost:8085/inmueble/' + id, options);
 }
 
 getInmueblesSinSocio(): Observable<IInmueble[]> {

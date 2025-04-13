@@ -4,7 +4,7 @@
       <div class="card shadow-sm">
         <div class="card-header bg-dark text-white text-center">
           <h2 class="mb-0">
-            <i class="bi bi-trash"></i> Borrar Instalacion <i class="bi bi-person-circle"></i>
+            <i class="bi bi-trash"></i> Borrar Instalación <i class="bi bi-person-circle"></i>
           </h2>
         </div>
         <div class="card-body">
@@ -15,53 +15,38 @@
                 <td class="text-start ps-5">{{ oInstalacion?.nombre }}</td>
               </tr>
               <tr class="text-center">
-                <th scope="row" class="bg-primary text-white text-end pe-5">
-                  Paneles
-                </th>
+                <th scope="row" class="bg-primary text-white text-end pe-5">Paneles</th>
                 <td class="text-start ps-5">{{ oInstalacion?.paneles }}</td>
               </tr>
               <tr class="text-center">
-                <th scope="row" class="bg-primary text-white text-end pe-5">
-                 Potencia Panel
-                </th>
+                <th scope="row" class="bg-primary text-white text-end pe-5">Potencia Panel</th>
                 <td class="text-start ps-5">{{ oInstalacion?.potenciaPanel }}</td>
               </tr>
               <tr class="text-center">
-                <th scope="row" class="bg-primary text-white text-end pe-5">
-                Potencia Total
-                </th>
+                <th scope="row" class="bg-primary text-white text-end pe-5">Potencia Total</th>
                 <td class="text-start ps-5">{{ oInstalacion?.potenciaTotal }}</td>
               </tr>
               <tr class="text-center">
-                <th scope="row" class="bg-primary text-white text-end pe-5">
-                  Potencia Disponible
-                </th>
+                <th scope="row" class="bg-primary text-white text-end pe-5">Potencia Disponible</th>
                 <td class="text-start ps-5">{{ oInstalacion?.potenciaDisponible }}</td>
               </tr>
               <tr class="text-center">
-                <th scope="row" class="bg-primary text-white text-end pe-5">
-                 Precio kWp
-                </th>
+                <th scope="row" class="bg-primary text-white text-end pe-5">Precio kWp</th>
                 <td class="text-start ps-5">{{ oInstalacion?.precioKw }}</td>
               </tr>
-             
-      
-             
-      
             </tbody>
           </table>
+
           <div class="d-flex justify-content-center mt-4">
-            <p class="fs-3">¿Seguro que desea borrar el Instalacion?</p>
+            <p class="fs-3">¿Seguro que desea borrar la Instalación?</p>
           </div>
+
           <div class="d-flex justify-content-center mt-4">
-            <button
-              class="btn btn-warning mt-4 mx-1"
-              [routerLink]="['/admin', 'Instalacion', 'plist']"
-            >
-              <i class="bi bi-list"></i> Ir a listado de Instalacions
+            <button class="btn btn-warning mt-4 mx-1" [routerLink]="['/admin', 'Instalacion', 'plist']">
+              <i class="bi bi-list"></i> Ir a listado de Instalaciones
             </button>
             <button class="btn btn-danger mt-4 mx-1" (click)="deleteInstalacion()">
-              <i class="bi bi-trash"></i> Borrar Instalacion
+              <i class="bi bi-trash"></i> Borrar Instalación
             </button>
           </div>
         </div>
@@ -69,37 +54,38 @@
     </div>
   </div>
 
-  <div
-    class="modal fade"
-    [id]="'mimodal'"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <!-- Modal Mensaje -->
+  <div class="modal fade" [id]="'mimodal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            (click)="hideModal()"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
         </div>
         <div class="modal-body">
           <p>{{ strMessage }}</p>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal"
-            (click)="hideModal()"
-          >
-            Cerrar
-          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Modal Confirmación personalizado -->
+  <div class="modal fade" [id]="'confirmModal'" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeConfirmModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ confirmMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">No</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Sí, eliminar</button>
         </div>
       </div>
     </div>

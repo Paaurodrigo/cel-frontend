@@ -138,8 +138,9 @@ import { IPage } from "../model/model.interface";
     return this.oHttp.get<IInstalacion>('http://localhost:8085/instalacion/' + id);
   }
   
-  delete(id: number) {
-    return this.oHttp.delete('http://localhost:8085/instalacion/' + id);
+  delete(id: number, force: boolean = false) {
+    const options = force ? { params: { force: 'true' } } : {};
+    return this.oHttp.delete('http://localhost:8085/instalacion/' + id, options);
   }
   
   
