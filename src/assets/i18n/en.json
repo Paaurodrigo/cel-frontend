@@ -1,0 +1,10 @@
+{
+  "home": {
+    "title": "Welcome to the application",
+    "description": "This is the English version."
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

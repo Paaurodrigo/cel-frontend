@@ -2,12 +2,12 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { SessionService } from '../../service/session.service';
 import { CommonModule } from '@angular/common';
-
+import {LanguageSwitcherComponent} from '../language-switcher/language-switcher.component';
 @Component({
   selector: 'app-shared-menu-unrouted',
   templateUrl: './shared.menu.unrouted.component.html',
   styleUrls: ['./shared.menu.unrouted.component.css'],
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule,LanguageSwitcherComponent],
   standalone: true,
 })
 export class SharedMenuUnroutedComponent implements OnInit {
