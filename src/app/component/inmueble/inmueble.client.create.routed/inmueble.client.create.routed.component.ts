@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { SessionService } from '../../../service/session.service';
+import { CommonModule } from '@angular/common';
 
 declare let bootstrap: any;
 @Component({
@@ -22,6 +23,7 @@ declare let bootstrap: any;
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule,
+    CommonModule
   ],
 })
 export class InmuebleClientCreateRoutedComponent implements OnInit {
