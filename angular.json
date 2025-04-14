@@ -66,11 +66,8 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
-            },
-            "en": {
-              "localize": ["en"],
-              "outputPath": "dist/cel-frontend-en"
             }
+            
           },
           "defaultConfiguration": "production"
         },
