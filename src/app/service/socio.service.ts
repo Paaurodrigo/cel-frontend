@@ -56,13 +56,13 @@ export class SocioService {
   create(formData: FormData): Observable<ISocio> {
     let URL: string = '';
     URL += this.serverURL;
-    return this.oHttp.put<ISocio>('http://localhost:8085/socio/new', formData);
+    return this.oHttp.put<ISocio>(this.serverURL+'/new', formData);
   }
 
   createbyAdmin(formData: FormData): Observable<ISocio> {
     let URL: string = '';
     URL += this.serverURL;
-    return this.oHttp.put<ISocio>('http://localhost:8085/socio/new/byadmin', formData);
+    return this.oHttp.put<ISocio>(this.serverURL+'/new/byadmin', formData);
   }
 
   update(oSocio: ISocio): Observable<ISocio> {
@@ -73,18 +73,15 @@ export class SocioService {
 
   getOne(id: number): Observable<ISocio> {
     let URL: string = '';
-    URL += 'http://localhost:8085';
-    URL += '/socio';
-    URL += '/' + id;
-    return this.oHttp.get<ISocio>('http://localhost:8085/socio/' + id);
+    return this.oHttp.get<ISocio>(this.serverURL+'/' + id);
   }
 
   delete(id: number) {
-    return this.oHttp.delete('http://localhost:8085/socio/' + id);
+    return this.oHttp.delete(this.serverURL + id);
   }
 
   getFotoDni(id: number): Observable<Blob> {
-    return this.oHttp.get('http://localhost:8085/socio/'+id+'/image', { responseType: 'blob' });
+    return this.oHttp.get(this.serverURL+'/'+id+'/image', { responseType: 'blob' });
   }
 
   getSocioByEmail(email: string): Observable<ISocio> {

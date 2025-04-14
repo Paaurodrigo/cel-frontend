@@ -121,7 +121,7 @@ get(id: number): Observable<IInmueble> {
 create(formData: FormData): Observable<IInmueble> {
   let URL: string = '';
   URL += this.serverURL;
-  return this.oHttp.put<IInmueble>('http://localhost:8085/inmueble/new', formData);
+  return this.oHttp.put<IInmueble>(this.serverURL + '/new', formData);
 }
 
 update(oinmueble: IInmueble): Observable<IInmueble> {
@@ -132,25 +132,23 @@ update(oinmueble: IInmueble): Observable<IInmueble> {
 
 getOne(id: number): Observable<IInmueble> {
   let URL: string = '';
-  URL += 'http://localhost:8085';
-  URL += '/inmueble';
-  URL += '/' + id;
-  return this.oHttp.get<IInmueble>('http://localhost:8085/inmueble/' + id);
+  
+  return this.oHttp.get<IInmueble>(this.serverURL + '/' + id);
 }
 
 
 
 delete(id: number, force: boolean = false) {
   const options = force ? { params: { force: 'true' } } : {};
-  return this.oHttp.delete('http://localhost:8085/inmueble/' + id, options);
+  return this.oHttp.delete(this.serverURL + '/' + id, options);
 }
 
 getInmueblesSinSocio(): Observable<IInmueble[]> {
-  return this.oHttp.get<IInmueble[]>('http://localhost:8085/inmueble/sin-socio');
+  return this.oHttp.get<IInmueble[]>(this.serverURL + '/sin-socio');
 }
 
 update1(oInmueble: IInmueble): Observable<IInmueble> {
-  return this.oHttp.put<IInmueble>('http://localhost:8085/inmueble/' + oInmueble.id, oInmueble);
+  return this.oHttp.put<IInmueble>(this.serverURL + '/' + oInmueble.id, oInmueble);
 }
 
 

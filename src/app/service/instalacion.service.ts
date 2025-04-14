@@ -121,7 +121,7 @@ import { IPage } from "../model/model.interface";
   create(formData: FormData): Observable<IInstalacion> {
     let URL: string = '';
     URL += this.serverURL;
-    return this.oHttp.put<IInstalacion>('https://cel-backend.onrender.com/instalacion/new', formData);
+    return this.oHttp.put<IInstalacion>(this.serverURL+'/new', formData);
   }
   
   update(oInstalacion: IInstalacion): Observable<IInstalacion> {
@@ -132,15 +132,13 @@ import { IPage } from "../model/model.interface";
   
   getOne(id: number): Observable<IInstalacion> {
     let URL: string = '';
-    URL += 'https://cel-backend.onrender.com';
-    URL += '/instalacion';
-    URL += '/' + id;
-    return this.oHttp.get<IInstalacion>('https://cel-backend.onrender.com/instalacion/' + id);
+    
+    return this.oHttp.get<IInstalacion>((this.serverURL+'/'+id));
   }
   
   delete(id: number, force: boolean = false) {
     const options = force ? { params: { force: 'true' } } : {};
-    return this.oHttp.delete('https://cel-backend.onrender.com/instalacion/' + id, options);
+    return this.oHttp.delete(this.serverURL+'/' + id, options);
   }
   
   

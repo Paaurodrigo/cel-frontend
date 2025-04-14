@@ -14,13 +14,13 @@ export class ConexionService {
     serverURL: string = serverURL + '/conexion';
 
     constructor(private oHttp: HttpClient) {}
-
+   
 
 
     create(formData: FormData): Observable<IConexion> {
       let URL: string = '';
       URL += this.serverURL;
-      return this.oHttp.put<IConexion>('http://localhost:8085/conexion/new', formData);
+      return this.oHttp.put<IConexion>(this.serverURL+'/new', formData);
     }
 
     getInstalacionById(id: number): Observable<any> {
@@ -34,7 +34,7 @@ export class ConexionService {
     }
 
     confirmarFirma(conexionId: number, firmaBase64: string) {
-      return this.oHttp.post(`http://localhost:8085/conexion/${conexionId}/firmar`, { firma: firmaBase64 });
+      return this.oHttp.post(this.serverURL + `/${conexionId}/firmar`, { firma: firmaBase64 });
     }
     
     
