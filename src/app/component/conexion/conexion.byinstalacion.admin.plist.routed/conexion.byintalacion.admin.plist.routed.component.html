@@ -171,7 +171,13 @@
                     </th>
                     <th class="sortable" (click)="sort('inmueble')">
                       <div class="d-flex align-items-center">
-                        <span>Inmuebles</span>
+                        <span>Inmueble</span>
+                        <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'inmueble' && strDir === 'desc', 'bi-caret-up-fill': strField === 'inmueble' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'inmueble'}"></i>
+                      </div>
+                    </th>
+                    <th class="sortable" (click)="sort('inmueble')">
+                      <div class="d-flex align-items-center">
+                        <span>Propietario</span>
                         <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'inmueble' && strDir === 'desc', 'bi-caret-up-fill': strField === 'inmueble' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'inmueble'}"></i>
                       </div>
                     </th>
@@ -214,6 +220,12 @@
                       <div class="d-flex align-items-center">
                         <i class="bi bi-building me-2 text-muted"></i>
                         <span>{{ conexion.inmueble.cups }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-building me-2 text-muted"></i>
+                        <span>{{ conexion.inmueble.socio.apellido1 }} {{ conexion.inmueble.socio.apellido2 }} {{ conexion.inmueble.socio.nombre }}</span>
                       </div>
                     </td>
                     <td class="text-center">
