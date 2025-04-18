@@ -67,6 +67,12 @@
                       <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'municipio' && strDir === 'desc', 'bi-caret-up-fill': strField === 'municipio' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'municipio'}"></i>
                     </div>
                   </th>
+                  <th class="sortable" (click)="sort('propietario')">
+                    <div class="d-flex align-items-center">
+                      <span>Propietario</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'municipio' && strDir === 'desc', 'bi-caret-up-fill': strField === 'municipio' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'municipio'}"></i>
+                    </div>
+                  </th>
                   <th class="sortable" (click)="sort('uso')">
                     <div class="d-flex align-items-center">
                       <span>Uso</span>
@@ -85,6 +91,7 @@
                     <small class="text-muted">CP: {{ inmueble.codigoPostal }}</small>
                   </td>
                   <td>{{ inmueble.municipio }}</td>
+                  <td>{{ inmueble.socio.nombre }} {{ inmueble.socio.apellido1 }} {{ inmueble.socio.apellido2 }}</td>
                   <td>
                     <span class="badge rounded-pill bg-light text-dark border">{{ inmueble.uso }}</span>
                   </td>
