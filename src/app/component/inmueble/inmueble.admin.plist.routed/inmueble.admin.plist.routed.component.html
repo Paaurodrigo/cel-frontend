@@ -79,12 +79,19 @@
                       <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'uso' && strDir === 'desc', 'bi-caret-up-fill': strField === 'uso' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'uso'}"></i>
                     </div>
                   </th>
+
+                  <th class="sortable" (click)="sort('uso')">
+                    <div class="d-flex align-items-center">
+                      <span>Recomendacion</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'uso' && strDir === 'desc', 'bi-caret-up-fill': strField === 'uso' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'uso'}"></i>
+                    </div>
+                  </th>
                   <th class="text-center">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 @for (inmueble of oPage?.content; track inmueble.cups) {
-                <tr class="cursor-pointer hover-row" (click)="view(inmueble)">
+                <tr>
                   <td class="fw-medium">{{ inmueble.cups }}</td>
                   <td>
                     <div>{{ inmueble.direccion }}</div>
@@ -94,6 +101,9 @@
                   <td>{{ inmueble.socio.nombre }} {{ inmueble.socio.apellido1 }} {{ inmueble.socio.apellido2 }}</td>
                   <td>
                     <span class="badge rounded-pill bg-light text-dark border">{{ inmueble.uso }}</span>
+                  </td>
+                  <td>
+                    <span >{{ inmueble.recomendacion }}</span>
                   </td>
                   <td>
                     <div class="d-flex justify-content-center gap-2">

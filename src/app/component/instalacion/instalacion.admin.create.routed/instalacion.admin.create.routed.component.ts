@@ -91,7 +91,7 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   seleccionarDireccion(sugerencia: any): void {
     const direccionCompleta = [
       sugerencia.properties.name,
-      sugerencia.properties.postcode,
+      sugerencia.properties.postcode,      
       sugerencia.properties.city,
       sugerencia.properties.state,
       sugerencia.properties.country

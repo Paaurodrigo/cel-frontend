@@ -1,223 +1,459 @@
-<div class="container mt-5 d-flex justify-content-center">
-  <div class="card w-50 shadow-lg">
-    <div class="card-header text-center">
-      <h2 class="my-2">
-        <i class="bi bi-plus-square"></i>
-        Creación de Inmueble
-        <i class="bi bi-person-circle"></i>
-      </h2>
-    </div>
-    <div class="card-body">
-      <form [formGroup]="oInmuebleForm!" (ngSubmit)="onSubmit()" novalidate>
-
-        <!-- Campo Cups -->
-        <div class="mb-3">
-          <mat-form-field class="w-100">
-            <mat-label>CUPS</mat-label>
-            <input matInput
-              formControlName="cups"
-              placeholder="Introduce el CUPS"
-              class="form-control"
-              (input)="onCupsChange()"
-              [ngClass]="{
-                'is-valid': cupsValido === true,
-                'is-invalid': cupsValido === false
-              }"
-            />
-            <mat-icon matSuffix *ngIf="cupsValido === true" color="primary"></mat-icon>
-            <mat-icon matSuffix *ngIf="cupsValido === false" color="warn"></mat-icon>
-            <mat-hint align="start">Formato: ES + 16 dígitos</mat-hint>
-          </mat-form-field>
-          
-        </div>
-
-        <!-- Campo Dirección -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Dirección</mat-label>
-            <input matInput type="text" id="direccion" formControlName="direccion" placeholder="Dirección">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('direccion')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('required')">Debes introducir una Dirección.</small>
-            <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('minlength')">La Dirección es demasiado corta.</small>
-            <small *ngIf="oInmuebleForm?.get('direccion')?.hasError('maxlength')">La Dirección es demasiado larga.</small>
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border-0 shadow-lg rounded-3 overflow-hidden">
+        <!-- Header with gradient background -->
+        <div class="card-header bg-gradient-primary text-white py-3">
+          <div class="d-flex align-items-center justify-content-center">
+            <h2 class="mb-0">
+              <i class="bi bi-building me-3 fs-3"></i>
+              Formulario de Alta de Inmueble
+            </h2>
           </div>
         </div>
 
-        <!-- Campo Código Postal -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Código Postal</mat-label>
-            <input matInput type="text" id="codigoPostal" formControlName="codigoPostal" placeholder="Código Postal">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('codigoPostal')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Código Postal.</small>
-            <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('minlength')">El Código Postal es demasiado corto.</small>
-            <small *ngIf="oInmuebleForm?.get('codigoPostal')?.hasError('maxlength')">El Código Postal es demasiado largo.</small>
+        <div class="card-body p-4">
+          <!-- Progress indicator -->
+          <div class="progress mb-4" style="height: 6px">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              style="width: 0%"
+              [style.width]="formProgress + '%'"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
           </div>
-        </div>
 
-        <!-- Campo Municipio -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Municipio</mat-label>
-            <input matInput type="text" id="municipio" formControlName="municipio" placeholder="Municipio">
-          </mat-form-field>
-        </div>
+          <form [formGroup]="oInmuebleForm!" (ngSubmit)="onSubmit()" novalidate>
+            <!-- 🏠 DATOS GENERALES -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h4><i class="bi bi-info-circle me-2"></i>Datos generales</h4>
+              </div>
+              <div class="section-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>CUPS</mat-label>
+                      <div class="d-flex align-items-center">
+                        <input
+                          matInput
+                          formControlName="cups"
+                          placeholder="Introduce el CUPS"
+                          class="form-control"
+                          (input)="onCupsChange()"
+                          [ngClass]="{
+                            'is-valid': cupsValido === true,
+                            'is-invalid': cupsValido === false
+                          }"
+                        />
+                      </div>
+                      <mat-icon
+                        matSuffix
+                        *ngIf="cupsValido === true"
+                        color="primary"
+                      ></mat-icon>
+                      <mat-icon
+                        matSuffix
+                        *ngIf="cupsValido === false"
+                        color="warn"
+                      ></mat-icon>
+                      <mat-hint align="start"
+                        >Formato: ES + 16 dígitos</mat-hint
+                      >
+                    </mat-form-field>
+                  </div>
 
-        <!-- Campo Referencia Catastral -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Referencia Catastral</mat-label>
-            <input matInput type="text" id="refCatas" formControlName="refCatas" placeholder="Referencia Catastral">
-          </mat-form-field>
-        </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Referencia Catastral</mat-label>
+                      <div class="d-flex align-items-center">
+                        <input
+                          matInput
+                          formControlName="refCatas"
+                          placeholder="Referencia catastral"
+                        />
+                      </div>
+                    </mat-form-field>
+                  </div>
+                </div>
 
-        <!-- Campo Potencia 1 -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Potencia 1</mat-label>
-            <input matInput type="text" id="potencia1" formControlName="potencia1" placeholder="Potencia 1">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('potencia1')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('potencia1')?.hasError('required')">Debes introducir la Potencia 1.</small>
-          </div>
-        </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Dirección</mat-label>
+                      <div class="d-flex align-items-center">
+                        <input
+                          matInput
+                          type="text"
+                          id="direccion"
+                          class="form-control"
+                          placeholder="Introduce una dirección"
+                          formControlName="direccion"
+                          (input)="onSearchDireccion()"
+                          [attr.autocomplete]="'off'"
+                        />
+                      </div>
+                    </mat-form-field>
+                    <ul
+                      class="list-group position-absolute w-100 z-3"
+                      *ngIf="sugerencias.length > 0"
+                    >
+                      <li
+                        class="list-group-item list-group-item-action"
+                        *ngFor="let sugerencia of sugerencias"
+                        (click)="seleccionarDireccion(sugerencia)"
+                      >
+                        {{ sugerencia.properties.name }},
+                        {{ sugerencia.properties.city }},
+                        {{ sugerencia.properties.state }},
+                        {{ sugerencia.properties.country }}
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div class="col-md-3 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Portal</mat-label>
+                      <input matInput formControlName="portal" placeholder="Ej: 3B" />
+                    </mat-form-field>
+                  </div>
+                
+                  <!-- Campo Puerta -->
+                  <div class="col-md-3 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Puerta</mat-label>
+                      <input matInput formControlName="puerta" placeholder="Ej: 2º A" />
+                    </mat-form-field>
+                  </div>
+ 
 
-        <!-- Campo Potencia 2 -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Potencia 2</mat-label>
-            <input matInput type="text" id="potencia2" formControlName="potencia2" placeholder="Potencia 2">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('potencia2')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('potencia2')?.hasError('required')">Debes introducir la Potencia 2.</small>
-          </div>
-        </div>
+                  <div class="col-md-3 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Código Postal</mat-label>
+                      <input matInput formControlName="codigoPostal" />
+                    </mat-form-field>
+                  </div>
 
-        <!-- Campo Tensión -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Tensión</mat-label>
-            <select matNativeControl formControlName="tension">
-              <option value="" disabled selected>Selecciona una tensión</option>
-              <option value="230">230</option>
-              <option value="400">400</option>
-            </select>
-          </mat-form-field>
-        </div>
- <!-- Campo Comercializadora -->
-        <mat-form-field appearance="fill">
-          <mat-label>Comercializadora</mat-label>
-          <select matNativeControl formControlName="comercializadora">
-            <option value="" disabled selected>Selecciona una comercializadora</option>
-            <option value="Iberdrola">Iberdrola</option>
-            <option value="Endesa">Endesa</option>
-            <option value="Naturgy">Naturgy</option>
-            <option value="Repsol">Repsol</option>
-            <option value="EDP">EDP</option>
-            <option value="Otra">Otra</option>
-          </select>
-        </mat-form-field>
-        
-
-        <!-- Campo Uso -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Uso</mat-label>
-            <select matNativeControl formControlName="uso">
-              <option value="" disabled selected>Selecciona un uso</option>
-              <option value="Vivienda Habitual">Vivienda Habitual</option>
-              <option value="Vivienda No Habitual">Vivienda No Habitual</option>
-              <option value="Local Comercial">Local Comercial</option>
-              <option value="Garaje">Garaje</option>
-              <option value="Otros">Otros</option>
-            </select>
-          </mat-form-field>
-        </div>
-
-        <!-- Campo Recomendación -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Recomendación</mat-label>
-            <input matInput type="text" id="recomendacion" formControlName="recomendacion" placeholder="Recomendación">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('recomendacion')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('recomendacion')?.hasError('required')">Debes introducir una Recomendación.</small>
-          </div>
-        </div>
-
-        <!-- Campo Consumo Anual -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Consumo Anual</mat-label>
-            <input matInput type="text" id="consumoAnual" formControlName="consumoAnual" placeholder="Consumo Anual">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('consumoAnual')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('consumoAnual')?.hasError('required')">Debes introducir el Consumo Anual.</small>
-          </div>
-        </div>
-
-        <!-- Campo Intención -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Intención</mat-label>
-            <input matInput type="text" id="intencion" formControlName="intencion" placeholder="Intención">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('intencion')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('intencion')?.hasError('required')">Debes introducir una Intención.</small>
-          </div>
-        </div>
-
-        <!-- Campo Hábitos -->
-        <div class="mb-3">
-          <mat-form-field appearance="fill">
-            <mat-label>Hábitos</mat-label>
-            <input matInput type="text" id="habitos" formControlName="habitos" placeholder="Hábitos">
-          </mat-form-field>
-          <div *ngIf="oInmuebleForm?.get('habitos')?.errors" class="text-danger">
-            <small *ngIf="oInmuebleForm?.get('habitos')?.hasError('required')">Debes introducir los Hábitos.</small>
-          </div>
-        </div>
-
-
-        <!-- Selector de Socio -->
-        <div formGroupName="socio">
-          <div class="row mt-4">
-            <div class="col">
-              <mat-form-field appearance="fill">
-                <mat-label>Socio</mat-label>
-                <input [readonly]="true" matInput formControlName="nombre" placeholder="Nombre del socio" />
-              </mat-form-field>
+                  <div class="col-md-3 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Municipio</mat-label>
+                      <input matInput formControlName="municipio" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col">
-              <mat-form-field appearance="fill">
-                <mat-label>Primer Apellido</mat-label>
-                <input [readonly]="true" matInput formControlName="apellido1" placeholder="Primer Apellido" />
-              </mat-form-field>
+
+            <!-- ⚡ CONSUMO Y POTENCIA -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h4>
+                  <i class="bi bi-lightning-charge me-2"></i>Consumo y potencia
+                </h4>
+              </div>
+              <div class="section-body">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Potencia 1</mat-label>
+                      <input
+                        matInput
+                        formControlName="potencia1"
+                        placeholder="Potencia 1"
+                        type="number"
+                        step="0.01"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Potencia 2</mat-label>
+                      <input
+                        matInput
+                        formControlName="potencia2"
+                        placeholder="potencia 2"
+                        type="number"
+                        step="0.01"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Tensión</mat-label>
+                      <select matNativeControl formControlName="tension">
+                        <option value="" disabled selected>Selecciona</option>
+                        <option value="230">230 V</option>
+                        <option value="400">400 V</option>
+                      </select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-auto d-flex align-items-end">
-              <button class="btn btn-primary" (click)="showSocioSelectorModal()">
-                <i class="bi bi-search"></i> Buscar
+
+            <!-- 🌞 Hábitos -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h4>
+                  <i class="bi bi-sun me-2"></i>Consumo durante horas solares
+                </h4>
+              </div>
+              <div class="section-body">
+                <div class="mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label
+                      >¿Qué porcentaje consumes en horas solares?</mat-label
+                    >
+                    <select matNativeControl formControlName="habitos">
+                      <option value="" disabled selected>Selecciona</option>
+                      <option value="70%">70%</option>
+                      <option value="60%">60%</option>
+                      <option value="40%">40%</option>
+                      <option value="20%">20%</option>
+                      <option value="15%">15%</option>
+                    </select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <!-- 🏢 Uso, comercializadora, recomendación -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h4><i class="bi bi-card-checklist me-2"></i>Otros datos</h4>
+              </div>
+              <div class="section-body">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Uso</mat-label>
+                      <select matNativeControl formControlName="uso">
+                        <option value="" disabled selected>Selecciona</option>
+                        <option value="Vivienda Habitual">
+                          Vivienda Habitual
+                        </option>
+                        <option value="Vivienda No Habitual">
+                          Vivienda No Habitual
+                        </option>
+                        <option value="Local Comercial">Local Comercial</option>
+                        <option value="Garaje">Garaje</option>
+                        <option value="Otros">Otros</option>
+                      </select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Comercializadora</mat-label>
+                      <select
+                        matNativeControl
+                        formControlName="comercializadora"
+                      >
+                        <option value="" disabled selected>Selecciona</option>
+                        <option value="Iberdrola">Iberdrola</option>
+                        <option value="Endesa">Endesa</option>
+                        <option value="Naturgy">Naturgy</option>
+                        <option value="Repsol">Repsol</option>
+                        <option value="EDP">EDP</option>
+                        <option value="Otra">Otra</option>
+                      </select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <!-- 📊 Intención y consumo anual -->
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Intención</mat-label>
+                      <input matInput formControlName="intencion" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Consumo Anual (kWh)</mat-label>
+                      <input matInput formControlName="consumoAnual" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 👤 Socio asignado -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h4>
+                  <i class="bi bi-person-circle me-2"></i>Titular del inmueble
+                </h4>
+              </div>
+              <div class="section-body">
+                <div formGroupName="socio" class="row">
+                  <div class="col-md-5 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Nombre</mat-label>
+                      <input
+                        matInput
+                        formControlName="nombre"
+                        [readonly]="true"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-5 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Primer Apellido</mat-label>
+                      <input
+                        matInput
+                        formControlName="apellido1"
+                        [readonly]="true"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-2 mb-3 d-flex align-items-end">
+                    <button
+                      type="button"
+                      class="btn btn-primary w-100 search-btn"
+                      (click)="showSocioSelectorModal()"
+                    >
+                      <i class="bi bi-search"></i> Buscar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 🎯 Botones -->
+            <div class="d-flex justify-content-between mt-4">
+              <button
+                class="btn btn-outline-primary px-4"
+                type="button"
+                [routerLink]="['/admin', 'inmueble', 'plist']"
+              >
+                <i class="bi bi-list me-2"></i> Listado
               </button>
+              <div>
+                <button
+                  class="btn btn-outline-secondary me-2"
+                  type="reset"
+                  (click)="onReset()"
+                >
+                  <i class="bi bi-x-circle me-1"></i> Reset
+                </button>
+                <button
+                  class="btn btn-success px-4"
+                  type="submit"
+                  [disabled]="isSubmitting"
+                >
+                  <i class="bi bi-save2 me-2"></i> Guardar
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
-       
-        <!-- Botones -->
-        <div class="text-center">
-          <button class="btn btn-warning mt-4 mx-1" [routerLink]="['/admin', 'inmueble', 'plist']">
-            <i class="bi bi-list"></i> Ir a listado de Inmuebles
-          </button>
-          <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
-            <i class="bi bi-x-lg"></i> Reset
-          </button>
-          <button class="btn btn-success mt-4 mx-1" type="submit" [disabled]="isSubmitting">
-            <i class="bi bi-floppy"></i> Guardar
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
-<button type="button" (click)="rellenarFormulario()">Rellenar Formulario</button>
+
+<style>
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  }
+
+  .section-card {
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .section-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-header {
+    background-color: #f8f9fa;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .section-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #0d6efd;
+  }
+
+  .section-body {
+    padding: 16px;
+  }
+
+  .search-btn {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .progress {
+    border-radius: 10px;
+    background-color: #e9ecef;
+  }
+
+  .progress-bar {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+  }
+
+  /* Material form field styling */
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #bdbdbd;
+  }
+
+  ::ng-deep
+    .mat-form-field-appearance-outline.mat-focused
+    .mat-form-field-outline {
+    color: #0d6efd;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0;
+  }
+
+  /* Button styling */
+  .btn {
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-success {
+    background-color: #198754;
+    border-color: #198754;
+  }
+
+  .btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+  }
+</style>

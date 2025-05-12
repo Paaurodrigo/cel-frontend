@@ -5,6 +5,7 @@ import { IInmueble } from '../model/inmueble.interface';
 import { IPage } from '../model/model.interface';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })

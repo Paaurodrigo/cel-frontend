@@ -33,6 +33,9 @@ import { ConexionAdminViewRoutedComponent } from './component/conexion/conexion.
 import { ConexionByInstalacionAdminPlistRoutedComponent } from './component/conexion/conexion.byinstalacion.admin.plist.routed/conexion.byintalacion.admin.plist.routed.component';
 import { ConexionAdminFirmaRoutedComponent } from './component/conexion/conexion.admin.firma.routed/conexion.admin.firma.routed.component';
 import { ConexionAdminAddRoutedComponent } from './component/conexion/conexion.admin.add.routed/conexion.admin.add.routed.component';
+import { InmuebleAdminCreateByuserRoutedComponent } from './component/inmueble/inmueble.admin.create.byuser.routed/inmueble.admin.create.byuser.routed.component';
+import { SharedRecuperarContraseñaComponent } from './shared/shared.recuperar.contraseña/shared.recuperar.contraseña.component';
+import { SharedRestablecerContraseñaComponent } from './shared/shared.restablecer.contraseña/shared.restablecer.contraseña.component';
 
 export const routes: Routes = [
 
@@ -41,8 +44,8 @@ export const routes: Routes = [
   { path: '', component: SharedHomeRoutedComponent },
   { path: 'byemail/:email', component: SharedByemailRoutedComponent},
   { path: 'register', component: SharedRegistrerRoutedComponent },
-  
-  
+  { path: 'forgot-password', component: SharedRecuperarContraseñaComponent },
+  { path: 'reset-password/:id', component: SharedRestablecerContraseñaComponent },
   
   
   { path: 'admin/socio/plist', component: SocioAdminPlistRoutedComponent,canActivate: [AdminGuard] },
@@ -57,6 +60,7 @@ export const routes: Routes = [
   {path: 'admin/inmueble/edit/:id', component:InmuebleAdminEditRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/create', component:InmuebleAdminCreateRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/view/:id', component:InmuebleAdminViewRoutedComponent,canActivate: [AdminGuard]},
+  {path: 'admin/inmueble/create/xsocio/:id', component: InmuebleAdminCreateByuserRoutedComponent,canActivate: [AdminGuard]},
 
 
   {path: 'client/inmueble/create', component: InmuebleClientCreateRoutedComponent,canActivate: [MiembroGuard]},
@@ -72,9 +76,7 @@ export const routes: Routes = [
   {path: 'admin/instalacion/view/:id', component: InstalacionAdminViewRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/plist/xsocio/:id', component :InmuebleXsocioAdminPlistRoutedComponent,canActivate: [AdminGuard]},
   {path: 'admin/inmueble/plist/xinstalacion/:id', component :InmuebleXinstalacionAdminPlistRoutedComponent,canActivate: [AdminGuard]},
-
-
-
+ 
 
 { path: 'admin/conexion/new', component: ConexionAdminCreateRoutedComponent,canActivate: [AdminGuard]},
 { path: 'admin/conexion/plist', component: ConexionAdminPlistRoutedComponent,canActivate: [AdminGuard] },

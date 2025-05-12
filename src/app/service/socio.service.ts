@@ -77,7 +77,7 @@ export class SocioService {
   }
 
   delete(id: number) {
-    return this.oHttp.delete(this.serverURL + id);
+    return this.oHttp.delete(this.serverURL+'/' + id);
   }
 
   getFotoDni(id: number): Observable<Blob> {

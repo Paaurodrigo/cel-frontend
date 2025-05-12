@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <div class="card mx-auto shadow" style="max-width: 500px;">
+    <div class="card-header bg-primary text-white text-center">
+      <h3><i class="bi bi-shield-lock me-2"></i> Establecer nueva contraseña</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="dni" class="form-label">DNI</label>
+          <input type="text" id="dni" class="form-control" formControlName="dni" placeholder="Introduce tu DNI" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Nueva contraseña</label>
+          <input type="password" id="password" class="form-control" formControlName="password" placeholder="Nueva contraseña" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+          <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" placeholder="Repite la contraseña" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+          <i class="bi bi-check-circle me-1"></i> Cambiar contraseña
+        </button>
+      </form>
+
+      <div class="alert alert-danger mt-3 text-center" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="alert alert-success mt-3 text-center" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,8 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { SessionService } from '../../../service/session.service';
 import { CommonModule } from '@angular/common';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 declare let bootstrap: any;
+
 @Component({
   selector: 'app-inmueble.client.create.routed',
   templateUrl: './inmueble.client.create.routed.component.html',
@@ -27,70 +29,105 @@ declare let bootstrap: any;
   ],
 })
 export class InmuebleClientCreateRoutedComponent implements OnInit {
-
-  oInmuebleForm!: FormGroup; // ¡Sin inicializar aquí!
+  oInmuebleForm!: FormGroup;
   oInmueble: IInmueble | null = null;
   strMessage: string = '';
   myModal: any;
   readonly dialog = inject(MatDialog);
- 
-  constructor( private oInmuebleService: InmuebleService,
+  cupsValido: boolean | null = null;
+  private cupsSubject: Subject<string> = new Subject<string>();
+  isSubmitting = false;
+  direccionSubject: Subject<string> = new Subject<string>();
+  sugerencias: any[] = [];
+  formProgress: number = 0;
+
+  constructor(
+    private oInmuebleService: InmuebleService,
     private oRouter: Router,
     private fb: FormBuilder,
     private oSessionService: SessionService
-  
-  ) { }
+  ) {}
 
-    isSubmitting = false;
+  ngOnInit() {
+    this.createForm();
+    this.oInmuebleForm.get('consumoAnual')?.valueChanges.subscribe(() => this.calcularRecomendacion());
+this.oInmuebleForm.get('habitos')?.valueChanges.subscribe(() => this.calcularRecomendacion());
 
-
-    ngOnInit() {
-      this.createForm();
-      
-      // Obtener el ID del usuario logueado
-      const userId = this.oSessionService.getSessionId;  // 🛠️ Asegúrate de que este método existe
-      console.log('ID del usuario logueado:', userId); // Debug
-    
-      if (userId) {
-        this.oInmuebleForm.get('socio.id')?.setValue(userId);
-      }
-    
-      this.oInmuebleForm.markAllAsTouched();
+this.cupsSubject.pipe(debounceTime(1000)).subscribe(cups => {
+  this.cupsValido = cups ? this.validarCUPS(cups) : null;
+});
+    const userId = this.oSessionService.getSessionId();
+    if (userId) {
+      this.oInmuebleForm.get('socio.id')?.setValue(userId);
     }
-    
-  
-    showModal(mensaje: string): void {
-      this.strMessage = mensaje;
-      this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
-        keyboard: false,
-      });
-      this.myModal.show();
-    }
+    this.oInmuebleForm.markAllAsTouched();
+
+    this.direccionSubject.pipe(
+                  debounceTime(400),
+                  distinctUntilChanged()
+                ).subscribe(direccion => {
+                  if (!direccion || direccion.length < 3) {
+                    this.sugerencias = [];
+                    return;
+                  }
+            
+                  fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5&bbox=-1.75,37.8,0.75,40.9`)
+              .then(res => res.json())
+              .then(data => {
+                this.sugerencias = data.features;
+              })
+              .catch(err => {
+                console.error('Error al buscar direcciones:', err);
+                this.sugerencias = [];
+              });
+                });
+  }
+
+  showModal(mensaje: string): void {
+    this.strMessage = mensaje;
+    this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
+      keyboard: false,
+    });
+    this.myModal.show();
+  }
 
   createForm() {
     this.oInmuebleForm = this.fb.group({
-      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]], 
+      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]],
       direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+      codigoPostal: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
       municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       refCatas: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      potencia1: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
-      potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(10)]],
+      potencia1: ['', [Validators.required]],
+      potencia2: ['', [Validators.required]],
       tension: [''],
-      uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]], 
+      uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       consumoAnual: ['', Validators.required],
-      intencion: ['', Validators.required],
+      comercializadora: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       habitos: ['', Validators.required],
+      recomendacion: [''],
       socio: this.fb.group({
-        id: ['', Validators.required],  // Se rellenará automáticamente
+        id: ['', Validators.required],
       }),
     });
   }
-  
-  
-  // Modal con MatDialog en lugar de bootstrap.Modal
-  
-  
+
+  onCupsChange(): void {
+    const cups = this.oInmuebleForm.get('cups')?.value;
+    this.cupsSubject.next(cups);
+  }
+
+  calcularRecomendacion() {
+    const consumo = Number(this.oInmuebleForm.get('consumoAnual')?.value);
+    const habitosStr = this.oInmuebleForm.get('habitos')?.value;
+    const porcentaje = habitosStr ? parseFloat(habitosStr.replace('%', '')) / 100 : 0;
+    if (!consumo || !porcentaje) {
+      this.oInmuebleForm.get('recomendacion')?.setValue('', { emitEvent: false });
+      return;
+    }
+    const resultado = (consumo * porcentaje) / 1450;
+    this.oInmuebleForm.get('recomendacion')?.setValue(resultado.toFixed(2), { emitEvent: false });
+  }
 
   hideModal(): void {
     this.myModal.hide();
@@ -98,43 +135,40 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
   }
 
   onReset(): void {
-    this.oInmuebleForm?.reset(); // Usa el método reset de Angular
+    this.oInmuebleForm?.reset();
   }
 
-
- 
-  
   onSubmit() {
-    // Si el formulario es inválido, no enviamos nada
     if (this.oInmuebleForm?.invalid) {
       alert('Formulario inválido. Por favor, revisa los campos marcados.');
       return;
     }
-  
-    // Evitar múltiples envíos
-    if (this.isSubmitting) {
-      return;
-    }
-  
-    this.isSubmitting = true; // Bloquear el formulario mientras se procesa
-  
-    // Obtener el ID del socio desde el SessionService
-    const socioId = this.oSessionService.getSessionId(); // Asegúrate de que este método exista en SessionService
+
+    if (this.isSubmitting) return;
+
+    this.isSubmitting = true;
+    this.calcularRecomendacion();
+
+    const socioId = this.oSessionService.getSessionId();
     if (!socioId) {
       alert('No se pudo asignar el socio. Inicia sesión nuevamente.');
       this.isSubmitting = false;
       return;
     }
-  
-    // Asignar el ID del socio automáticamente
+    const formData = this.oInmuebleForm.value;
+    const direccionCompleta = [
+      formData.direccion,
+      formData.portal && `${formData.portal}`
+    ].filter(Boolean).join(', ');
+    formData.direccion = direccionCompleta;
+
     this.oInmuebleForm.get('socio.id')?.setValue(socioId);
-  
-    // Llamada al servicio para crear el inmueble
+
     this.oInmuebleService.create(this.oInmuebleForm.value).subscribe({
       next: (oInmueble: IInmueble) => {
         this.oInmueble = oInmueble;
         alert('Inmueble creado con éxito');
-        this.oRouter.navigate(['/client/inmueble/plist']); // Redirige a la vista de cliente
+        this.oRouter.navigate(['/client/inmueble/plist']);
       },
       error: (err) => {
         if (err.status === 400) {
@@ -147,41 +181,11 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
         console.error(err);
       },
       complete: () => {
-        this.isSubmitting = false; // Rehabilitar el formulario cuando termine el proceso
+        this.isSubmitting = false;
       },
     });
   }
-  
 
-/*  
-  onSubmit() {
-
-    if (this.oInmuebleForm?.invalid) {
-     
-      alert('Formulario inválido. Por favor, revisa los campos marcados.');
-      return;
-    }
-  
-    this.oInmuebleService.create(this.oInmuebleForm?.value).subscribe({
-      next: (oInmueble: IInmueble) => {
-        this.oInmueble = oInmueble;
-        alert('Inmueble creado con éxito');
-        this.oRouter.navigate(['/admin/inmueble/plist']);
-      },
-      error: (err) => {
-        if (err.status === 400) {
-          this.showModal('Datos inválidos. Revisa los campos.');
-        } else if (err.status === 500) {
-          this.showModal('Error interno del servidor. Inténtalo más tarde.');
-        } else {
-          this.showModal('Error desconocido. Consulta con el administrador.');
-        }
-        console.error(err);
-      },
-    });
-  }
-  */
-  
   showSocioSelectorModal() {
     const dialogRef = this.dialog.open(SocioselectorComponent, {
       height: '400px',
@@ -190,30 +194,23 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
       maxWidth: '90%',
       data: { origen: '', idBalance: '' },
     });
-  
+
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        console.log("Socio seleccionado antes de asignarlo al formulario:", result);
-    
         if (result.id && result.nombre && result.apellido1) {
-          // Asigna todos los campos requeridos al 'socio'
           this.oInmuebleForm.get('socio')?.setValue({
             id: result.id,
             nombre: result.nombre,
-            apellido1: result.apellido1
+            apellido1: result.apellido1,
           });
-          console.log("Formulario actualizado:", this.oInmuebleForm.value);
         } else {
-          console.error("El socio no tiene id, nombre o apellido1:", result);
+          console.error('El socio no tiene id, nombre o apellido1:', result);
         }
       }
     });
-    
-  
+
     return false;
   }
-  
-
 
   rellenarFormulario() {
     this.oInmuebleForm.patchValue({
@@ -227,12 +224,43 @@ export class InmuebleClientCreateRoutedComponent implements OnInit {
       tension: 230,
       uso: 'Residencial',
       consumoAnual: 2500,
-      intencion: 'Reducir consumo',
-      habitos: 'Uso moderado'
+      intencion: '50',
+      habitos: '60%'
     });
   }
 
+  onSearchDireccion(): void {
+    const direccion = this.oInmuebleForm.get('direccion')?.value;
+    this.direccionSubject.next(direccion);
+  }
 
+  seleccionarDireccion(sugerencia: any): void {
+    const props = sugerencia.properties;
+  
+    const direccionCompleta = [
+      props.name,
+     
+    ].filter(Boolean).join(', '); // Filtra null/undefined
+  
+    this.oInmuebleForm.patchValue({
+      direccion: direccionCompleta,
+      codigoPostal: props.postcode || '',
+      municipio: props.city || ''
+    });
+  
+    this.sugerencias = [];
+  }
+
+  validarCUPS(cups: string): boolean {
+    const cupsRegex = /^ES(\d{16})([A-Z]{2})$/;
+    const match = cups.match(cupsRegex);
+    if (!match) return false;
+
+    const numbers = match[1];
+    const lettersInput = match[2];
+    const lettersTable = 'TRWAGMYFPDXBNJZSQVHLCKE'.split('');
+    const mod = BigInt(numbers) % 529n;
+    const controlLetters = lettersTable[Number(mod / 23n)] + lettersTable[Number(mod % 23n)];
+    return controlLetters === lettersInput;
+  }
 }
-
-

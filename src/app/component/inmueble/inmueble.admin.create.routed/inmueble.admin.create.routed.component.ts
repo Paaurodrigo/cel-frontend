@@ -15,7 +15,7 @@ import { InmuebleService } from '../../../service/inmueble.service';
 import { SocioselectorComponent } from '../../socio/socioselector/socioselector.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { Subject, debounceTime } from 'rxjs'; // ✅ Importamos RxJS
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs'; 
 
 declare let bootstrap: any;
 
@@ -41,10 +41,12 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   isSubmitting = false;
-
+  formProgress: number = 0;
   // ✅ Añadimos estado para el CUPS
   cupsValido: boolean | null = null;
   private cupsSubject: Subject<string> = new Subject<string>();
+  direccionSubject: Subject<string> = new Subject<string>();
+  sugerencias: any[] = [];
 
   constructor(
     private oInmuebleService: InmuebleService,
@@ -66,11 +68,33 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
         this.cupsValido = this.validarCUPS(cups);
       }
     });
+
+       // ✅ Photon API con debounce
+        this.direccionSubject.pipe(
+          debounceTime(400),
+          distinctUntilChanged()
+        ).subscribe(direccion => {
+          if (!direccion || direccion.length < 3) {
+            this.sugerencias = [];
+            return;
+          }
+    
+          fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5&bbox=-1.75,37.8,0.75,40.9`)
+      .then(res => res.json())
+      .then(data => {
+        this.sugerencias = data.features;
+      })
+      .catch(err => {
+        console.error('Error al buscar direcciones:', err);
+        this.sugerencias = [];
+      });
+        });
+        
   }
 
   createForm() {
     this.oInmuebleForm = this.fb.group({
-      cups: ['', [Validators.minLength(3), Validators.maxLength(50)]],
+      cups: ['', [Validators.minLength(1), Validators.maxLength(50)]],
       direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigoPostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       municipio: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -79,7 +103,6 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       potencia2: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
       tension: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
       uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      recomendacion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       consumoAnual: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
       intencion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       habitos: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -88,11 +111,16 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
         nombre: [''],
         apellido1: ['']
       }),
-      comercializadora:['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
+      comercializadora:['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      portal: [''],
+     puerta: [''],
     });
+
+    this.oInmuebleForm.get('habitos')?.valueChanges.subscribe(() => this.calcularRecomendacion());
   }
 
-  // ✅ Función que se dispara cuando el usuario escribe en el campo CUPS
+
+  
   onCupsChange(): void {
     const cups = this.oInmuebleForm.get('cups')?.value;
     this.cupsSubject.next(cups);
@@ -122,6 +150,19 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   
     return controlLetters === lettersInput;
   }
+  calcularRecomendacion() {
+    const consumo = Number(this.oInmuebleForm.get('consumoAnual')?.value);
+    const intencion = Number(this.oInmuebleForm.get('intencion')?.value);
+  
+    if (!consumo || !intencion || intencion === 0) {
+      this.oInmuebleForm.get('recomendacion')?.setValue('', { emitEvent: false });
+      return;
+    }
+  
+    const resultado = consumo / intencion;
+    this.oInmuebleForm.get('recomendacion')?.setValue(resultado.toFixed(2), { emitEvent: false });
+  }
+  
   
 
   showModal(mensaje: string): void {
@@ -152,14 +193,27 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       alert('Formulario inválido. Por favor, revisa los campos marcados.');
       return;
     }
-
+  
     if (this.isSubmitting) {
       return;
     }
-
+  
     this.isSubmitting = true;
-
-    this.oInmuebleService.create(this.oInmuebleForm?.value).subscribe({
+    const formData = this.oInmuebleForm.value;
+  
+    // Calculamos porcentaje y recomendación
+    const porcentaje = parseFloat(formData.habitos.replace('%', '')) / 100;
+    formData.recomendacion = (formData.consumoAnual * porcentaje) / 1450;
+  
+    // Concatenar portal y puerta a la dirección
+    const direccionCompleta = [
+      formData.direccion,
+      formData.portal && `${formData.portal}`
+    ].filter(Boolean).join(', ');
+    formData.direccion = direccionCompleta;
+  
+    // Enviar al servicio
+    this.oInmuebleService.create(formData).subscribe({
       next: (oInmueble: IInmueble) => {
         this.oInmueble = oInmueble;
         alert('Inmueble creado con éxito');
@@ -180,6 +234,7 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       },
     });
   }
+  
 
   showSocioSelectorModal() {
     const dialogRef = this.dialog.open(SocioselectorComponent, {
@@ -224,4 +279,27 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       habitos: 'Uso moderado'
     });
   }
+
+  onSearchDireccion(): void {
+    const direccion = this.oInmuebleForm.get('direccion')?.value;
+    this.direccionSubject.next(direccion);
+  }
+
+  seleccionarDireccion(sugerencia: any): void {
+    const props = sugerencia.properties;
+  
+    const direccionCompleta = [
+      props.name,
+     
+    ].filter(Boolean).join(', '); // Filtra null/undefined
+  
+    this.oInmuebleForm.patchValue({
+      direccion: direccionCompleta,
+      codigoPostal: props.postcode || '',
+      municipio: props.city || ''
+    });
+  
+    this.sugerencias = [];
+  }
+  
 }

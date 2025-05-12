@@ -3,9 +3,12 @@
     <div class="col text-center">
       <h2 class="my-4">
         <i class="bi bi-list"></i>
-        Selector de tipo de Socio
+        Selector de Socio
         <i class="bi bi-credit-card-fill"></i>
       </h2>
+      <button type="button" class="btn btn-outline-danger" (click)="cerrar()">
+        <i class="bi bi-x-lg me-1"></i> Cerrar
+      </button>
       <!-- Tarjetas de tipos de socio -->
       <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
         <div class="col" *ngFor="let socio of oPage?.content; trackBy: trackById">

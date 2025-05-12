@@ -98,7 +98,7 @@
                   </th>
                   <th class="sortable" (click)="sort('precioKw')">
                     <div class="d-flex align-items-center">
-                      <span>Precio kW</span>
+                      <span>Precio kWp</span>
                       <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'precioKw' && strDir === 'desc', 'bi-caret-up-fill': strField === 'precioKw' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'precioKw'}"></i>
                     </div>
                   </th>
@@ -107,7 +107,7 @@
               </thead>
               <tbody>
                 @for (instalacion of oPage?.content; track instalacion.id) {
-                <tr class="cursor-pointer hover-row" (click)="view(instalacion)">
+                <tr>
                   <td class="fw-medium">{{ instalacion.cau }}</td>
                   <td class="fw-medium">{{ instalacion.nombre }}</td>
                   <td>
@@ -115,23 +115,20 @@
                       <i class="bi bi-grid-3x3 me-1"></i> {{ instalacion.paneles }}
                     </span>
                   </td>
-                  <td>{{ instalacion.potenciaPanel }} W</td>
+                  <td>{{ instalacion.potenciaPanel }} Wp</td>
                   <td>
                     <span class="badge bg-success-subtle text-success">
-                      {{ instalacion.potenciaTotal }} kW
+                      {{ instalacion.potenciaTotal }} kWp
                     </span>
                   </td>
                   <td>
                     <span class="badge bg-info-subtle text-info">
-                      {{ instalacion.potenciaDisponible }} kW
+                      {{ instalacion.potenciaDisponible }} kWp
                     </span>
                   </td>
-                  <td>{{ instalacion.precioKw }} €/kW</td>
+                  <td>{{ instalacion.precioKw }} €/kWp</td>
                   <td>
                     <div class="d-flex justify-content-center gap-2">
-                      <button type="button" class="btn btn-sm btn-action" (click)="$event.stopPropagation(); view(instalacion)" title="Ver detalles">
-                        <i class="bi bi-eye"></i>
-                      </button>
                       <a class="btn btn-sm btn-action-secondary" href="admin/conexion/byinstalacion/plist/{{ instalacion.id }}" (click)="$event.stopPropagation()" title="Ver conexiones">
                         <i class="bi bi-diagram-3"></i>
                         <span class="badge bg-secondary position-absolute top-0 start-100 translate-middle rounded-pill">{{ instalacion.conexiones }}</span>
@@ -140,10 +137,11 @@
                         <button type="button" class="btn btn-sm btn-action-more" data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
                           <i class="bi bi-three-dots-vertical"></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="admin/instalacion/edit/{{ instalacion.id }}"><i class="bi bi-pencil me-2"></i>Editar</a></li>
                           <li><a class="dropdown-item" href="admin/instalacion/delete/{{ instalacion.id }}"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
                         </ul>
+                        
                       </div>
                     </div>
                   </td>

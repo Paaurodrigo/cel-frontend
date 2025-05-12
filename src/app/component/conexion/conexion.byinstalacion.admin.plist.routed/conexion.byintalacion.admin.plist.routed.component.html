@@ -48,7 +48,7 @@
                         </div>
                         <div class="text-center">
                           <div class="display-6 fw-bold text-primary mb-0">{{ instalacion.potenciaTotal }}</div>
-                          <div class="small text-muted">kW Totales</div>
+                          <div class="small text-muted">kWp Totales</div>
                         </div>
                       </div>
                     </div>
@@ -91,12 +91,15 @@
                     <div class="col-3">
                       <div class="tech-stat-card text-center p-3 rounded bg-light">
                         <div class="tech-stat-icon mb-2">
-                          <i class="bi bi-diagram-3 text-info fs-3"></i> <!-- 📊 Conexiones totales -->
+                          <i class="bi bi-lightning-fill text-danger fs-3"></i> <!-- 📊 Potencia utilizada -->
                         </div>
-                        <div class="tech-stat-value fw-bold fs-4">{{ instalacion.conexiones }} kWp</div>
-                        <div class="tech-stat-label small text-muted">Conexiones Totales</div>
+                        <div class="tech-stat-value fw-bold fs-4">
+                          {{ (instalacion.potenciaTotal - instalacion.potenciaDisponible) | number:'1.2-2' }} kWp
+                        </div>
+                        <div class="tech-stat-label small text-muted">Potencia Utilizada</div>
                       </div>
                     </div>
+                    
                     <div class="col-3">
                       <div class="tech-stat-card text-center p-3 rounded bg-light">
                         <div class="tech-stat-icon mb-2">
@@ -183,6 +186,12 @@
                     </th>
                     <th class="sortable">
                       <div class="d-flex align-items-center">
+                        <span>Importe (€)</span>
+                      </div>
+                    </th>
+                    
+                    <th class="sortable">
+                      <div class="d-flex align-items-center">
                         <span>Firma</span>
                       </div>
                     </th>
@@ -200,11 +209,13 @@
                     </td>
                     <td>
                       <div class="progress" style="height: 20px;">
-                        <div class="progress-bar bg-success" role="progressbar" 
+                        <div class="progress-bar bg-success-subtle" role="progressbar" 
                         [style.width]="(conexion.porcentaje * 100) + '%'"
                         [attr.aria-valuenow]="conexion.porcentaje * 100" 
                         aria-valuemin="0" 
-                        aria-valuemax="100">
+                        aria-valuemax="100"
+                        style="color: black;">
+                        
                      {{ (conexion.porcentaje * 100) | number : '1.0-0' }}%
                    </div>
                    
@@ -219,7 +230,7 @@
                     <td>
                       <div class="d-flex align-items-center">
                         <i class="bi bi-building me-2 text-muted"></i>
-                        <span>{{ conexion.inmueble.cups }}</span>
+                        <a href="admin/inmueble/view/{{ conexion.inmueble.id }}">{{ conexion.inmueble.cups }}</a>
                       </div>
                     </td>
                     <td>
@@ -228,6 +239,12 @@
                         <span>{{ conexion.inmueble.socio.apellido1 }} {{ conexion.inmueble.socio.apellido2 }} {{ conexion.inmueble.socio.nombre }}</span>
                       </div>
                     </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <span>{{ (+conexion.potencia) * (+instalacion.precioKw) | number:'1.2-2' }} €</span>
+                      </div>
+                    </td>
+                    
                     <td class="text-center">
                       <span *ngIf="conexion.firma; else noFirma" class="text-success fw-bold fs-4">✅</span>
                       <ng-template #noFirma>

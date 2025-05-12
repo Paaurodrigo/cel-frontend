@@ -3,6 +3,16 @@
   <h2 class="mb-3">Autorizar Conexión</h2>
   <p>Firma para autorizar la conexión:</p>
 
+  <div *ngIf="mensajeMostrado" class="mt-3">
+    <div *ngIf="mensaje" class="alerta-exito">
+      {{ mensaje }}
+    </div>
+    <div *ngIf="mensajeError" class="alerta-error">
+      {{ mensajeError }}
+    </div>
+  </div>
+
+  
   <div class="firma-container">
     <signature-pad [options]="signaturePadOptions" #signaturePad></signature-pad>
   </div>

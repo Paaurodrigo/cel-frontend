@@ -17,5 +17,6 @@ export interface IInmueble {
     recomendacion:string;
     socio: ISocio;
     comercializadora: string;
+    puerta: string;
 }
   
