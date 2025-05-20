@@ -1,0 +1,47 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #e0f7fa, #f1f8e9);
+    padding: 2rem;
+  }
+  
+  .welcome-box {
+    max-width: 700px;
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  
+    h1 {
+      color: #388e3c;
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
+  
+    .intro {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #555;
+    }
+  
+    .info {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #666;
+    }
+  
+    .logo {
+      max-width: 120px;
+      margin-bottom: 1rem;
+    }
+  
+    button {
+      padding: 0.6rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+    }
+  }
+  
