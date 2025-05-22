@@ -65,25 +65,37 @@ export class ConexionAdminFirmaRoutedComponent implements AfterViewInit {
     this.mensajeError = '';
     this.mensajeMostrado = false;
   
-    if (!this.firmaBase64) {
-      this.mensajeError = "Debes guardar la firma antes de enviarla.";
+    // Auto-guardar antes de comprobar si está vacía
+    if (this.signaturePad.isEmpty()) {
+      this.mensajeError = "❌ Por favor, dibuja tu firma antes de enviarla.";
       this.mensajeMostrado = true;
       return;
     }
   
-    this.conexionService.confirmarFirma(this.conexionId, this.firmaBase64).subscribe(() => {
-      this.mensaje = "Firma enviada correctamente.";
-      this.mensajeMostrado = true;
+    this.firmaBase64 = this.signaturePad.toDataURL();
+    this.firmaGuardada = true;
   
-      // Da tiempo a leer el mensaje antes de redirigir
-      setTimeout(() => {
-        this.router.navigate(['/admin/conexion/plist']);
-      }, 1500);
-  
-    }, error => {
-      console.error("Error al enviar la firma:", error);
-      this.mensajeError = "Error al enviar la firma. Inténtalo de nuevo.";
-      this.mensajeMostrado = true;
-    });
+    this.conexionService.confirmarFirma(this.conexionId, this.firmaBase64).subscribe(
+      (response: any) => {
+        // Muestra el mensaje recibido del backend
+        this.mensajeError = response.message || "✅ Firma enviada correctamente.";
+        this.mensajeError = '';
+        this.mensajeMostrado = true;
+    
+        setTimeout(() => {
+          this.router.navigate(['/admin/conexion/plist']);
+        }, 1500);
+      },
+      error => {
+        console.error("Error al enviar la firma:", error);
+        this.mensajeError = error.error?.message || "✅ Firma enviada correctamente.";
+        this.mensaje = '';
+        this.mensajeMostrado = true;
+      }
+    );
+    
+    
   }
+  
+  
 }
