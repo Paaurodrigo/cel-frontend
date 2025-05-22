@@ -4,7 +4,7 @@ export const environment = {
   production: false,
 };
 
-export const serverURL: string = 'https://cel-frontend.vercel.app';
+export const serverURL: string = 'https://cel-backend.onrender.com';
 
 
 export const httpOptions = {
