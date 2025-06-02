@@ -1,7 +1,7 @@
 <div class="container-fluid py-4">
-  <div class="row mb-4">
+  <div class="row">
     <div class="col-12">
-      <div class="card shadow border-0 rounded-3">
+      <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3">
           <div class="d-flex justify-content-between align-items-center">
             <h2 class="mb-0 fs-4 fw-bold">
@@ -28,121 +28,94 @@
                   (keyup)="filter($event)" 
                   [(ngModel)]="strFiltro"
                 />
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="bi bi-funnel"></i>
-                </button>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="d-flex justify-content-md-end mt-3 mt-md-0">
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 6" (click)="goToRpp(6)">6</button>
-                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 18" (click)="goToRpp(18)">18</button>
-                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 30" (click)="goToRpp(30)">30</button>
+              <div class="d-flex justify-content-md-end gap-2">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 10" (click)="goToRpp(10)">10</button>
+                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 25" (click)="goToRpp(25)">25</button>
+                  <button type="button" class="btn btn-outline-secondary" [class.active]="nRpp === 50" (click)="goToRpp(50)">50</button>
                 </div>
-                <button class="btn btn-outline-secondary ms-2" (click)="sort('id')">
-                  <i class="bi bi-sort-numeric-down me-1"></i> ID
-                  <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'id' && strDir === 'desc', 'bi-caret-up-fill': strField === 'id' && strDir === 'asc'}"></i>
-                </button>
               </div>
             </div>
           </div>
 
-          <!-- Tarjetas de socios -->
-          <div class="row">
-            @for (socio of oPage?.content; track socio.id) {
-              <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card shadow-sm h-100 hover-card">
-                  <div class="card-header bg-white border-bottom py-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-0 fw-bold">{{ socio.nombre }} {{ socio.apellido1 }} {{ socio.apellido2 }}</h5>
-                      <span class="badge bg-primary-subtle text-primary">ID: {{ socio.id }}</span>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="mb-3">
-                      <div class="row g-3">
-                        <div class="col-sm-6">
-                          <div class="detail-item">
-                            <span class="detail-label">DNI</span>
-                            <span class="detail-value">{{ socio.dni }}</span>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="detail-item">
-                            <span class="detail-label">Tipo</span>
-                            <span class="detail-value">
-                              <span class="badge rounded-pill bg-light text-dark border">
-                                {{ socio.tiposocio.descripcion }}
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="detail-item">
-                            <span class="detail-label">Email</span>
-                            <span class="detail-value">{{ socio.email }}</span>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="detail-item">
-                            <span class="detail-label">Teléfono</span>
-                            <span class="detail-value">{{ socio.telefono }}</span>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="detail-item">
-                            <span class="detail-label">Dirección</span>
-                            <span class="detail-value">{{ socio.direccionfiscal }}</span>
-                            <small class="text-muted">CP: {{ socio.codigopostal }}</small>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer bg-white border-top py-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <a href="admin/inmueble/plist/xsocio/{{ socio.id }}" class="btn btn-sm btn-outline-info">
-                        <i class="bi bi-buildings me-1"></i> Ver Inmuebles
-                      </a>
-                      <div class="d-flex gap-2">
+          <!-- Tabla de socios -->
+          <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th class="cursor-pointer" (click)="sort('id')">
+                    ID 
+                    <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'id' && strDir === 'desc', 'bi-caret-up-fill': strField === 'id' && strDir === 'asc'}"></i>
+                  </th>
+                  <th>Nombre Completo</th>
+                  <th>DNI</th>
+                  <th>Tipo</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (socio of oPage?.content; track socio.id) {
+                  <tr>
+                    <td><span class="fw-medium">{{ socio.id }}</span></td>
+                    <td>{{ socio.nombre }} {{ socio.apellido1 }} {{ socio.apellido2 }}</td>
+                    <td>{{ socio.dni }}</td>
+                    <td>
+                      <span class="badge rounded-pill bg-light text-dark border">
+                        {{ socio.tiposocio.descripcion }}
+                      </span>
+                    </td>
+                    <td>{{ socio.email }}</td>
+                    <td>{{ socio.telefono }}</td>
+                    <td>
+                      {{ socio.direccionfiscal }}
+                      <small class="text-muted d-block">CP: {{ socio.codigopostal }}</small>
+                    </td>
+                    <td>
+                      <div class="d-flex gap-2 justify-content-end">
+                        <a href="admin/inmueble/plist/xsocio/{{ socio.id }}" class="btn btn-sm btn-outline-info" title="Ver inmuebles">
+                          <i class="bi bi-buildings"></i>
+                        </a>
                         <button type="button" class="btn btn-sm btn-outline-primary" (click)="view(socio)" title="Ver detalles">
                           <i class="bi bi-eye"></i>
                         </button>
                         <a class="btn btn-sm btn-outline-secondary" href="admin/socio/edit/{{ socio.id }}" title="Editar">
                           <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="admin/socio/delete/{{ socio.id }}" type="button" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                        <a href="admin/socio/delete/{{ socio.id }}" class="btn btn-sm btn-outline-danger" title="Eliminar">
                           <i class="bi bi-trash"></i>
                         </a>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            } @empty {
-              <div class="col-12">
-                <div class="text-center py-5">
-                  <div class="d-flex flex-column align-items-center">
-                    <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
-                    <p class="mt-2 mb-0">No se encontraron socios</p>
-                    <small class="text-muted">Intente cambiar los filtros o crear un nuevo socio</small>
-                  </div>
-                </div>
-              </div>
-            }
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="8" class="text-center py-4">
+                      <i class="bi bi-inbox text-muted d-block mb-2" style="font-size: 2rem;"></i>
+                      <p class="mb-0">No se encontraron socios</p>
+                      <small class="text-muted">Intente cambiar los filtros o crear un nuevo socio</small>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
           </div>
 
-          <!-- Información de paginación -->
+          <!-- Información y paginación -->
           <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4">
             <div class="mb-3 mb-md-0">
               @if (strFiltro.length > 0) {
-              <span class="badge bg-light text-dark border">
-                <i class="bi bi-funnel me-1"></i> Filtrando por: {{ strFiltro }}
-                <button type="button" class="btn-close ms-2" aria-label="Close" style="font-size: 0.65rem;" (click)="strFiltro='';"></button>
-              </span>
+                <span class="badge bg-light text-dark border">
+                  <i class="bi bi-funnel me-1"></i> Filtrando por: {{ strFiltro }}
+                  <button type="button" class="btn-close ms-2" aria-label="Close" style="font-size: 0.65rem;" (click)="strFiltro='';"></button>
+                </span>
               } @else {
-              <span class="text-muted small">Mostrando todos los registros</span>
+                <span class="text-muted small">Mostrando todos los registros</span>
               }
             </div>
             <div class="text-muted small">
@@ -160,9 +133,9 @@
               </li>
               <li class="page-item" *ngFor="let pag of arrBotonera">
                 @if(pag === '...') {
-                <a class="page-link disabled">{{ pag }}</a>
+                  <a class="page-link disabled">{{ pag }}</a>
                 } @else {
-                <a class="page-link" href="#" (click)="goToPage(-(-pag))" [class.active]="nPage - -1 === -(-pag)">{{ pag }}</a>
+                  <a class="page-link" href="#" (click)="goToPage(-(-pag))" [class.active]="nPage - -1 === -(-pag)">{{ pag }}</a>
                 }
               </li>
               <li class="page-item" [class.disabled]="nPage - -1 === oPage?.totalPages">

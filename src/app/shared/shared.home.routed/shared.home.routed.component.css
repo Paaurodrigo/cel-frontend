@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to bottom right, #e0f7fa, #f1f8e9);
+    background: linear-gradient(to bottom right, #e3f2fd, #bbdefb); /* Tonos azul claro */
     padding: 2rem;
   }
   
@@ -14,34 +14,46 @@
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+  }
   
-    h1 {
-      color: #388e3c;
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-    }
+  .welcome-box h1 {
+    color: #1565c0; /* Azul intenso */
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+  }
   
-    .intro {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #555;
-    }
+  .welcome-box .intro {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #444; /* Gris oscuro */
+  }
   
-    .info {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      color: #666;
-    }
+  .welcome-box .info {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    color: #555; /* Gris medio */
+  }
   
-    .logo {
-      max-width: 120px;
-      margin-bottom: 1rem;
-    }
+  .welcome-box .logo {
+    max-width: 120px;
+    margin-bottom: 1rem;
+  }
   
-    button {
-      padding: 0.6rem 2rem;
-      font-size: 1.1rem;
-      border-radius: 30px;
-    }
+  /* Estilo para el botón/enlace */
+  .welcome-box a.anim-boton {
+    padding: 0.6rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    transition: transform 0.15s ease-in-out;
+    text-decoration: none;
+    background-color: #1976d2; /* Azul primario */
+    color: white;
+    display: inline-block;
+  }
+  
+  .welcome-box a.anim-boton:hover,
+  .welcome-box a.anim-boton:active {
+    transform: scale(1.1);
+    background-color: #0d47a1; /* Azul más oscuro al interactuar */
   }
   
