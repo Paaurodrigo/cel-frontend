@@ -63,29 +63,59 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // ✅ Configuramos debounce para el campo DNI
+    // Debounce para el campo DNI + validación letra DNI + check si existe en backend
     this.dniSubject.pipe(
-      debounceTime(1000) // 1 segundo (puedes ajustar)
+      debounceTime(1000)
     ).subscribe(dni => {
       if (!dni) {
         this.dniValido = false;
+        this.dniExiste = false;
       } else {
         this.dniValido = this.esDniValido(dni);
+        if (this.dniValido) {
+          this.checkDniExists(dni);
+        } else {
+          this.dniExiste = false; // No hacer check si DNI formato incorrecto
+        }
       }
     });
+  
+    // Debounce para el campo Email + check si existe en backend
     this.emailSubject.pipe(debounceTime(1000)).subscribe(email => {
       if (!email) {
         this.emailExiste = false;
       } else {
-        this.oSocioService.checkEmailExists(email).subscribe(existe => {
-          this.emailExiste = existe;
-          if (existe) {
-            this.showModal('El email ya está registrado');
-          }
-        });
+        this.checkEmailExists(email);
       }
     });
   }
+  
+  // Método para llamar al servicio y actualizar dniExiste
+  private checkDniExists(dni: string): void {
+    this.oSocioService.checkDniExists(dni).subscribe({
+      next: (existe: boolean) => {
+        this.dniExiste = existe;
+      },
+      error: (err) => {
+        console.error('Error checking DNI existence', err);
+        this.dniExiste = false;
+      }
+    });
+  }
+  
+  // Método para llamar al servicio y actualizar emailExiste
+  private checkEmailExists(email: string): void {
+    this.oSocioService.checkEmailExists(email).subscribe({
+      next: (existe: boolean) => {
+        this.emailExiste = existe;
+      },
+      error: (err) => {
+        console.error('Error checking email existence', err);
+        this.emailExiste = false;
+      }
+    });
+  }
+  
 
   onFileSelect(event: any): void {
     const file: File = event.target.files[0];
@@ -120,7 +150,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
       return;
     }
   
-    console.log(this.emailExiste, this.dniExiste);
+    console.log(this.emailExiste);
     if (this.emailExiste) {
       this.showModal('No se puede registrar porque el email ya existe.');
       return;
