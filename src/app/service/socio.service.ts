@@ -91,6 +91,16 @@ export class SocioService {
     return this.oHttp.get<ISocio>(URL);
   }
 
+  // En socio.service.ts (simplificado)
+checkEmailExists(email: string): Observable<boolean> {
+  return this.oHttp.get<boolean>(`/api/socios/check-email?email=${email}`);
+}
+
+checkDniExists(dni: string): Observable<boolean> {
+  return this.oHttp.get<boolean>(`/api/socios/check-dni?dni=${dni}`);
+}
+
+
  
   
 

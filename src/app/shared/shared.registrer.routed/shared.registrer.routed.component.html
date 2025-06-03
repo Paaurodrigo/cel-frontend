@@ -29,7 +29,7 @@
           <div class="col-md-6">
             <mat-form-field class="w-100">
               <mat-label>Email</mat-label>
-              <input matInput formControlName="email" placeholder="Pon aquí tu email" />
+              <input matInput formControlName="email"   (input)="onEmailChange()" placeholder="Pon aquí tu email" />
             </mat-form-field>
           </div>
           <div class="col-md-6">

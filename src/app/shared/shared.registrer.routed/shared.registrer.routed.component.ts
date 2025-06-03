@@ -34,6 +34,9 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   dniValido: boolean | null = null; // Estado del DNI
   fotoDni: File | null = null;
   resultado: boolean | null = null; // Resultado de la comprobación
+  emailExiste: boolean = false;
+  dniExiste: boolean = false;
+  emailSubject: Subject<string> = new Subject<string>();
 
   // ✅ Añadimos Subject para debounce del DNI
   dniSubject: Subject<string> = new Subject<string>();
@@ -70,6 +73,18 @@ export class SharedRegistrerRoutedComponent implements OnInit {
         this.dniValido = this.esDniValido(dni);
       }
     });
+    this.emailSubject.pipe(debounceTime(1000)).subscribe(email => {
+      if (!email) {
+        this.emailExiste = false;
+      } else {
+        this.oSocioService.checkEmailExists(email).subscribe(existe => {
+          this.emailExiste = existe;
+          if (existe) {
+            this.showModal('El email ya está registrado');
+          }
+        });
+      }
+    });
   }
 
   onFileSelect(event: any): void {
@@ -96,9 +111,22 @@ export class SharedRegistrerRoutedComponent implements OnInit {
     this.oSocioForm.reset();
   }
 
+ 
+  
+
   onSubmit(): void {
     if (this.oSocioForm.invalid) {
       this.showModal('Formulario inválido. Revisa los campos e inténtalo de nuevo.');
+      return;
+    }
+  
+    if (this.emailExiste) {
+      this.showModal('No se puede registrar porque el email ya existe.');
+      return;
+    }
+  
+    if (this.dniExiste) {
+      this.showModal('No se puede registrar porque el DNI ya existe.');
       return;
     }
 
@@ -151,4 +179,10 @@ export class SharedRegistrerRoutedComponent implements OnInit {
     const dni = this.oSocioForm.get('dni')?.value;
     this.dniSubject.next(dni);
   }
+  onEmailChange(): void {
+    const email = this.oSocioForm.get('email')?.value;
+    this.emailSubject.next(email);
+  }
+  
+
 }
