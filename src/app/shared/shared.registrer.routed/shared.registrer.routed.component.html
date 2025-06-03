@@ -48,7 +48,7 @@
                 formControlName="email"
                 (input)="onEmailChange()"
                 placeholder="Pon aquí tu email"
-                [class.is-invalid]="emailExiste"
+               
               />
               <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
                 Email obligatorio
@@ -56,7 +56,6 @@
               <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
                 Formato email incorrecto
               </mat-error>
-              
               <mat-error *ngIf="emailExiste">
                 Este mail ya está registrado
               </mat-error>
