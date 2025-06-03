@@ -93,12 +93,12 @@ export class SocioService {
 
   // En socio.service.ts (simplificado)
   checkEmailExists(email: string): Observable<boolean> {
-    const url = `${this.serverURL}/socio/check-email?email=${encodeURIComponent(email)}`;
+    const url = `${this.serverURL}/check-email?email=${encodeURIComponent(email)}`;
     return this.oHttp.get<boolean>(url);
   }
   
   checkDniExists(dni: string): Observable<boolean> {
-    const url = `${this.serverURL}/socio/check-dni?dni=${encodeURIComponent(dni)}`;
+    const url = `${this.serverURL}/check-dni?dni=${encodeURIComponent(dni)}`;
     return this.oHttp.get<boolean>(url);
   }
   
