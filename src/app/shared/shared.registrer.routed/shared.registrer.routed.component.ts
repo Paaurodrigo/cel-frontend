@@ -120,6 +120,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
       return;
     }
   
+    console.log(this.emailExiste, this.dniExiste);
     if (this.emailExiste) {
       this.showModal('No se puede registrar porque el email ya existe.');
       return;
