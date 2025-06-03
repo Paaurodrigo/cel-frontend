@@ -56,9 +56,11 @@
               <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
                 Formato email incorrecto
               </mat-error>
-              <mat-error *ngIf="emailExiste && oSocioForm.get('email')?.touched">
+              
+              <mat-error *ngIf="emailExiste">
                 Este mail ya está registrado
               </mat-error>
+              
             </mat-form-field>
           </div>
 
