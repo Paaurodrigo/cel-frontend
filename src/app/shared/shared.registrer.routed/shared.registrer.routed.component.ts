@@ -54,7 +54,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
       apellido2: [''],
       email: ['', [Validators.required, Validators.email]],
       contraseña: ['', [Validators.required, Validators.minLength(4)]],
-      dni: ['', [Validators.required, Validators.pattern(/^\d{8}[A-Z]$/)]],
+      dni: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       fotoDni: [null], // Campo para la foto del DNI
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
