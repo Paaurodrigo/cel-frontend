@@ -39,29 +39,42 @@
             </mat-form-field>
           </div>
 
-          <!-- Email -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100" [class.mat-form-field-invalid]="emailExiste">
-              <mat-label>Email</mat-label>
-              <input
-                matInput
-                formControlName="email"
-                (input)="onEmailChange()"
-                placeholder="Pon aquí tu email"
-               
-              />
-              <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
-                Email obligatorio
-              </mat-error>
-              <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
-                Formato email incorrecto
-              </mat-error>
-              <mat-error *ngIf="emailExiste">
-                Este mail ya está registrado
-              </mat-error>
-              
-            </mat-form-field>
-          </div>
+         <!-- Email -->
+<div class="col-md-6">
+  <mat-form-field appearance="outline" class="w-100"
+    [class.mat-form-field-invalid]="emailExiste && oSocioForm.get('email')?.touched">
+
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      formControlName="email"
+      (input)="onEmailChange()"
+      placeholder="Pon aquí tu email"
+      [class.is-invalid]="emailExiste && oSocioForm.get('email')?.touched"
+    />
+
+    <!-- ✅ Icono verde si es válido y no existe -->
+    <mat-icon matSuffix *ngIf="!emailExiste && oSocioForm.get('email')?.valid" color="primary">check_circle</mat-icon>
+
+    <!-- ❌ Icono rojo si ya existe -->
+    <mat-icon matSuffix *ngIf="emailExiste && oSocioForm.get('email')?.touched" color="warn">error</mat-icon>
+
+    <!-- Errores -->
+    <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
+      Email obligatorio
+    </mat-error>
+
+    <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
+      Formato de email incorrecto
+    </mat-error>
+
+    <mat-error *ngIf="emailExiste && oSocioForm.get('email')?.touched">
+      Este email ya está registrado
+    </mat-error>
+
+  </mat-form-field>
+</div>
+
 
           <!-- Contraseña -->
           <div class="col-md-6">
@@ -115,42 +128,45 @@
          <!-- DNI -->
 <div class="col-md-6 position-relative">
   <mat-form-field appearance="outline" class="w-100"
-    [class.mat-form-field-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched">
+  [class.mat-form-field-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched">
 
-    <mat-label>DNI</mat-label>
-    <input
-      matInput
-      formControlName="dni"
-      placeholder="Escribe tu DNI"
-      (input)="onDniChange()" 
-      [ngClass]="{
-        'is-valid': dniValido === true && !dniExiste,
-        'is-invalid': dniValido === false || dniExiste,
-       
-      }"
-    />
+  <mat-label>DNI</mat-label>
+  <input
+    matInput
+    formControlName="dni"
+    (input)="onDniChange()"
+    placeholder="Escribe tu DNI"
+    [class.is-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched"
+  />
 
-    <!-- Iconos -->
-    <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary"></mat-icon>
-    <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn"></mat-icon>
+  <!-- ✅ Icono verde si todo bien -->
+  <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary">check_circle</mat-icon>
 
+  <!-- ❌ Icono rojo si hay error -->
+  <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn">error</mat-icon>
+
+  <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
+    Debes introducir un DNI
+  </mat-error>
   
-    <!-- Errores -->
-    <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
-      Debes introducir un DNI
-    </mat-error>
-    <mat-error *ngIf="oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
-      Formato incorrecto. Debe ser 8 dígitos y 1 letra
-    </mat-error>
-    <mat-error *ngIf="dniValido === false && !oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
-      La letra del DNI no es correcta
-    </mat-error>
-    <mat-error *ngIf="dniExiste">
-      Este DNI ya está registrado
-    </mat-error>
+  <mat-error *ngIf="oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
+    Formato incorrecto. Debe ser 8 dígitos y 1 letra mayúscula
+  </mat-error>
+  
+  <mat-error *ngIf="dniValido === false && oSocioForm.get('dni')?.touched">
+    La letra del DNI no es correcta
+  </mat-error>
+  
+  <mat-error *ngIf="dniExiste && dniValido && oSocioForm.get('dni')?.touched">
+    Este DNI ya está registrado
+  </mat-error>
+  
 
-    <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
-  </mat-form-field>
+  <!-- Pista -->
+  <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
+</mat-form-field>
+
+
 </div>
 
          

@@ -44,10 +44,11 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   resultado: boolean | null = null;
   readonly dialog = inject(MatDialog);
   oTipoSocio: ITipoSocio = {} as ITipoSocio;
-
+  emailExiste: boolean = false;
+  dniExiste: boolean = false;
+  emailSubject: Subject<string> = new Subject<string>();
   // ✅ Añadimos Subject para debounce del DNI
   dniSubject: Subject<string> = new Subject<string>();
-
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
@@ -92,6 +93,49 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.fotoDni = file;
     }
   }
+
+
+  // Método para llamar al servicio y actualizar dniExiste
+  private checkDniExists(dni: string): void {
+    this.oSocioService.checkDniExists(dni).subscribe({
+      next: (existe: boolean) => {
+        this.dniExiste = existe;
+  
+        // 🔥 Fuerza que se muestre el mensaje en el HTML
+        this.oSocioForm.get('dni')?.markAsTouched();
+        this.oSocioForm.get('dni')?.updateValueAndValidity();
+      },
+      error: (err) => {
+        console.error('Error checking DNI existence', err);
+        this.dniExiste = false;
+      }
+    });
+  }
+  
+  // Método para llamar al servicio y actualizar emailExiste
+  private checkEmailExists(email: string): void {
+    this.oSocioService.checkEmailExists(email).subscribe({
+      next: (existe: boolean) => {
+        console.log('¿EMAIL existe?', existe);
+        this.emailExiste = existe;
+  
+        // 🔥 Fuerza visualización del error si ya existe
+        this.oSocioForm.get('email')?.markAsTouched();
+        this.oSocioForm.get('email')?.updateValueAndValidity();
+      },
+      error: (err) => {
+        console.error('Error checking email existence', err);
+        this.emailExiste = false;
+      }
+    });
+  }
+
+  onEmailChange(): void {
+    const email = this.oSocioForm.get('email')?.value;
+    this.emailSubject.next(email);
+  }
+  
+  
 
   showModal(mensaje: string): void {
     this.strMessage = mensaje;

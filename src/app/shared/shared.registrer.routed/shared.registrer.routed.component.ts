@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Subject, debounceTime } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 declare let bootstrap: any;
 
@@ -24,6 +25,7 @@ declare let bootstrap: any;
     ReactiveFormsModule,
     RouterModule,
     CommonModule,
+    MatIconModule
   ],
 })
 export class SharedRegistrerRoutedComponent implements OnInit {
@@ -65,9 +67,8 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   ngOnInit(): void {
     // Debounce para el campo DNI + validación letra DNI + check si existe en backend
     this.dniSubject.pipe(
-      debounceTime(1000)
+      debounceTime(100)
     ).subscribe(dni => {
-      console.log('📡 DNI recibido tras debounce:', dni); // 👈 Este log es clave
       if (!dni) {
         this.dniValido = false;
         this.dniExiste = false;
@@ -95,8 +96,11 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   private checkDniExists(dni: string): void {
     this.oSocioService.checkDniExists(dni).subscribe({
       next: (existe: boolean) => {
-        console.log('¿DNI existe?', existe); // 👈 AÑADE ESTO
         this.dniExiste = existe;
+  
+        // 🔥 Fuerza que se muestre el mensaje en el HTML
+        this.oSocioForm.get('dni')?.markAsTouched();
+        this.oSocioForm.get('dni')?.updateValueAndValidity();
       },
       error: (err) => {
         console.error('Error checking DNI existence', err);
@@ -109,7 +113,12 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   private checkEmailExists(email: string): void {
     this.oSocioService.checkEmailExists(email).subscribe({
       next: (existe: boolean) => {
+        console.log('¿EMAIL existe?', existe);
         this.emailExiste = existe;
+  
+        // 🔥 Fuerza visualización del error si ya existe
+        this.oSocioForm.get('email')?.markAsTouched();
+        this.oSocioForm.get('email')?.updateValueAndValidity();
       },
       error: (err) => {
         console.error('Error checking email existence', err);
