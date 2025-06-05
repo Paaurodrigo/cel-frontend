@@ -125,8 +125,8 @@
       (input)="onDniChange()"
       [ngClass]="{
         'is-valid': dniValido === true && !dniExiste,
-        'is-invalid': dniValido === false,
-        'is-invalid': dniExiste === false
+        'is-invalid': dniValido === false || dniExiste,
+       
       }"
     />
 
