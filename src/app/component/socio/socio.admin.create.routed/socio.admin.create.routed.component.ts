@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ITipoSocio } from '../../../model/tipoSocio.interface';
 import { Subject, debounceTime } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 declare let bootstrap: any;
 
@@ -31,7 +32,8 @@ declare let bootstrap: any;
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule,
-    CommonModule
+    CommonModule,
+    MatIconModule
   ],
 })
 export class SocioAdminCreateRoutedComponent implements OnInit {
@@ -75,14 +77,28 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // ✅ Configuramos debounce para el campo DNI
     this.dniSubject.pipe(
-      debounceTime(1000) // 2 segundos
+      debounceTime(100)
     ).subscribe(dni => {
       if (!dni) {
         this.dniValido = false;
+        this.dniExiste = false;
       } else {
         this.dniValido = this.esDniValido(dni);
+        if (this.dniValido) {
+          this.checkDniExists(dni);
+        } else {
+          this.dniExiste = false; // No hacer check si DNI formato incorrecto
+        }
+      }
+    });
+  
+    // Debounce para el campo Email + check si existe en backend
+    this.emailSubject.pipe(debounceTime(1000)).subscribe(email => {
+      if (!email) {
+        this.emailExiste = false;
+      } else {
+        this.checkEmailExists(email);
       }
     });
   }
