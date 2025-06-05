@@ -112,36 +112,42 @@
             </mat-form-field>
           </div>
 
-          <!-- DNI -->
-          <div class="col-md-6 position-relative">
-            <mat-form-field appearance="outline" class="w-100" [class.mat-form-field-invalid]="dniExiste || dniValido === false">
-              <mat-label>DNI</mat-label>
-              <input
-                matInput
-                formControlName="dni"
-                placeholder="Escribe tu DNI"
-                (input)="onDniChange()"
-                [class.is-invalid]="dniExiste || dniValido === false"
-              />
-              <mat-icon matSuffix *ngIf="dniValido === true" color="primary"></mat-icon>
-              <mat-icon matSuffix *ngIf="dniValido === false" color="warn"></mat-icon>
+         <!-- DNI -->
+<div class="col-md-6 position-relative">
+  <mat-form-field appearance="outline" class="w-100"
+    [class.mat-form-field-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched">
 
-              <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
-                Debes introducir un DNI
-              </mat-error>
-              <mat-error *ngIf="oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
-                Formato incorrecto. Debe ser 8 dígitos y 1 letra
-              </mat-error>
-              <mat-error *ngIf="dniValido === false && !oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
-                La letra del DNI no es correcta
-              </mat-error>
-              
-              <mat-error *ngIf="dniExiste && oSocioForm.get('dni')?.touched">
-                Este DNI ya está registrado
-              </mat-error>
-              <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
-            </mat-form-field>
-          </div>
+    <mat-label>DNI</mat-label>
+    <input
+      matInput
+      formControlName="dni"
+      placeholder="Escribe tu DNI"
+      (input)="onDniChange()"
+      [class.is-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched"
+    />
+
+    <!-- Iconos -->
+    <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary">check_circle</mat-icon>
+    <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn">error</mat-icon>
+
+    <!-- Errores -->
+    <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
+      Debes introducir un DNI
+    </mat-error>
+    <mat-error *ngIf="oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
+      Formato incorrecto. Debe ser 8 dígitos y 1 letra
+    </mat-error>
+    <mat-error *ngIf="dniValido === false && !oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
+      La letra del DNI no es correcta
+    </mat-error>
+    <mat-error *ngIf="dniExiste">
+      Este DNI ya está registrado
+    </mat-error>
+
+    <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
+  </mat-form-field>
+</div>
+
          
 
           <!-- Foto DNI -->
