@@ -67,6 +67,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
     this.dniSubject.pipe(
       debounceTime(1000)
     ).subscribe(dni => {
+      console.log('📡 DNI recibido tras debounce:', dni); // 👈 Este log es clave
       if (!dni) {
         this.dniValido = false;
         this.dniExiste = false;
@@ -94,6 +95,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   private checkDniExists(dni: string): void {
     this.oSocioService.checkDniExists(dni).subscribe({
       next: (existe: boolean) => {
+        console.log('¿DNI existe?', existe); // 👈 AÑADE ESTO
         this.dniExiste = existe;
       },
       error: (err) => {
@@ -208,6 +210,7 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   // ✅ Cada vez que el usuario escribe en el campo DNI, se emite al Subject
   onDniChange(): void {
     const dni = this.oSocioForm.get('dni')?.value;
+    console.log('DNI cambiado:', dni); // 👈 AÑADE ESTO PARA VERLO EN CONSOLA
     this.dniSubject.next(dni);
   }
   onEmailChange(): void {

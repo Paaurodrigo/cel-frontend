@@ -122,7 +122,7 @@
       matInput
       formControlName="dni"
       placeholder="Escribe tu DNI"
-      (input)="onDniChange()"
+      (input)="onDniChange()" 
       [ngClass]="{
         'is-valid': dniValido === true && !dniExiste,
         'is-invalid': dniValido === false || dniExiste,
