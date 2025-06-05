@@ -123,13 +123,18 @@
       formControlName="dni"
       placeholder="Escribe tu DNI"
       (input)="onDniChange()"
-      [class.is-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched"
+      [ngClass]="{
+        'is-valid': dniValido === true && !dniExiste,
+        'is-invalid': dniValido === false,
+        'is-invalid': dniExiste === false
+      }"
     />
 
     <!-- Iconos -->
-    <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary">check_circle</mat-icon>
-    <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn">error</mat-icon>
+    <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary"></mat-icon>
+    <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn"></mat-icon>
 
+  
     <!-- Errores -->
     <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
       Debes introducir un DNI
