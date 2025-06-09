@@ -1,88 +1,84 @@
-<div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card shadow border-0">
-        <div class="card-header bg-danger text-white py-3">
-          <div class="d-flex align-items-center">
-            <h2 class="mb-0 fs-4 fw-bold">
-              <i class="bi bi-trash me-2"></i> Confirmar Eliminación de Socio
-            </h2>
-          </div>
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="text-center mb-4">
+        <div class="display-1 text-danger mb-3">
+          <i class="bi bi-trash"></i>
         </div>
+        <h1 class="h3 mb-3">¿Eliminar Socio?</h1>
+        <p class="text-muted">
+          Está a punto de eliminar al siguiente socio del sistema. 
+          Esta acción no se puede deshacer.
+        </p>
+      </div>
+
+      <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
-          <div class="alert alert-warning mb-4">
-            <div class="d-flex align-items-center">
-              <i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i>
-              <div>
-                <h4 class="alert-heading mb-1">Advertencia</h4>
-                <p class="mb-0">Está a punto de eliminar permanentemente este socio. Esta acción no se puede deshacer.</p>
+          <div class="row g-4">
+            <!-- Columna Izquierda -->
+            <div class="col-sm-6">
+              <div class="mb-4">
+                <label class="small text-muted d-block mb-1">ID del Socio</label>
+                <span class="h5 text-danger">{{ oSocio?.id }}</span>
+              </div>
+              
+              <div class="mb-4">
+                <label class="small text-muted d-block mb-1">Nombre Completo</label>
+                <span class="h5">{{ oSocio?.nombre }} {{ oSocio?.apellido1 }} {{ oSocio?.apellido2 }}</span>
+              </div>
+              
+              <div class="mb-4">
+                <label class="small text-muted d-block mb-1">DNI</label>
+                <span class="h5">{{ oSocio?.dni }}</span>
+              </div>
+            </div>
+
+            <!-- Columna Derecha -->
+            <div class="col-sm-6">
+              <div class="mb-4">
+                <label class="small text-muted d-block mb-1">Correo Electrónico</label>
+                <span class="h5">{{ oSocio?.email }}</span>
+              </div>
+              
+              <div class="mb-4">
+                <label class="small text-muted d-block mb-1">Teléfono</label>
+                <span class="h5">{{ oSocio?.telefono }}</span>
+              </div>
+              
+              <div class="mb-4">
+                <label class="small text-muted d-block mb-1">Dirección</label>
+                <span class="h5 d-block">{{ oSocio?.direccionfiscal }}</span>
+                <span class="small text-muted">CP: {{ oSocio?.codigopostal }}</span>
               </div>
             </div>
           </div>
-
-          <div class="table-responsive">
-            <table class="table table-bordered mb-0">
-              <tbody>
-                <tr>
-                  <th class="bg-light text-dark w-25">ID</th>
-                  <td class="fw-medium">{{ oSocio?.id }}</td>
-                </tr>
-                <tr>
-                  <th class="bg-light text-dark">Nombre Completo</th>
-                  <td>{{ oSocio?.nombre }} {{ oSocio?.apellido1 }} {{ oSocio?.apellido2 }}</td>
-                </tr>
-                <tr>
-                  <th class="bg-light text-dark">DNI</th>
-                  <td>{{ oSocio?.dni }}</td>
-                </tr>
-                <tr>
-                  <th class="bg-light text-dark">Correo Electrónico</th>
-                  <td>{{ oSocio?.email }}</td>
-                </tr>
-                <tr>
-                  <th class="bg-light text-dark">Teléfono</th>
-                  <td>{{ oSocio?.telefono }}</td>
-                </tr>
-                <tr>
-                  <th class="bg-light text-dark">Dirección</th>
-                  <td>
-                    {{ oSocio?.direccionfiscal }}
-                    <small class="text-muted d-block">CP: {{ oSocio?.codigopostal }}</small>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="d-flex justify-content-end gap-2 mt-4">
-            <button class="btn btn-secondary" [routerLink]="['/admin', 'socio', 'plist']">
-              <i class="bi bi-x-lg me-1"></i> Cancelar
-            </button>
-            <button class="btn btn-danger" (click)="deleteSocio()">
-              <i class="bi bi-trash me-1"></i> Confirmar Eliminación
-            </button>
-          </div>
         </div>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3 mt-4">
+        <button class="btn btn-light btn-lg px-5" [routerLink]="['/admin', 'socio', 'plist']">
+          Cancelar
+        </button>
+        <button class="btn btn-danger btn-lg px-5" (click)="deleteSocio()">
+          Eliminar
+        </button>
       </div>
     </div>
   </div>
 
   <!-- Modal de mensaje -->
   <div class="modal fade" [id]="'mimodal'" tabindex="-1" aria-labelledby="modalMessageLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalMessageLabel">
-            <i class="bi bi-info-circle me-1"></i> Mensaje del Sistema
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
+        <div class="modal-body text-center p-4">
+          <div class="mb-3">
+            <i class="bi bi-info-circle display-6 text-primary"></i>
+          </div>
+          <p class="mb-0">{{ strMessage }}</p>
         </div>
-        <div class="modal-body">
-          {{ strMessage }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">
-            <i class="bi bi-check-lg me-1"></i> Aceptar
+        <div class="modal-footer justify-content-center border-0">
+          <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal" (click)="hideModal()">
+            Aceptar
           </button>
         </div>
       </div>
