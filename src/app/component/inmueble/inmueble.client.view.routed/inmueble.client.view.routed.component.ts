@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IInmueble } from '../../../model/inmueble.interface';
 import { InmuebleService } from '../../../service/inmueble.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-inmueble.client.view.routed',
   templateUrl: './inmueble.client.view.routed.component.html',
-  styleUrls: ['./inmueble.client.view.routed.component.css']
+  styleUrls: ['./inmueble.client.view.routed.component.css'],
+  imports: [
+    CommonModule
+  ],
+  standalone: true
 })
 export class InmuebleClientViewRoutedComponent implements OnInit {
 
