@@ -1,80 +1,117 @@
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10 col-md-12">
+      <!-- Tarjeta principal -->
+      <div class="card shadow-sm border-0 rounded-3 mb-4">
+        <div class="card-header bg-white border-0 py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 class="fs-4 fw-bold mb-0">
+              <i class="bi bi-buildings me-2"></i> Detalle de Inmueble
+            </h1>
+            <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-2 rounded-pill">
+              {{ oInmueble.uso }}
+            </span>
+          </div>
+        </div>
 
-<div class="row justify-content-center m-3">
-  <div class="col-lg-7 col-md-10 col-sm-12">
-    <h1 class="my-5 text-center">
-      <i class="bi bi-card-list"></i>
-      Detalle de Inmueble
-      <i class="bi bi-person-circle"></i>
-    </h1>
-    <br />
-    <table class="table table-striped table-bordered my-5 text-center">
-      <tbody>
-        <tr class="text-center">
-          <th scope="row" class="bg-danger text-white text-end pe-5">CUPS</th>
-          <td class="text-start ps-5">{{ oInmueble.cups }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Direccion
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.direccion }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Codigo Postal
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.codigoPostal }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-           Municipio
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.municipio }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Referencia Catastral
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.refCatas }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-           Potencia1
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.potencia1 }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Potencia2
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.potencia2 }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-           Tension
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.tension }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Uso
-          </th>
-          <td class="text-start ps-5">{{ oInmueble.uso }}</td>
-        </tr>
-        
+        <div class="card-body p-0">
+          <!-- Información principal -->
+          <div class="property-header p-4 border-bottom">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h2 class="fs-5 fw-bold mb-1">{{ oInmueble.direccion }}</h2>
+                <p class="mb-0 text-muted">
+                  <i class="bi bi-geo-alt me-1"></i> {{ oInmueble.municipio }}, {{ oInmueble.codigoPostal }}
+                </p>
+              </div>
+              <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="cups-badge">
+                  <span class="cups-label">CUPS</span>
+                  <span class="cups-value">{{ oInmueble.cups }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-       
+          <!-- Detalles del inmueble -->
+          <div class="p-4">
+            <div class="row g-4">
+              <!-- Columna izquierda -->
+              <div class="col-lg-6">
+                <div class="detail-section">
+                  <h3 class="detail-section-title">
+                    <i class="bi bi-geo me-2"></i>Ubicación
+                  </h3>
+                  <div class="detail-group">
+                    <div class="detail-item">
+                      <span class="detail-label">Dirección</span>
+                      <span class="detail-value">{{ oInmueble.direccion }}</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Código Postal</span>
+                      <span class="detail-value">{{ oInmueble.codigoPostal }}</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Municipio</span>
+                      <span class="detail-value">{{ oInmueble.municipio }}</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Referencia Catastral</span>
+                      <span class="detail-value">{{ oInmueble.refCatas }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Columna derecha -->
+              <div class="col-lg-6">
+                <div class="detail-section">
+                  <h3 class="detail-section-title">
+                    <i class="bi bi-lightning-charge me-2"></i>Características Técnicas
+                  </h3>
+                  <div class="detail-group">
+                    <div class="detail-item">
+                      <span class="detail-label">Potencia 1</span>
+                      <span class="detail-value">{{ oInmueble.potencia1 }} kW</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Potencia 2</span>
+                      <span class="detail-value">{{ oInmueble.potencia2 }} kW</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Tensión</span>
+                      <span class="detail-value">{{ oInmueble.tension }} V</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Uso</span>
+                      <span class="detail-value">
+                        <span class="badge uso-badge" >
+                          <i class="bi"></i>
+                          {{ oInmueble.uso }}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      </tbody>
-    </table>
-  </div>
-
-
-
-  <div class="d-flex justify-content-center mt-4">
-    <a class="btn btn-warning mt-4 mx-1" href="client/inmueble/plist">
-      <i class="bi bi-list"></i>
-      Ir a listado de Inmuebles
-    </a>
+        <!-- Acciones -->
+        <div class="card-footer bg-white py-3 border-0">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="mb-3 mb-md-0">
+              <a class="btn btn-outline-secondary" href="client/inmueble/plist">
+                <i class="bi bi-arrow-left me-2"></i>Volver al listado
+              </a>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+  
