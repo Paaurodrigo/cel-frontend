@@ -54,12 +54,13 @@
                     Nombre Completo
                     <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'nombre' && strDir === 'desc', 'bi-caret-up-fill': strField === 'nombre' && strDir === 'asc'}"></i>
                   </th>
-                  <th class="cursor-pointer" (click)="sort('dni')">
+                  <th class="cursor-pointer" (click)="sort('DNI')">
                     DNI
-                    <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'dni' && strDir === 'desc', 'bi-caret-up-fill': strField === 'dni' && strDir === 'asc'}"></i>
+                    <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'DNI' && strDir === 'desc', 'bi-caret-up-fill': strField === 'DNI' && strDir === 'asc'}"></i>
                   </th>
                   <th>Tipo</th>
-                  <th>Email
+                  <th class="cursor-pointer" (click)="sort('mail')">
+                    Email
                     <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'mail' && strDir === 'desc', 'bi-caret-up-fill': strField === 'mail' && strDir === 'asc'}"></i>
                   </th>
                   <th>Teléfono</th>
