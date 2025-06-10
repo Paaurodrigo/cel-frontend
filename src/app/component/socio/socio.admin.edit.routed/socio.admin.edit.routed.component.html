@@ -67,13 +67,15 @@
 
             <div class="mb-3">
               <label for="dni" class="form-label fw-bold">DNI</label>
-              <input
+              <input 
                 type="text"
-                id="dni"
-                class="form-control"
-                formControlName="dni"
-                placeholder="DNI"
-              />
+                 id="dni" 
+                 class="form-control" 
+                 formControlName="dni" 
+                placeholder="DNI" 
+                readonly 
+               />
+            
             </div>
 
 
@@ -86,6 +88,7 @@
                 class="form-control"
                 formControlName="email"
                 placeholder="Correo Electrónico"
+                readonly
               />
               <div *ngIf="oSocioForm?.get('email')?.errors" class="text-danger">
                 <small *ngIf="oSocioForm?.get('email')?.hasError('required')">Debes introducir un correo.</small>

@@ -84,10 +84,9 @@
                       <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'municipio' && strDir === 'desc', 'bi-caret-up-fill': strField === 'municipio' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'municipio'}"></i>
                     </div>
                   </th>
-                  <th class="sortable d-none d-lg-table-cell" (click)="sort('refCatas')">
+                  <th class="sortable d-none d-lg-table-cell">
                     <div class="d-flex align-items-center">
                       <span>Ref. Catastral</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'refCatas' && strDir === 'desc', 'bi-caret-up-fill': strField === 'refCatas' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'refCatas'}"></i>
                     </div>
                   </th>
                   <th class="sortable d-none d-xl-table-cell" (click)="sort('potencia1')">
