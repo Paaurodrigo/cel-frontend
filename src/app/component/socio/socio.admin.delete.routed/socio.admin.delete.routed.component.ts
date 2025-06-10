@@ -53,10 +53,15 @@ export class SocioAdminDeleteRoutedComponent implements OnInit {
         );
       },
       error: (error) => {
-        this.showModal('Error al borrar el socio');
+        console.error('Error al borrar socio:', error);
+  
+        // 👇 Aquí recogemos el mensaje del backend
+        const msg = error?.error?.message || 'Error al borrar el socio.';
+        this.showModal(msg);
       },
     });
   }
+  
 
   hideModal = () => {
     this.myModal.hide();
