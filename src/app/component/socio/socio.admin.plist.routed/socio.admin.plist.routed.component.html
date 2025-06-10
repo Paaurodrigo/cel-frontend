@@ -50,10 +50,12 @@
                     ID 
                     <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'id' && strDir === 'desc', 'bi-caret-up-fill': strField === 'id' && strDir === 'asc'}"></i>
                   </th>
-                  <th>Nombre Completo
+                  <th class="cursor-pointer" (click)="sort('nombre')">
+                    Nombre Completo
                     <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'nombre' && strDir === 'desc', 'bi-caret-up-fill': strField === 'nombre' && strDir === 'asc'}"></i>
                   </th>
-                  <th>DNI
+                  <th class="cursor-pointer" (click)="sort('dni')">
+                    DNI
                     <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'dni' && strDir === 'desc', 'bi-caret-up-fill': strField === 'dni' && strDir === 'asc'}"></i>
                   </th>
                   <th>Tipo</th>
