@@ -288,7 +288,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   onSearchDireccion(): void {
-    const direccion = this.oSocioForm.get('direccion')?.value;
+    const direccion = this.oSocioForm.get('direccionfiscal')?.value;
     this.direccionSubject.next(direccion);
   }
 
@@ -301,7 +301,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     ].filter(Boolean).join(', '); // Filtra null/undefined
   
     this.oSocioForm.patchValue({
-      direccion: direccionCompleta,
+      direccionfiscal: direccionCompleta,
       codigoPostal: props.postcode || '',
       
     });
