@@ -62,6 +62,11 @@
                         *ngIf="cupsValido === false"
                         color="warn"
                       ></mat-icon>
+                       <!-- ✅ Icono verde si todo bien -->
+  <mat-icon matSuffix *ngIf="cupsValido && !cupsExiste" color="primary"></mat-icon>
+
+  <!-- ❌ Icono rojo si hay error -->
+  <mat-icon matSuffix *ngIf="cupsExiste || cupsValido === false" color="warn"></mat-icon>
                       <mat-hint align="start"
                         >Formato: ES + 16 dígitos</mat-hint
                       >
