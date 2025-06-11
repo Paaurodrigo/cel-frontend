@@ -75,7 +75,7 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
       precioKw: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
       direccion: ['', [Validators.required, Validators.minLength(3)]],
-      cau: ['', [Validators.minLength(3), Validators.maxLength(35)]],
+      cau: ['', [Validators.minLength(26), Validators.maxLength(26)]],
     });
 
     this.oInstalacionForm.get('paneles')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
