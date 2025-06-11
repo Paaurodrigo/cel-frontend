@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
 import { TrimPipe } from '../../../pipe/trim.pipe';
@@ -73,6 +73,7 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(50),
+        this.potenciaValidator.bind(this)
       ]),
       instalacion: new FormGroup({
         id: new FormControl('', [Validators.required]),
@@ -202,5 +203,25 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       }
     });
     return false;
+  }
+
+  private potenciaValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+  
+    if (value == null || value === '') {
+      return null; // no validar si está vacío, eso lo hace el required
+    }
+  
+    // Si contiene una coma → error
+    if (value.toString().includes(',')) {
+      return { invalidComma: true };
+    }
+  
+    // Si no es un número válido → error
+    if (isNaN(Number(value))) {
+      return { invalidNumber: true };
+    }
+  
+    return null; // todo ok
   }
 }

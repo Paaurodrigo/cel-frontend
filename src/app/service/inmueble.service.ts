@@ -152,6 +152,10 @@ update1(oInmueble: IInmueble): Observable<IInmueble> {
   return this.oHttp.put<IInmueble>(this.serverURL + '/' + oInmueble.id, oInmueble);
 }
 
+checkCupsExists(cups: string): Observable<boolean> {
+  const url = `${this.serverURL}/check-cups?cups=${encodeURIComponent(cups)}`;
+  return this.oHttp.get<boolean>(url);
+}
 
 
 }
