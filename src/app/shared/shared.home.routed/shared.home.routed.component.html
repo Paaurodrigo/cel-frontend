@@ -1,36 +1,341 @@
- <!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comunitat Energètica Local Castellar - Oliveral</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: #004d40;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header img {
+            max-height: 60px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Slider */
+        .slider {
+            background: url('https://celcastellaroliveral.org/wp-content/uploads/2022/11/img_3311-2.jpg') no-repeat center center/cover;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .slider::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .slider-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .slider h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        .slider p {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .slider a {
+            background: #ff4081;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .slider a:hover {
+            background: #e91e63;
+        }
+
+        /* Sección Ventajas */
+        .ventajas {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 50px 20px;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        .ventaja {
+            flex: 1 1 300px;
+            padding: 20px;
+        }
+
+        .ventaja i {
+            font-size: 40px;
+            color: #ff4081;
+            margin-bottom: 15px;
+        }
+
+        .ventaja h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        /* Sección Com funciona */
+        .com-funciona {
+            background: #fff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .com-funciona h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #004d40;
+        }
+
+        .pasos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .paso {
+            flex: 1 1 250px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .paso i {
+            font-size: 40px;
+            color: #ff4081;
+            margin-bottom: 15px;
+        }
+
+        .paso h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        /* Sección Avantatges (2 columnas) */
+        .avantatges {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 50px 20px;
+            background: #f0f0f0;
+            text-align: left;
+        }
+
+        .avantatge-col {
+            flex: 1 1 400px;
+            padding: 20px;
+        }
+
+        .avantatge-col h3 {
+            color: #004d40;
+            margin-bottom: 10px;
+        }
+
+        /* Sección contadores */
+        .contadores {
+            background: #004d40;
+            color: #fff;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .contador {
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .contador h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .contador p {
+            font-size: 1.1em;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #ff4081;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ventajas, .avantatges {
+                flex-direction: column;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="welcome-container">
-        <div class="welcome-box">
-        
 
+    <!-- Header -->
+    <header>
+        <img src="https://celcastellaroliveral.org/wp-content/uploads/2024/06/cropped-cel-2002000.png" alt="Logo CEL" />
+        <nav>
+            <ul>
+                <li><a href="#">Inici</a></li>
+                <li><a href="#">Associació</a></li>
+                <li><a href="#">Instal·lacions</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacte</a></li>
+            </ul>
+        </nav>
+    </header>
 
-
-      
-          <h1>Bienvenido a SolarCel</h1>
-      
-          <p class="intro">
-            Esta aplicación está diseñada para ayudarte a formar parte activa de una CEL: una comunidad donde vecinos, empresas y entidades colaboran para generar, compartir y optimizar energía limpia.
-          </p>
-      
-          <p class="info">
-            Explora tus inmuebles, gestiona productos energéticos, consulta tus conexiones o descubre nuevos proveedores comprometidos con la sostenibilidad.
-          </p>
-      
-          <a  href="/login" mat-raised-button color="primary"  class="anim-boton">
-            Empezar ahora
-          </a>
-          
-          
+    <!-- Slider -->
+    <section class="slider">
+        <div class="slider-content">
+            <h1>Produïm i gestionem la nostra energia</h1>
+            <p>Renovable i de proximitat</p>
+            <a href="#">Fes-te soci</a>
         </div>
-      </div>
-      
-      
+    </section>
+
+    <!-- Ventajas -->
+    <section class="ventajas">
+        <div class="ventaja">
+            <i class="fa fa-cog"></i>
+            <h3>Sense canviar de comercialitzadora</h3>
+            <p>Gaudeix dels avantatges sense modificar el teu contracte actual.</p>
+        </div>
+        <div class="ventaja">
+            <i class="fa fa-home"></i>
+            <h3>Sense obres a la teua casa</h3>
+            <p>Participa sense instal·lacions ni molèsties al teu domicili.</p>
+        </div>
+        <div class="ventaja">
+            <i class="fa fa-sun"></i>
+            <h3>Energia neta i renovable</h3>
+            <p>Contribueix a un futur sostenible amb energia solar de proximitat.</p>
+        </div>
+    </section>
+
+    <!-- Com funciona -->
+    <section class="com-funciona">
+        <h2>Com funciona?</h2>
+        <div class="pasos">
+            <div class="paso">
+                <i class="fa fa-user-plus"></i>
+                <h3>1. Fes-te soci</h3>
+                <p>Adhereix-te a la Comunitat Energètica Local.</p>
+            </div>
+            <div class="paso">
+                <i class="fa fa-solar-panel"></i>
+                <h3>2. Generem energia</h3>
+                <p>Utilitzem instal·lacions solars col·lectives.</p>
+            </div>
+            <div class="paso">
+                <i class="fa fa-bolt"></i>
+                <h3>3. Comparteix energia</h3>
+                <p>Comparteix i gaudeix de l'energia neta generada.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avantatges -->
+    <section class="avantatges">
+        <div class="avantatge-col">
+            <h3>Estalvi econòmic</h3>
+            <p>Redueix la factura de la llum gràcies a l'autoconsum compartit.</p>
+            <h3>Benefici social</h3>
+            <p>Contribueix a democratitzar l'energia i generar cohesió social.</p>
+        </div>
+        <div class="avantatge-col">
+            <h3>Benefici ambiental</h3>
+            <p>Reducció d'emissions i aposta per un futur sostenible.</p>
+            <h3>Proximitat</h3>
+            <p>Participa en un projecte local, amb impacte directe a la teua comunitat.</p>
+        </div>
+    </section>
+
+    <!-- Contadores -->
+    <section class="contadores">
+        <div class="contador">
+            <h2>120</h2>
+            <p>Sòcies i socis</p>
+        </div>
+        <div class="contador">
+            <h2>3</h2>
+            <p>Instal·lacions actives</p>
+        </div>
+        <div class="contador">
+            <h2>250 MWh</h2>
+            <p>Energia generada</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Comunitat Energètica Local Castellar - Oliveral | <a href="#">Avis legal</a>
+    </footer>
+
 </body>
-</html> 
+</html>
