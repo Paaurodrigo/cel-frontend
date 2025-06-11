@@ -120,6 +120,10 @@ export class InstalacionselectorComponent implements OnInit {
   trackById(index: number, item: any): number {
     return item.id;  // Usamos el id para hacer el seguimiento de cada elemento
   }
+  cerrar() {
+    this.dialogRef.close(); // Cierra el modal sin pasar ningún dato
+  }
+  
 
 }
 
