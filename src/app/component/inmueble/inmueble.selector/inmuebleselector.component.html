@@ -42,6 +42,7 @@
               <thead class="table-light">
                 <tr>
                   <th class="py-3">CUPS</th>
+                  <th class="py-3">Propietario</th>
                   <th class="py-3">Dirección</th>
                   <th class="py-3">Municipio</th>
                   <th class="py-3 text-end">Acciones</th>
@@ -54,6 +55,7 @@
                       <i class="bi bi-plug-fill me-2 text-muted"></i>
                       {{ inmueble.cups }}
                     </td>
+                    <td>{{ inmueble.socio?.nombre }} {{ inmueble.socio?.apellido1 }} {{ inmueble.socio?.apellido2 }}</td>
                     <td>{{ inmueble.direccion | trim: 100 }}</td>
                     <td>{{ inmueble.municipio }}</td>
                     <td class="text-end">
