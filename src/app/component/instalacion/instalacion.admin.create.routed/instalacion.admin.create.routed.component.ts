@@ -76,7 +76,7 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
         return;
       }
 
-      fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5`)
+      fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5&bbox=-1.75,37.8,0.75,40.9`)
   .then(res => res.json())
   .then(data => {
     this.sugerencias = data.features;
