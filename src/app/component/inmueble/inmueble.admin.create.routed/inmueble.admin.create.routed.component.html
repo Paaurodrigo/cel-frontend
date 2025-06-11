@@ -52,6 +52,9 @@
                             [class.is-invalid]="(cupsExiste || cupsValido === false) && oInmuebleForm.get('cups')?.touched"
                         />
                       </div>
+                      <mat-hint *ngIf="cupsExiste" style="color: red; font-weight: bold;">
+                        ⚠️ Este CUPS ya está registrado
+                      </mat-hint>
                       <mat-icon
                         matSuffix
                         *ngIf="cupsValido === true"
