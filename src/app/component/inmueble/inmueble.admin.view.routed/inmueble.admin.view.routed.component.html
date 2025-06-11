@@ -60,6 +60,16 @@
                       <span class="detail-label">Referencia Catastral</span>
                       <span class="detail-value">{{ oInmueble.refCatas }}</span>
                     </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Uso</span>
+                      <span class="detail-value">
+                        <span class="badge uso-badge" [ngClass]="getUsoBadgeClass(oInmueble.uso)">
+                          <i class="bi" [ngClass]="getUsoIcon(oInmueble.uso)"></i>
+                          {{ oInmueble.uso }}
+                        </span>
+                      </span>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -83,14 +93,10 @@
                       <span class="detail-label">Tensión</span>
                       <span class="detail-value">{{ oInmueble.tension }} V</span>
                     </div>
+                    
                     <div class="detail-item">
-                      <span class="detail-label">Uso</span>
-                      <span class="detail-value">
-                        <span class="badge uso-badge" [ngClass]="getUsoBadgeClass(oInmueble.uso)">
-                          <i class="bi" [ngClass]="getUsoIcon(oInmueble.uso)"></i>
-                          {{ oInmueble.uso }}
-                        </span>
-                      </span>
+                      <span class="detail-label">Consumo anual</span>
+                      <span class="detail-value">{{ oInmueble.consumoAnual }} kWh</span>
                     </div>
                     
                     <div class="detail-item">
