@@ -1,241 +1,266 @@
-<div class="container mt-5 d-flex justify-content-center">
-  <div class="card w-75 shadow rounded-3 border-1 overflow-hidden">
-    <div class="card-header bg-secondary text-white text-center py-3">
-      <h2 class="fw-bold mb-0">
-        <i class="bi bi-person-plus"></i> Registro de Socio
-      </h2>
-    </div>
-    <div class="card-body p-5 bg-white">
-      <form [formGroup]="oSocioForm" (ngSubmit)="onSubmit()" novalidate>
-        <div class="row g-4">
-
-          <!-- Nombre -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Nombre</mat-label>
-              <input matInput formControlName="nombre" placeholder="Pon aquí tu nombre" />
-              <mat-error *ngIf="oSocioForm.get('nombre')?.invalid && oSocioForm.get('nombre')?.touched">
-                Campo obligatorio (3-50 caracteres)
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!-- Apellido1 -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Primer Apellido</mat-label>
-              <input matInput formControlName="apellido1" placeholder="Escribe tu primer apellido" />
-              <mat-error *ngIf="oSocioForm.get('apellido1')?.invalid && oSocioForm.get('apellido1')?.touched">
-                Campo obligatorio (3-50 caracteres)
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!-- Apellido2 -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Segundo Apellido</mat-label>
-              <input matInput formControlName="apellido2" placeholder="Escribe tu segundo apellido" />
-            </mat-form-field>
-          </div>
-
-         <!-- Email -->
-<div class="col-md-6">
-  <mat-form-field appearance="outline" class="w-100"
-    [class.mat-form-field-invalid]="emailExiste && oSocioForm.get('email')?.touched">
-
-    <mat-label>Email</mat-label>
-    <input
-      matInput
-      formControlName="email"
-      (input)="onEmailChange()"
-      placeholder="Pon aquí tu email"
-      [class.is-invalid]="emailExiste && oSocioForm.get('email')?.touched"
-    />
-
-    <!-- ✅ Icono verde si es válido y no existe -->
-    <mat-icon matSuffix *ngIf="!emailExiste && oSocioForm.get('email')?.valid" color="primary"></mat-icon>
-
-    <!-- ❌ Icono rojo si ya existe -->
-    <mat-icon matSuffix *ngIf="emailExiste && oSocioForm.get('email')?.touched" color="warn"></mat-icon>
-
-    <!-- Errores -->
-    <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
-      Email obligatorio
-    </mat-error>
-
-    <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
-      Formato de email incorrecto
-    </mat-error>
-
-    <mat-error *ngIf="emailExiste && oSocioForm.get('email')?.touched">
-      Este email ya está registrado
-    </mat-error>
-
-  </mat-form-field>
-</div>
-
-
-          <!-- Contraseña -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Contraseña</mat-label>
-              <input
-                matInput
-                type="password"
-                formControlName="contraseña"
-                placeholder="Escribe tu contraseña"
-              />
-              <mat-error *ngIf="oSocioForm.get('contraseña')?.invalid && oSocioForm.get('contraseña')?.touched">
-                Contraseña obligatoria (mín. 4 caracteres)
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!-- Dirección Fiscal -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Dirección Fiscal</mat-label>
-              <input matInput formControlName="direccionfiscal" placeholder="Tu dirección fiscal" 
-              (input)="onSearchDireccion()"
-                          [attr.autocomplete]="'off'"
-                          
-                          />
-
-                          <ul class="list-group position-absolute w-100 z-3" style="background-color: rgba(255, 255, 255, 0.9);"
-                          *ngIf="sugerencias.length > 0"
-                        >
-                          <li
-                            class="list-group-item list-group-item-action"
-                            *ngFor="let sugerencia of sugerencias"
-                            (click)="seleccionarDireccion(sugerencia)"
-                          >
-                            {{ sugerencia.properties.name }},
-                            {{ sugerencia.properties.city }},
-                            {{ sugerencia.properties.state }},
-                            {{ sugerencia.properties.country }}
-                          </li>
-                        </ul>
-
-              <mat-error *ngIf="oSocioForm.get('direccionfiscal')?.invalid && oSocioForm.get('direccionfiscal')?.touched">
-                Obligatorio (3-50 caracteres)
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!-- Teléfono -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Teléfono</mat-label>
-              <input matInput formControlName="telefono" placeholder="Escribe tu teléfono" />
-              <mat-error *ngIf="oSocioForm.get('telefono')?.invalid && oSocioForm.get('telefono')?.touched">
-                Teléfono válido obligatorio (9 dígitos)
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <!-- Código Postal -->
-          <div class="col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Código Postal</mat-label>
-              <input matInput formControlName="codigopostal" placeholder="Código postal" />
-              <mat-error *ngIf="oSocioForm.get('codigopostal')?.invalid && oSocioForm.get('codigopostal')?.touched">
-                Código postal válido (5 dígitos)
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-         <!-- DNI -->
-<div class="col-md-6 position-relative">
-  <mat-form-field appearance="outline" class="w-100"
-  [class.mat-form-field-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched">
-
-  <mat-label>DNI</mat-label>
-  <input
-    matInput
-    formControlName="dni"
-    (input)="onDniChange()"
-    placeholder="Escribe tu DNI"
-    [class.is-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched"
-  />
-
-  <!-- ✅ Icono verde si todo bien -->
-  <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary"></mat-icon>
-
-  <!-- ❌ Icono rojo si hay error -->
-  <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn"></mat-icon>
-
-  <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
-    Debes introducir un DNI
-  </mat-error>
-  
-  <mat-error *ngIf="oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
-    Formato incorrecto. Debe ser 8 dígitos y 1 letra mayúscula
-  </mat-error>
-  
-  <mat-error *ngIf="dniValido === false && oSocioForm.get('dni')?.touched">
-    La letra del DNI no es correcta
-  </mat-error>
-  
-  <mat-error *ngIf="dniExiste && dniValido && oSocioForm.get('dni')?.touched">
-    Este DNI ya está registrado
-  </mat-error>
-  
-  <mat-hint *ngIf="dniExiste" style="color: red; font-weight: bold;">
-    Este DNI ya está registrado
-  </mat-hint>
-  <!-- Pista -->
-  <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
-</mat-form-field>
-
-
-</div>
-
-         
-
-          <!-- Foto DNI -->
-          <div class="col-md-6 d-flex flex-column justify-content-center">
-            <label class="form-label fw-semibold mb-2">Foto del DNI</label>
-            <input
-              type="file"
-              class="form-control"
-              (change)="onFileSelect($event)"
-              accept="image/*"
-              formControlName="fotoDni"
-            />
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-xxl-8 col-xl-9 col-lg-10">
+      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <!-- Cabecera -->
+        <div class="card-header bg-gradient text-white py-4" style="background: linear-gradient(45deg, #2b5876, #4e4376);">
+          <div class="d-flex align-items-center px-3">
+            <i class="bi bi-person-plus-fill display-6 me-3"></i>
+            <div>
+              <h2 class="fw-bold mb-0">Registro de Socio</h2>
+              <p class="mb-0 opacity-75">Complete el formulario con sus datos personales</p>
+            </div>
           </div>
         </div>
 
-        <div class="text-center mt-5">
-          <button class="btn btn-outline-secondary mx-1" [routerLink]="['/admin', 'socio', 'plist']">
-            <i class="bi bi-list"></i> Ir a listado de Socios
-          </button>
-          <button class="btn btn-secondary mx-1" type="reset" (click)="onReset()">
-            <i class="bi bi-x-lg"></i> Reset
-          </button>
-          <button class="btn btn-primary mx-1" type="submit" [disabled]="!oSocioForm.valid || dniValido !== true || emailExiste || dniExiste">
-            <i class="bi bi-floppy"></i> Guardar
-          </button>
+        <div class="card-body p-4 p-lg-5">
+          <form [formGroup]="oSocioForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Progreso del formulario -->
+            <div class="progress mb-4" style="height: 8px;">
+              <div class="progress-bar bg-success" role="progressbar" 
+                   [style.width.%]="(oSocioForm.valid && !emailExiste && !dniExiste && dniValido === true) ? 100 : 
+                                   (oSocioForm.value.nombre && oSocioForm.value.apellido1) ? 75 :
+                                   oSocioForm.value.nombre ? 50 : 25">
+              </div>
+            </div>
+
+            <!-- Secciones del formulario -->
+            <div class="row g-4">
+              <!-- Datos Personales -->
+              <div class="col-12">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-person-badge me-2"></i>Datos Personales
+                </h5>
+              </div>
+
+              <!-- Nombre y Apellidos -->
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput formControlName="nombre" placeholder="Ej: Juan" />
+                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-error *ngIf="oSocioForm.get('nombre')?.invalid && oSocioForm.get('nombre')?.touched">
+                    Campo obligatorio (3-50 caracteres)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Primer Apellido</mat-label>
+                  <input matInput formControlName="apellido1" placeholder="Ej: García" />
+                  <mat-icon matSuffix>badge</mat-icon>
+                  <mat-error *ngIf="oSocioForm.get('apellido1')?.invalid && oSocioForm.get('apellido1')?.touched">
+                    Campo obligatorio (3-50 caracteres)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Segundo Apellido</mat-label>
+                  <input matInput formControlName="apellido2" placeholder="Ej: Pérez" />
+                  <mat-icon matSuffix>badge</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <!-- Identificación -->
+              <div class="col-12 mt-4">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-shield-lock me-2"></i>Identificación
+                </h5>
+              </div>
+
+              <!-- DNI -->
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100"
+                  [class.mat-form-field-invalid]="(dniExiste || dniValido === false) && oSocioForm.get('dni')?.touched">
+                  <mat-label>DNI</mat-label>
+                  <input matInput formControlName="dni" (input)="onDniChange()" placeholder="12345678Z" />
+                  
+                  <mat-icon matSuffix *ngIf="dniValido && !dniExiste" color="primary">check_circle</mat-icon>
+                  <mat-icon matSuffix *ngIf="dniExiste || dniValido === false" color="warn">error</mat-icon>
+
+                  <mat-error *ngIf="oSocioForm.get('dni')?.hasError('required') && oSocioForm.get('dni')?.touched">
+                    DNI obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="oSocioForm.get('dni')?.hasError('pattern') && oSocioForm.get('dni')?.touched">
+                    Formato: 8 dígitos y 1 letra mayúscula
+                  </mat-error>
+                  <mat-error *ngIf="dniValido === false && oSocioForm.get('dni')?.touched">
+                    Letra del DNI incorrecta
+                  </mat-error>
+                  <mat-error *ngIf="dniExiste && dniValido && oSocioForm.get('dni')?.touched">
+                    DNI ya registrado
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100"
+                  [class.mat-form-field-invalid]="emailExiste && oSocioForm.get('email')?.touched">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email" (input)="onEmailChange()" 
+                         placeholder="ejemplo@email.com" type="email" />
+                  
+                  <mat-icon matSuffix *ngIf="!emailExiste && oSocioForm.get('email')?.valid" color="primary">check_circle</mat-icon>
+                  <mat-icon matSuffix *ngIf="emailExiste && oSocioForm.get('email')?.touched" color="warn">error</mat-icon>
+
+                  <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
+                    Email obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
+                    Formato de email incorrecto
+                  </mat-error>
+                  <mat-error *ngIf="emailExiste && oSocioForm.get('email')?.touched">
+                    Email ya registrado
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Contraseña -->
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Contraseña</mat-label>
+                  <input matInput [type]="hidePassword ? 'password' : 'text'" 
+                         formControlName="contraseña" placeholder="Mínimo 4 caracteres" />
+                  <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                  <mat-error *ngIf="oSocioForm.get('contraseña')?.invalid && oSocioForm.get('contraseña')?.touched">
+                    Contraseña obligatoria (mín. 4 caracteres)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Contacto -->
+              <div class="col-12 mt-4">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-geo-alt me-2"></i>Información de Contacto
+                </h5>
+              </div>
+
+              <!-- Dirección Fiscal -->
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Dirección Fiscal</mat-label>
+                  <input matInput formControlName="direccionfiscal" 
+                         placeholder="Calle, número, piso..." 
+                         (input)="onSearchDireccion()"
+                         [attr.autocomplete]="'off'" />
+                  <mat-icon matSuffix>location_on</mat-icon>
+                  
+                  <mat-error *ngIf="oSocioForm.get('direccionfiscal')?.invalid && oSocioForm.get('direccionfiscal')?.touched">
+                    Dirección obligatoria (3-50 caracteres)
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- Sugerencias de dirección -->
+                <div class="position-relative">
+                  <ul class="list-group position-absolute w-100 z-3 shadow-sm" 
+                      *ngIf="sugerencias.length > 0">
+                    <li class="list-group-item list-group-item-action py-2 px-3" 
+                        *ngFor="let sugerencia of sugerencias"
+                        (click)="seleccionarDireccion(sugerencia)">
+                      <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                      {{ sugerencia.properties.name }},
+                      {{ sugerencia.properties.city }},
+                      {{ sugerencia.properties.state }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Teléfono -->
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Teléfono</mat-label>
+                  <input matInput formControlName="telefono" placeholder="123456789" />
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <mat-error *ngIf="oSocioForm.get('telefono')?.invalid && oSocioForm.get('telefono')?.touched">
+                    Teléfono válido (9 dígitos)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Código Postal -->
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Código Postal</mat-label>
+                  <input matInput formControlName="codigopostal" placeholder="12345" />
+                  <mat-icon matSuffix>local_post_office</mat-icon>
+                  <mat-error *ngIf="oSocioForm.get('codigopostal')?.invalid && oSocioForm.get('codigopostal')?.touched">
+                    CP válido (5 dígitos)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <!-- Documentación -->
+              <div class="col-12 mt-4">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-file-earmark-text me-2"></i>Documentación
+                </h5>
+              </div>
+
+              <!-- Foto DNI -->
+              <div class="col-md-6">
+                <div class="card border-1 rounded-3">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-card-image fs-4 me-2 text-primary"></i>
+                      <h6 class="mb-0">Foto del DNI</h6>
+                    </div>
+                    <input type="file" class="form-control" 
+                           (change)="onFileSelect($event)" 
+                           accept="image/*"
+                           formControlName="fotoDni" />
+                    <small class="text-muted d-block mt-2">
+                      Formatos aceptados: JPG, PNG. Máximo 5MB
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
+              <button type="button" class="btn btn-outline-secondary px-4" [routerLink]="['/admin', 'socio', 'plist']">
+                <i class="bi bi-arrow-left me-2"></i>Volver al listado
+              </button>
+              <button type="reset" class="btn btn-outline-danger px-4" (click)="onReset()">
+                <i class="bi bi-x-circle me-2"></i>Limpiar formulario
+              </button>
+              <button type="submit" class="btn btn-primary px-4" 
+                      [disabled]="!oSocioForm.valid || dniValido !== true || emailExiste || dniExiste">
+                <i class="bi bi-check2-circle me-2"></i>Registrar socio
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal de Resultado -->
+<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4">
-      <div class="modal-header bg-secondary text-white">
-        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
+    <div class="modal-content border-0 shadow rounded-4">
+      <div class="modal-header border-0" [ngClass]="{'bg-success text-white': strMessage.includes('correctamente'),
+                                                    'bg-danger text-white': strMessage.includes('Error')}">
+        <h5 class="modal-title" id="modalLabel">
+          <i [class]="strMessage.includes('correctamente') ? 'bi bi-check-circle me-2' : 'bi bi-exclamation-circle me-2'"></i>
+          {{ strMessage.includes('correctamente') ? 'Éxito' : 'Error' }}
+        </h5>
+        <button type="button" class="btn-close" [class.btn-close-white]="true" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
       </div>
-      <div class="modal-body text-center">
-        <p class="fs-5">{{ strMessage }}</p>
+      <div class="modal-body text-center p-4">
+        <p class="mb-0">{{ strMessage }}</p>
       </div>
-      <div class="modal-footer justify-content-center">
+      <div class="modal-footer border-0 justify-content-center">
         <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal" (click)="hideModal()">
-          Cerrar
+          Aceptar
         </button>
       </div>
     </div>

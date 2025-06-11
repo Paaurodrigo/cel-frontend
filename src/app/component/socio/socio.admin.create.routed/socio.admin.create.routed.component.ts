@@ -53,6 +53,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   dniSubject: Subject<string> = new Subject<string>();
   direccionSubject: Subject<string> = new Subject<string>();
   sugerencias: any[] = [];
+  hidePassword: boolean = true;
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
