@@ -15,7 +15,7 @@ import { CryptoService } from '../../../service/crypto.service';
 import { TiposocioselectorComponent } from '../../tiposocio/tiposocioselector/tiposocioselector.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ITipoSocio } from '../../../model/tipoSocio.interface';
-import { Subject, debounceTime } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -51,6 +51,8 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   emailSubject: Subject<string> = new Subject<string>();
   // ✅ Añadimos Subject para debounce del DNI
   dniSubject: Subject<string> = new Subject<string>();
+  direccionSubject: Subject<string> = new Subject<string>();
+  sugerencias: any[] = [];
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
@@ -92,6 +94,27 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
         }
       }
     });
+
+    // ✅ Photon API con debounce
+            this.direccionSubject.pipe(
+              debounceTime(400),
+              distinctUntilChanged()
+            ).subscribe(direccion => {
+              if (!direccion || direccion.length < 3) {
+                this.sugerencias = [];
+                return;
+              }
+        
+              fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5&bbox=-1.75,37.8,0.75,40.9`)
+          .then(res => res.json())
+          .then(data => {
+            this.sugerencias = data.features;
+          })
+          .catch(err => {
+            console.error('Error al buscar direcciones:', err);
+            this.sugerencias = [];
+          });
+            });
   
     // Debounce para el campo Email + check si existe en backend
     this.emailSubject.pipe(debounceTime(1000)).subscribe(email => {
@@ -262,5 +285,27 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
 
   rellenarFormulario(): void {
     this.oSocioForm.patchValue(this.datosEjemplo);
+  }
+
+  onSearchDireccion(): void {
+    const direccion = this.oSocioForm.get('direccion')?.value;
+    this.direccionSubject.next(direccion);
+  }
+
+  seleccionarDireccion(sugerencia: any): void {
+    const props = sugerencia.properties;
+  
+    const direccionCompleta = [
+      props.name,
+     
+    ].filter(Boolean).join(', '); // Filtra null/undefined
+  
+    this.oSocioForm.patchValue({
+      direccion: direccionCompleta,
+      codigoPostal: props.postcode || '',
+      
+    });
+  
+    this.sugerencias = [];
   }
 }

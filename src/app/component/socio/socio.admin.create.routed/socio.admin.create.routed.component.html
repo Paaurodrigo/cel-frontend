@@ -96,7 +96,28 @@
           <div class="col-md-6">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Dirección Fiscal</mat-label>
-              <input matInput formControlName="direccionfiscal" placeholder="Tu dirección fiscal" />
+              <input matInput formControlName="direccionfiscal" placeholder="Tu dirección fiscal" 
+              (input)="onSearchDireccion()"
+                          [attr.autocomplete]="'off'"
+                          
+                          />
+
+                          <ul
+                          class="list-group position-absolute w-100 z-3"
+                          *ngIf="sugerencias.length > 0"
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            *ngFor="let sugerencia of sugerencias"
+                            (click)="seleccionarDireccion(sugerencia)"
+                          >
+                            {{ sugerencia.properties.name }},
+                            {{ sugerencia.properties.city }},
+                            {{ sugerencia.properties.state }},
+                            {{ sugerencia.properties.country }}
+                          </li>
+                        </ul>
+
               <mat-error *ngIf="oSocioForm.get('direccionfiscal')?.invalid && oSocioForm.get('direccionfiscal')?.touched">
                 Obligatorio (3-50 caracteres)
               </mat-error>
