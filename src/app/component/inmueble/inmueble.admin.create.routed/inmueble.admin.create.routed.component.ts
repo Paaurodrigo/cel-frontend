@@ -99,8 +99,17 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
         });
         
   }
-  checkCupsExists(cups: string) {
-    throw new Error('Method not implemented.');
+  checkCupsExists(cups: string): void {
+    this.oInmuebleService.checkCupsExists(cups).subscribe({
+      next: (existe: boolean) => {
+        this.cupsExiste = existe;
+        console.log('¿Existe CUPS?:', existe);
+      },
+      error: (err) => {
+        console.error('Error al comprobar CUPS:', err);
+        this.cupsExiste = false;
+      }
+    });
   }
 
   createForm() {
