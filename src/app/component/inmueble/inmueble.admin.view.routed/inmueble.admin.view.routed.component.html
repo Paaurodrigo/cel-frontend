@@ -49,6 +49,10 @@
                       <span class="detail-value">{{ oInmueble.direccion }}</span>
                     </div>
                     <div class="detail-item">
+                      <span class="detail-label">Puerta</span>
+                      <span class="detail-value">{{ oInmueble.puerta }}</span>
+                    </div>
+                    <div class="detail-item">
                       <span class="detail-label">Código Postal</span>
                       <span class="detail-value">{{ oInmueble.codigoPostal }}</span>
                     </div>
@@ -102,8 +106,12 @@
                     <div class="detail-item">
                       <span class="detail-label">Recomendación a instalar</span>
                       <span class="detail-value">{{ oInmueble.recomendacion | number:'1.2-2' }} kWp</span>
-
                     </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Comercializadora</span>
+                      <span class="detail-value">{{ oInmueble.comercializadora }} </span>
+                    </div>
+
 
                     
                   </div>
