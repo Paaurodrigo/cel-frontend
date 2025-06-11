@@ -54,10 +54,10 @@
     />
 
     <!-- ✅ Icono verde si es válido y no existe -->
-    <mat-icon matSuffix *ngIf="!emailExiste && oSocioForm.get('email')?.valid" color="primary">check_circle</mat-icon>
+    <mat-icon matSuffix *ngIf="!emailExiste && oSocioForm.get('email')?.valid" color="primary"></mat-icon>
 
     <!-- ❌ Icono rojo si ya existe -->
-    <mat-icon matSuffix *ngIf="emailExiste && oSocioForm.get('email')?.touched" color="warn">error</mat-icon>
+    <mat-icon matSuffix *ngIf="emailExiste && oSocioForm.get('email')?.touched" color="warn"></mat-icon>
 
     <!-- Errores -->
     <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
@@ -161,7 +161,9 @@
     Este DNI ya está registrado
   </mat-error>
   
-
+  <mat-hint *ngIf="dniExiste" style="color: red; font-weight: bold;">
+    Este DNI ya está registrado
+  </mat-hint>
   <!-- Pista -->
   <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
 </mat-form-field>

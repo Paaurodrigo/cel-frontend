@@ -31,7 +31,10 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   strMessage: string = '';
   myModal: any;
   sugerencias: any[] = [];
-
+  cauValido: boolean | null = null;
+  cauExiste: boolean = false;
+  private cauSubject: Subject<string> = new Subject<string>();
+  
   direccionSubject: Subject<string> = new Subject<string>();
 
   constructor(
@@ -46,6 +49,23 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
     this.createForm();
     this.oInstalacionForm?.markAllAsTouched();
 
+    this.cauSubject.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe(cau => {
+      if (!cau) {
+        this.cauValido = false;
+        this.cauExiste = false;
+      } else {
+        this.cauValido = this.validarCAU(cau);
+        if (this.cauValido) {
+          this.checkCauExists(cau);
+        } else {
+          this.cauExiste = false;
+        }
+      }
+    });
+    
     // ✅ Photon API con debounce
     this.direccionSubject.pipe(
       debounceTime(400),
@@ -102,6 +122,29 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
     });
   
     this.sugerencias = [];
+  }
+  
+  onCauChange(): void {
+    const cau = this.oInstalacionForm.get('cau')?.value;
+    this.cauSubject.next(cau);
+  }
+
+  checkCauExists(cau: string): void {
+    this.oInstalacionService.checkCauExists(cau).subscribe({
+      next: (existe: boolean) => {
+        this.cauExiste = existe;
+        console.log('¿Existe CAU?:', existe);
+      },
+      error: (err) => {
+        console.error('Error al comprobar CAU:', err);
+        this.cauExiste = false;
+      }
+    });
+  }
+
+  validarCAU(cau: string): boolean {
+    const cauRegex = /^[A-Z0-9]{26}$/;
+    return cauRegex.test(cau);
   }
   
 

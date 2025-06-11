@@ -17,6 +17,7 @@
             class="form-control"
             formControlName="nombre"
             placeholder="nombre"
+            
           />
          
         </div>
@@ -26,10 +27,30 @@
           <input
             type="text"
             id="cau"
+            (input)="onCauChange()"
             class="form-control"
             formControlName="cau"
             placeholder="cau"
+            [ngClass]="{
+              'is-valid': cauValido === true,
+              'is-invalid': cauValido === false
+              
+            }"
+              [class.is-invalid]="(cauExiste || cauValido === false) && oInstalacionForm.get('cau')?.touched"
+         
           />
+
+
+     <!-- ✅ Icono verde si todo bien -->
+  <mat-icon matSuffix *ngIf="cauValido && !cauExiste" color="primary"></mat-icon>
+
+  <!-- ❌ Icono rojo si hay error -->
+  <mat-icon matSuffix *ngIf="cauExiste || cauValido === false" color="warn"></mat-icon>
+
+          <mat-hint *ngIf="cauExiste && cauValido" style="color: red; font-weight: bold;">
+            ⚠️ Este CAU ya está registrado
+          </mat-hint>
+          
           <div class="invalid-feedback">
            Son 26 digitos
           </div>

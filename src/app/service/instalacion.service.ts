@@ -141,6 +141,10 @@ import { IPage } from "../model/model.interface";
     return this.oHttp.delete(this.serverURL+'/' + id, options);
   }
   
+  checkCauExists(cau: string): Observable<boolean> {
+    const url = `${this.serverURL}/check-cau?cau=${encodeURIComponent(cau)}`;
+    return this.oHttp.get<boolean>(url);
+  }
   
   
   }

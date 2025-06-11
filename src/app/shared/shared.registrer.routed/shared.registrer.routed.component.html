@@ -71,7 +71,9 @@
     <mat-error *ngIf="emailExiste && oSocioForm.get('email')?.touched">
       Este email ya está registrado
     </mat-error>
-
+    <mat-hint *ngIf="emailExiste" style="color: red; font-weight: bold;">
+      Este email ya está registrado
+    </mat-hint>
   </mat-form-field>
 </div>
 
@@ -161,7 +163,9 @@
     Este DNI ya está registrado
   </mat-error>
   
-
+  <mat-hint *ngIf="dniExiste" style="color: red; font-weight: bold;">
+    Este DNI ya está registrado
+  </mat-hint>
   <!-- Pista -->
   <mat-hint align="start">De 8 dígitos y 1 letra (ejemplo: 12345678Z)</mat-hint>
 </mat-form-field>
