@@ -47,6 +47,8 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   private cupsSubject: Subject<string> = new Subject<string>();
   direccionSubject: Subject<string> = new Subject<string>();
   sugerencias: any[] = [];
+  cupsExiste: boolean = false;
+  
 
   constructor(
     private oInmuebleService: InmuebleService,
@@ -63,9 +65,15 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       debounceTime(1000) // 2 segundos de espera tras la última tecla
     ).subscribe(cups => {
       if (!cups) {
-        this.cupsValido = null; // Sin estado si está vacío
+        this.cupsValido = false;
+        this.cupsExiste = false;
       } else {
         this.cupsValido = this.validarCUPS(cups);
+        if (this.cupsValido) {
+          this.checkCupsExists(cups);
+        } else {
+          this.cupsExiste = false; // No hacer check si DNI formato incorrecto
+        }
       }
     });
 
@@ -90,6 +98,9 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       });
         });
         
+  }
+  checkCupsExists(cups: string) {
+    throw new Error('Method not implemented.');
   }
 
   createForm() {

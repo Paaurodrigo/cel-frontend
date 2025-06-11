@@ -47,7 +47,9 @@
                           [ngClass]="{
                             'is-valid': cupsValido === true,
                             'is-invalid': cupsValido === false
+                            
                           }"
+                            [class.is-invalid]="(cupsExiste || cupsValido === false) && oInmuebleForm.get('cups')?.touched"
                         />
                       </div>
                       <mat-icon
