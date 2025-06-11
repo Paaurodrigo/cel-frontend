@@ -104,7 +104,6 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
       tension: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
       uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       consumoAnual: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(5)]],
-      intencion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       habitos: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       socio: this.fb.group({
         id: ['', Validators.required],
@@ -120,7 +119,7 @@ export class InmuebleAdminCreateRoutedComponent implements OnInit {
   }
 
 
-  
+
   onCupsChange(): void {
     const cups = this.oInmuebleForm.get('cups')?.value;
     this.cupsSubject.next(cups);
