@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-shared-home-routed',
@@ -33,25 +33,20 @@ export class SharedHomeRoutedComponent implements OnInit {
     { nombre: 'Aceite virgen', categoria: 'Aceites', imagenUrl: '/assets/img2.jpg' },
   ];
 
-  contactForm: FormGroup;
-  isHeaderFixed: boolean = false;
-  showMobileMenu: boolean = false;
-
-  constructor(private fb: FormBuilder) {
-    this.contactForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      telefono: [''],
-      mensaje: ['', Validators.required]
-    });
+  initMap() {
+    const map = L.map('map').setView([39.5, -0.4], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    // Añadir marcadores según instalaciones
   }
+
+  constructor() { }
 
   ngOnInit(): void {
     // Inicializar AOS (Animate On Scroll)
     
 
     // Inicializar contadores
-    this.initializeStats();
+    this.initCounters();
 
     this.initMap(); // puedes cargar leaflet si usas mapa
   }
@@ -77,9 +72,6 @@ export class SharedHomeRoutedComponent implements OnInit {
         header.classList.remove('scrolled');
       }
     }
-
-    // Header fijo al hacer scroll
-    this.isHeaderFixed = window.scrollY > 50;
   }
 
   // Función para volver arriba
@@ -102,59 +94,36 @@ export class SharedHomeRoutedComponent implements OnInit {
     }
   }
 
-  // Animación de estadísticas
-  private initializeStats() {
-    const stats = [
-      { element: 'familias', target: 120, current: 0 },
-      { element: 'instalaciones', target: 3, current: 0 },
-      { element: 'energia', target: 250, current: 0 }
-    ];
+  // Inicializar contadores con animación
+  private initCounters(): void {
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
 
-    stats.forEach(stat => {
-      this.animateStat(stat);
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target')!;
+      let count = 0;
+
+      const updateCount = () => {
+        const increment = target / speed;
+        
+        if (count < target) {
+          count += increment;
+          (counter as HTMLElement).innerText = Math.ceil(count).toString();
+          setTimeout(updateCount, 1);
+        } else {
+          (counter as HTMLElement).innerText = target.toString();
+        }
+      };
+
+      updateCount();
     });
   }
 
-  private animateStat(stat: { element: string, target: number, current: number }) {
-    const element = document.getElementById(stat.element);
-    if (!element) return;
-
-    const increment = stat.target / 100;
-    const interval = setInterval(() => {
-      stat.current += increment;
-      if (stat.current >= stat.target) {
-        stat.current = stat.target;
-        clearInterval(interval);
-      }
-      element.textContent = Math.round(stat.current).toString();
-    }, 20);
-  }
-
-  // Navegación suave
-  scrollToSection(sectionId: string) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  // Toggle menú móvil
-  toggleMobileMenu() {
-    this.showMobileMenu = !this.showMobileMenu;
-  }
-
-  // Manejo del formulario de contacto
-  onSubmit() {
-    if (this.contactForm.valid) {
-      // Aquí iría la lógica para enviar el formulario
-      console.log(this.contactForm.value);
-      this.contactForm.reset();
-    }
-  }
-
-  initMap() {
-    const map = L.map('map').setView([39.5, -0.4], 6);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    // Añadir marcadores según instalaciones
+  // Manejar envío del formulario de contacto
+  onContactSubmit(event: Event): void {
+    event.preventDefault();
+    // Aquí iría la lógica para enviar el formulario
+    // Por ahora solo cerramos el modal
+    this.toggleContactForm();
   }
 }

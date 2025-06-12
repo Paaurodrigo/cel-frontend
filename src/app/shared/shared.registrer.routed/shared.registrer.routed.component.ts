@@ -43,6 +43,8 @@ export class SharedRegistrerRoutedComponent implements OnInit {
   // ✅ Añadimos Subject para debounce del DNI
   dniSubject: Subject<string> = new Subject<string>();
 
+  hidePassword: boolean = true;
+
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
