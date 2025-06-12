@@ -8,10 +8,17 @@ import { serverURL } from '../environment/environment';
 })
 export class PdfService {
 
-  serverURL: string = serverURL + '/api/pdf/generate';
+  serverURL: string = serverURL + '/api/generate';
   constructor(private http: HttpClient) {}
 
   downloadPdf(instalacionId: number): Observable<Blob> {
-    return this.http.get(`${this.serverURL}/${instalacionId}`, { responseType: 'blob' });
+    return this.http.get(`${this.serverURL}/pdf/${instalacionId}`, { responseType: 'blob' });
   }
+
+  downloadTxt(instalacionId: number): Observable<Blob> {
+    const url = `${this.serverURL}/txt/${instalacionId}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
+  
 }

@@ -208,6 +208,23 @@ L.circle([coords.lat, coords.lon], {
     });
   }
 
+  downloadTxt() {
+    this.pdfService.downloadTxt(this.id_instalacion).subscribe(response => {
+      const blob = new Blob([response], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `instalacion-${this.id_instalacion}.txt`; // nombre fallback
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Error al generar el TXT:', error);
+    });
+  }
+  
+
   goToPage(p: number) {
     if (p) {
       this.nPage = p - 1;
