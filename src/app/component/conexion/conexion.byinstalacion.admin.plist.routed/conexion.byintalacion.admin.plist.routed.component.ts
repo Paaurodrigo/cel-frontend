@@ -30,7 +30,7 @@ export class ConexionByInstalacionAdminPlistRoutedComponent implements OnInit, A
   arrBotonera: string[] = [];
   instalacion: any = {};
   porcentajeUtilizado: number = 0;
-
+ 
   map: any; // Leaflet map
 
   datosInstalacionCargados: boolean = false;
@@ -192,13 +192,20 @@ L.circle([coords.lat, coords.lon], {
     });
   }
 
+ 
   downloadPdf() {
     this.pdfService.downloadPdf(this.id_instalacion).subscribe(response => {
       const blob = new Blob([response], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `acuerdo-autoconsumo-${this.id_instalacion}.pdf`;
+  
+      // Obtener fecha actual en formato "12-06-2025"
+      const today = new Date();
+      const fechaFormateada = today.toLocaleDateString('es-ES').replace(/\//g, '-');
+  
+      a.download = `Acuerdo de reparto firmado-${fechaFormateada}.pdf`;
+  
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -207,14 +214,16 @@ L.circle([coords.lat, coords.lon], {
       console.error('Error al generar el PDF:', error);
     });
   }
+  
 
   downloadTxt() {
     this.pdfService.downloadTxt(this.id_instalacion).subscribe(response => {
       const blob = new Blob([response], { type: 'text/plain' });
       const url = window.URL.createObjectURL(blob);
+      const anioActual = new Date().getFullYear();
       const a = document.createElement('a');
       a.href = url;
-      a.download = `instalacion-${this.id_instalacion}.txt`; // nombre fallback
+      a.download = `${this.instalacion.cau}_${anioActual}.txt`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
