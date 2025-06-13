@@ -25,20 +25,14 @@
               </div>
 
               <!-- ID -->
-              <div class="col-md-4">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>ID</mat-label>
-                  <input matInput formControlName="id" readonly />
-                  <mat-icon matSuffix>badge</mat-icon>
-                </mat-form-field>
-              </div>
+              
 
               <!-- Nombre -->
               <div class="col-md-4">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Nombre</mat-label>
                   <input matInput formControlName="nombre" placeholder="Ej: Juan" />
-                  <mat-icon matSuffix>person</mat-icon>
+                  <mat-icon matSuffix>badge</mat-icon>
                   <mat-error *ngIf="oSocioForm.get('nombre')?.invalid && oSocioForm.get('nombre')?.touched">
                     Campo obligatorio (3-50 caracteres)
                   </mat-error>
