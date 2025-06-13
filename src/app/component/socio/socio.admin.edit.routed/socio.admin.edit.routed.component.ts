@@ -10,6 +10,9 @@ import {
 import { ISocio } from '../../../model/socio.interface';
 import { SocioService } from '../../../service/socio.service';
 import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 declare let bootstrap: any;
 @Component({
@@ -17,14 +20,17 @@ declare let bootstrap: any;
   templateUrl: './socio.admin.edit.routed.component.html',
   styleUrls: ['./socio.admin.edit.routed.component.css'],
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule,CommonModule],
+  imports: [RouterModule, ReactiveFormsModule,CommonModule,   MatFormFieldModule,
+      MatInputModule,
+      MatSelectModule,],
   
 })
 export class SocioAdminEditRoutedComponent implements OnInit {
   id: number = 0;
-  oSocioForm: FormGroup | undefined = undefined;
+  oSocioForm: FormGroup = new FormGroup({});
   oSocio: ISocio | null = null;
   strMessage: string = '';
+ 
 
   myModal: any;
 
