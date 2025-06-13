@@ -70,9 +70,16 @@
 
             <div class="mb-3">
               <label for="potenciaTotal" class="form-label fw-bold">Potencia Total</label>
-              <input type="text" id="potenciaTotal" class="form-control" formControlName="potenciaTotal" placeholder="potenciaTotal"
-                [disabled]="oInstalacion?.conexiones > 0" (input)="onPotenciaTotalChange($any($event.target).value)" />
-
+              <input
+              type="text"
+              id="potenciaTotal"
+              class="form-control"
+              formControlName="potenciaTotal"
+              placeholder="potenciaTotal"
+              [readonly]="oInstalacion?.conexiones > 0"
+            />
+            
+            
             
             
               <!-- Mensaje cuando hay conexiones -->

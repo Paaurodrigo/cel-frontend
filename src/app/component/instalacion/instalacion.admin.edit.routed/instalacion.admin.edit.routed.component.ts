@@ -105,19 +105,25 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       this.showModal('Formulario no válido');
       return;
     } else {
+      // ⚠️ Antes de guardar → forzamos que potenciadisponible sea igual que potenciaTotal
+      this.oInstalacionForm?.controls['potenciadisponible'].setValue(
+        this.oInstalacionForm?.controls['potenciaTotal'].value
+      );
+  
       this.oInstalacionService.update(this.oInstalacionForm?.value).subscribe({
         next: (oInstalacion: IInstalacion) => {
           this.oInstalacion = oInstalacion;
           this.updateForm();
-          this.showModal('Instalacion ' + this.oInstalacion.id + ' actualizado');
+          this.showModal('Instalacion ' + this.oInstalacion.id + ' actualizada');
         },
         error: (error) => {
-          this.showModal('Error al actualizar el usuario');
+          this.showModal('Error al actualizar la instalacion');
           console.error(error);
         },
       });
     }
   }
+  
 
   onPotenciaTotalChange(value: string): void {
     if (this.oInstalacion?.conexiones === 0) {
