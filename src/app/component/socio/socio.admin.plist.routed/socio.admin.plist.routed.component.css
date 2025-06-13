@@ -62,3 +62,145 @@
   .input-group-text {
     background-color: #fff;
   }
+  /* Estilos para la tabla */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.table th {
+  font-weight: 600;
+  border-top: 0;
+  padding: 1rem 0.75rem;
+}
+
+.sortable {
+  cursor: pointer;
+}
+
+.sortable:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Estilos para las filas */
+.hover-row:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+  transition: background-color 0.15s ease-in-out;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Estilos para la paginación */
+.page-link {
+  color: #495057;
+  border-radius: 0.25rem;
+  margin: 0 2px;
+}
+
+.page-link.active {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+}
+
+/* Estilos para los botones de acción */
+.btn-action {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #0d6efd;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.btn-action:hover {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-action-secondary {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.btn-action-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-action-more {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  transition: all 0.2s;
+}
+
+.btn-action-more:hover {
+  background-color: #e9ecef;
+  transform: translateY(-2px);
+}
+
+/* Estilos para los badges */
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+}
+
+.badge i {
+  font-size: 0.85em;
+}
+
+/* Estilos para el dropdown */
+.dropdown-menu {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Estilos para la barra de búsqueda */
+.input-group .form-control:focus {
+  box-shadow: none;
+  border-color: #dee2e6;
+}
+
+.input-group-text {
+  background-color: #fff;
+}
