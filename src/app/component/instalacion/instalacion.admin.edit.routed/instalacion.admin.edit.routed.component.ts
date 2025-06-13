@@ -106,7 +106,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       return;
     } else {
       // ⚠️ Antes de guardar → forzamos que potenciadisponible sea igual que potenciaTotal
-      this.oInstalacionForm?.controls['potenciaDisponible'].setValue(
+      this.oInstalacionForm?.controls['potenciadisponible'].setValue(
         this.oInstalacionForm?.controls['potenciaTotal'].value
       );
   
