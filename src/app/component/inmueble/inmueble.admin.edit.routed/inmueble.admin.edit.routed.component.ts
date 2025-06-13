@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IInmueble } from '../../../model/inmueble.interface';
 import { InmuebleService } from '../../../service/inmueble.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 declare let bootstrap: any;
 @Component({
@@ -11,7 +12,7 @@ declare let bootstrap: any;
   templateUrl: './inmueble.admin.edit.routed.component.html',
   styleUrls: ['./inmueble.admin.edit.routed.component.css'],
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule,CommonModule],
+  imports: [RouterModule, ReactiveFormsModule,CommonModule, MatFormFieldModule],
 })
 export class InmuebleAdminEditRoutedComponent implements OnInit {
   id: number = 0;
