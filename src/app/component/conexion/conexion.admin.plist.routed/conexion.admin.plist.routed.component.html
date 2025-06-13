@@ -135,15 +135,19 @@
                   </td>
                   <td>
                     <div class="d-flex justify-content-center gap-2">
-                      <button type="button" class="btn btn-sm btn-action" (click)="$event.stopPropagation(); view(conexion)" title="Ver detalles">
+                      <a class="btn btn-sm btn-action-secondary" href="admin/conexion/view/{{ conexion.id }}" title="Ver conexiones">
                         <i class="bi bi-eye"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-action-secondary" title="Editar">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button type="button" class="btn btn-sm btn-action-danger" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                      </button>
+                      </a>
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-sm btn-action-more" data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
+                          <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="admin/conexion/edit/{{ conexion.id }}"><i class="bi bi-pencil me-2"></i>Editar</a></li>
+                          <li><a class="dropdown-item" href="admin/conexion/delete/{{ conexion.id }}"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
+                        </ul>
+                        
+                      </div>
                     </div>
                   </td>
                 </tr>

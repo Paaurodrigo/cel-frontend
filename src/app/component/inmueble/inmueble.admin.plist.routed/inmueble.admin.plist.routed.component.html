@@ -105,7 +105,7 @@
                   <td>
                     <span >{{ inmueble.recomendacion | number:'1.2-2' }} kWp</span>
                   </td>
-                  <td>
+                  <!-- <td>
                     <div class="d-flex justify-content-center gap-2">
                       <button type="button" class="btn btn-sm btn-outline-primary" (click)="$event.stopPropagation(); view(inmueble)" title="Ver detalles">
                         <i class="bi bi-eye"></i>
@@ -122,6 +122,26 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-danger" href="admin/inmueble/delete/{{ inmueble.id }}"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
                       </ul>
+                    </div>
+                  </td> -->
+                  <td>
+                    <div class="d-flex justify-content-center gap-2">
+                      <a class="btn btn-sm btn-action-secondary" href="admin/inmueble/view/{{ inmueble.id }}" title="Ver inmueble">
+                        <i class="bi bi-eye"></i>
+                      </a>
+                      <a class="btn btn-sm btn-action-secondary" href="admin/socio/view/{{ inmueble.socio?.id }}" (click)="$event.stopPropagation()" title="Ver socio">
+                        <i class="bi bi-person"></i>
+                      </a>
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-sm btn-action-more" data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
+                          <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="admin/inmueble/edit/{{ inmueble.id }}"><i class="bi bi-pencil me-2"></i>Editar</a></li>
+                          <li><a class="dropdown-item" href="admin/inmueble/delete/{{ inmueble.id }}"><i class="bi bi-trash me-2"></i>Eliminar</a></li>
+                        </ul>
+                        
+                      </div>
                     </div>
                   </td>
                 </tr>
