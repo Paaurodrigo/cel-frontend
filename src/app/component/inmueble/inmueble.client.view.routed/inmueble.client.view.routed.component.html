@@ -93,7 +93,7 @@
                       <div class="card bg-white border-0">
                         <div class="card-body p-3">
                           <div class="text-muted small">Potencia 1</div>
-                          <div class="h4 mb-0">{{ oInmueble.potencia1 }}<small class="fs-6 ms-1">kW</small></div>
+                          <div class="h4 mb-0">{{ oInmueble.potencia1 | number:'1.2-2' }}<small class="fs-6 ms-1">kW</small></div>
                         </div>
                       </div>
                     </div>
@@ -101,7 +101,8 @@
                       <div class="card bg-white border-0">
                         <div class="card-body p-3">
                           <div class="text-muted small">Potencia 2</div>
-                          <div class="h4 mb-0">{{ oInmueble.potencia2 }}<small class="fs-6 ms-1">kW</small></div>
+                          <div class="h4 mb-0">{{ oInmueble.potencia2 | number:'1.2-2' }}<small class="fs-6 ms-1">kW</small></div>
+
                         </div>
                       </div>
                     </div>
