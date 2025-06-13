@@ -156,7 +156,8 @@ L.circle([coords.lat, coords.lon], {
             .bindPopup(`
               <b>Inmueble:</b> ${dirInmueble}<br>
               <b>Potencia:</b> ${conexion.potencia} kW<br>
-              <b>Porcentaje:</b> ${conexion.porcentaje}%
+              <b>Porcentaje:</b> ${(conexion.porcentaje * 100).toFixed(2)}%
+
             `);
         }
       }
