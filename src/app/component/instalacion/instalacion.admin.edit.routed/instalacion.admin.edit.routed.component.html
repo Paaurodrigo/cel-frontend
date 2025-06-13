@@ -70,14 +70,18 @@
 
             <div class="mb-3">
               <label for="potenciaTotal" class="form-label fw-bold">Potencia Total</label>
-              <input
-                type="text"
-                id="potenciaTotal"
-                class="form-control"
-                formControlName="potenciaTotal"
-                placeholder="potenciaTotal"
-              />
+              <input type="text" id="potenciaTotal" class="form-control" formControlName="potenciaTotal" placeholder="potenciaTotal"
+                [disabled]="oInstalacion?.conexiones > 0" (input)="onPotenciaTotalChange($any($event.target).value)" />
+
+            
+            
+              <!-- Mensaje cuando hay conexiones -->
+              <div *ngIf="oInstalacion?.conexiones > 0" class="mt-2 text-danger small">
+                Si hay conexiones no se puede editar la potencia total. Primero deberán ser eliminadas.
+              </div>
             </div>
+            
+            
 
             <div class="mb-3">
               <label for="potenciadisponible" class="form-label fw-bold">Potencia Disponible</label>
@@ -87,6 +91,7 @@
                 class="form-control"
                 formControlName="potenciadisponible"
                 placeholder="potenciaDisponible"
+                readonly
               />
             </div>
 

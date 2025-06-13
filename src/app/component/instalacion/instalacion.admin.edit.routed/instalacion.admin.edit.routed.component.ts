@@ -119,6 +119,19 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     }
   }
 
+  onPotenciaTotalChange(value: string): void {
+    if (this.oInstalacion?.conexiones === 0) {
+      const potenciaTotal = parseFloat(value);
+      if (!isNaN(potenciaTotal)) {
+        // Aquí decides la lógica → en este caso, igualar potenciaDisponible
+        this.oInstalacionForm?.controls['potenciadisponible'].setValue(potenciaTotal);
+      }
+    }
+  }
+  
+  
+  
+
 }
 
 
