@@ -100,16 +100,17 @@
                     
                     <div class="detail-item">
                       <span class="detail-label">Consumo anual</span>
-                      <span class="detail-value">{{ oInmueble.consumoAnual }} kWh</span>
+                      <span class="detail-value">{{ oInmueble.consumoAnual | number:'1.0-0' }} kWh</span>
+
                     </div>
                     
                     <div class="detail-item">
                       <span class="detail-label">Recomendación a instalar</span>
-                      <span class="detail-value">{{ oInmueble.recomendacion | number:'1.2-2' }} kWp</span>
+                      <span class="detail-value">{{ oInmueble.recomendacion | number:'1,2-2' }} kWp</span>
                     </div>
                     <div class="detail-item">
                       <span class="detail-label">Comercializadora</span>
-                      <span class="detail-value">{{ oInmueble.comercializadora }} </span>
+                      <span class="detail-value">{{ oInmueble.comercializadora }} kWp</span>
                     </div>
 
 
