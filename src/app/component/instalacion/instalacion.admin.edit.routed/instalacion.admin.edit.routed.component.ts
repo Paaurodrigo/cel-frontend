@@ -45,7 +45,6 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       paneles: new FormControl('', [Validators.required]),
       potenciaPanel : new FormControl(''),
       potenciaTotal : new FormControl(''),
-      potenciadisponible: new FormControl(''),
       precioKw: new FormControl('',)
      
     });
