@@ -42,16 +42,7 @@
     color: white;
   }
   
-  /* Estilos para los botones de acción */
-  .btn-outline-primary, .btn-outline-info, .btn-outline-secondary {
-    border-width: 1px;
-  }
   
-  .btn-outline-primary:hover, .btn-outline-info:hover, .btn-outline-secondary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s;
-  }
   
   /* Estilos para el dropdown */
   .dropdown-menu {
@@ -75,4 +66,68 @@
   
   .card {
     overflow: hidden;
+  }
+
+   /* Estilos para los botones de acción */
+   .btn-action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #0d6efd;
+    transition: all 0.2s;
+    position: relative;
+  }
+  
+  .btn-action:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .btn-action-secondary {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+    transition: all 0.2s;
+    position: relative;
+  }
+  
+  .btn-action-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  .btn-action-more {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    transition: all 0.2s;
+  }
+  
+  .btn-action-more:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
   }
