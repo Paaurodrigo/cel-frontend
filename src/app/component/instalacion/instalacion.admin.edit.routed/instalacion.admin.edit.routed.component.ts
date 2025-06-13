@@ -45,6 +45,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       paneles: new FormControl('', [Validators.required]),
       potenciaPanel : new FormControl(''),
       potenciaTotal : new FormControl(''),
+      potenciadisponible: new FormControl(''),
       precioKw: new FormControl('',)
      
     });
@@ -113,6 +114,12 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
         next: (oInstalacion: IInstalacion) => {
           this.oInstalacion = oInstalacion;
           this.updateForm();
+  
+          // ⚠️ Aquí volvemos a forzar en el form para que se vea bien en la UI
+          this.oInstalacionForm?.controls['potenciadisponible'].setValue(
+            this.oInstalacionForm?.controls['potenciaTotal'].value
+          );
+  
           this.showModal('Instalacion ' + this.oInstalacion.id + ' actualizada');
         },
         error: (error) => {
@@ -122,6 +129,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       });
     }
   }
+  
   
 
   onPotenciaTotalChange(value: string): void {
