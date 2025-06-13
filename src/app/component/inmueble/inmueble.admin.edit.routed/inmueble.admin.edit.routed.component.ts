@@ -5,6 +5,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IInmueble } from '../../../model/inmueble.interface';
 import { InmuebleService } from '../../../service/inmueble.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 declare let bootstrap: any;
 @Component({
@@ -12,7 +14,12 @@ declare let bootstrap: any;
   templateUrl: './inmueble.admin.edit.routed.component.html',
   styleUrls: ['./inmueble.admin.edit.routed.component.css'],
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule,CommonModule, MatFormFieldModule],
+  imports: [ MatFormFieldModule,
+      MatInputModule,
+      MatSelectModule,
+      ReactiveFormsModule,
+      RouterModule,
+      CommonModule,],
 })
 export class InmuebleAdminEditRoutedComponent implements OnInit {
   id: number = 0;
