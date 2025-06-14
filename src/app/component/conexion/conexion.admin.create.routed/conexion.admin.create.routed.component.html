@@ -74,21 +74,25 @@
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Seleccione el inmueble</mat-label>
                         <div class="d-flex justify-content-end mb-2">
-                          <button class="btn btn-primary" (click)="showInmuebleSelectorModal()">
+                          <button class="btn btn-primary" (click)="showInmuebleSelectorModal()" type="button">
                             <i class="bi bi-search me-2"></i>Buscar Inmueble
                           </button>
                         </div>
-                        <div class="selected-item p-3 bg-light rounded mb-2">
+              
+                        <!-- MOSTRAR DATOS DESDE EL FORMULARIO -->
+                        <div class="selected-item p-3 bg-light rounded mb-2" *ngIf="oConexionForm?.get('inmueble.cups')?.value">
                           <div class="d-flex align-items-center">
                             <i class="bi bi-building me-2"></i>
                             <div>
-                              <strong>CUPS:</strong> {{oInmueble.cups}}
+                              <strong>CUPS:</strong> {{ oConexionForm?.get('inmueble.cups')?.value }}
                             </div>
                           </div>
                           <div class="mt-1">
-                            <strong>Dirección:</strong> {{oInmueble.direccion}}
+                            <strong>Dirección:</strong> {{ oConexionForm?.get('inmueble.direccion')?.value }}
                           </div>
                         </div>
+              
+                        <!-- Inputs ocultos (opcional, puedes quitarlos si no son necesarios) -->
                         <input matInput formControlName="cups" hidden />
                         <input matInput formControlName="id" hidden />
                         <input matInput formControlName="direccion" hidden />
@@ -98,6 +102,7 @@
                   </div>
                 </div>
               </div>
+              
             </div>
 
             <!-- Selección de Instalación -->
