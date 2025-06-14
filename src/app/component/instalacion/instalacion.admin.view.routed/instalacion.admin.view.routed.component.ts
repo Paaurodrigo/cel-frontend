@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { IInstalacion } from '../../../model/instalacion.interface';
 import { InstalacionService } from '../../../service/instalacion.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-instalacion.admin.view.routed',
   templateUrl: './instalacion.admin.view.routed.component.html',
-  styleUrls: ['./instalacion.admin.view.routed.component.css']
+  styleUrls: ['./instalacion.admin.view.routed.component.css'],
+  imports: [RouterLink],
+  standalone: true
 })
 export class InstalacionAdminViewRoutedComponent implements OnInit {
   id: number = 0;

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ISocio } from '../../../model/socio.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SocioService } from '../../../service/socio.service';
 
 @Component({
   selector: 'app-socio.admin.view.routed',
   templateUrl: './socio.admin.view.routed.component.html',
-  styleUrls: ['./socio.admin.view.routed.component.css']
+  styleUrls: ['./socio.admin.view.routed.component.css'],
+  imports: [RouterLink],
+  standalone: true
 })
 export class SocioAdminViewRoutedComponent implements OnInit {
 

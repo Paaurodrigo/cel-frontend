@@ -1,71 +1,183 @@
-<div class="container-fluid py-4">
+<div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-xl-8 col-lg-10 col-md-12">
-     
-      <!-- Tarjetas adicionales -->
-      <div class="row g-4">
-        <!-- Tarjeta de rendimiento -->
-        <div class="col-md-6">
-          <div class="card shadow-sm h-100">
-            <div class="card-header bg-white py-3">
-              <h3 class="fs-5 fw-bold mb-0">
-                <i class="bi bi-graph-up me-2"></i>Rendimiento
-              </h3>
-            </div>
-            <div class="card-body text-center py-4">
-              <i class="bi bi-bar-chart-line fs-1 text-muted"></i>
-              <p class="mt-3 mb-0">Consulte el rendimiento de esta instalación</p>
-              <button class="btn btn-sm btn-outline-primary mt-3">
-                <i class="bi bi-graph-up me-1"></i>Ver estadísticas
-              </button>
+    <div class="col-lg-10">
+      <div class="card border-0 shadow-lg">
+        <!-- Cabecera -->
+        <div class="card-header bg-primary text-white py-4">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-solar-panel display-6 me-3"></i>
+            <div>
+              <h2 class="fw-bold mb-0">Detalle de Instalación</h2>
+              <p class="mb-0 opacity-75">Información detallada de la instalación seleccionada</p>
             </div>
           </div>
         </div>
 
-        <!-- Tarjeta de conexiones -->
-        <div class="col-md-6">
-          <div class="card shadow-sm h-100">
-            <div class="card-header bg-white py-3">
-              <h3 class="fs-5 fw-bold mb-0">
-                <i class="bi bi-diagram-3 me-2"></i>Conexiones
-              </h3>
+        <div class="card-body p-4">
+          <!-- Información Básica -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                Información Básica
+              </h5>
             </div>
-            <div class="card-body text-center py-4">
-              <i class="bi bi-link-45deg fs-1 text-muted"></i>
-              <p class="mt-3 mb-0">Gestione las conexiones asociadas a esta instalación</p>
-              <a href="admin/conexion/byinstalacion/plist/{{ oInstalacion.id }}" class="btn btn-sm btn-outline-primary mt-3">
-                <i class="bi bi-list-ul me-1"></i>Ver conexiones
-              </a>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-tag display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Nombre</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.nombre }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-upc display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">CAU</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.cau }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-geo-alt display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Dirección</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.direccion }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div id="map" style="height: 400px; width: 100%;"></div>
+          </div>
 
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm h-100">
-            <div class="bg-white p-3 shadow-sm rounded-3">
-              <h6 class="text-muted mb-1">Potencia</h6>
-              <h4 class="text-success mb-0">{{ oInstalacion.potenciaTotal }} kWp</h4>
+          <!-- Especificaciones Técnicas -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-gear me-2"></i>
+                Especificaciones Técnicas
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-grid-3x3 display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Número de Paneles</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.paneles }} unidades</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-lightning-charge display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Potencia por Panel</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.potenciaPanel }} Wp</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm h-100">
-            <div class="bg-white p-3 shadow-sm rounded-3">
-              <h6 class="text-muted mb-1">Potencia Disponible</h6>
-              <h4 class="text-success mb-0">{{ oInstalacion.potenciaDisponible }} kWp</h4>
+
+          <!-- Potencias y Precio -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-graph-up me-2"></i>
+                Potencias y Precio
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-lightning display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Potencia Total</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.potenciaTotal }} kWp</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-battery-charging display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Potencia Disponible</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.potenciaDisponible }} kWp</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-currency-euro display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Precio por kWp</h6>
+                      <p class="mb-0 fs-5">{{ oInstalacion.precioKw }} €/kWp</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm h-100">
-            <div class="bg-white p-3 shadow-sm rounded-3">
-              <h6 class="text-muted mb-1">Potencia Panel</h6>
-              <h4 class="text-success mb-0">{{ oInstalacion.potenciaPanel}} Wp</h4>
+
+          <!-- Mapa y Estadísticas -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-map me-2"></i>
+                Ubicación y Estadísticas
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center py-4">
+                      <i class="bi bi-graph-up fs-1 text-primary mb-3"></i>
+                      <p class="mb-3">Consulte el rendimiento de esta instalación</p>
+                      <button class="btn btn-outline-primary">
+                        <i class="bi bi-graph-up me-2"></i>Ver estadísticas
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center py-4">
+                      <i class="bi bi-diagram-3 fs-1 text-primary mb-3"></i>
+                      <p class="mb-3">Gestione las conexiones asociadas</p>
+                      <a [routerLink]="['/admin', 'conexion', 'byinstalacion', 'plist', oInstalacion.id]" class="btn btn-outline-primary">
+                        <i class="bi bi-list-ul me-2"></i>Ver conexiones
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="map" style="height: 400px; width: 100%;" class="mt-3 rounded"></div>
             </div>
           </div>
+
+          <!-- Botones de acción -->
+          <div class="d-flex justify-content-end gap-3 mt-4">
+            <a class="btn btn-outline-secondary" [routerLink]="['/admin', 'instalacion', 'plist']">
+              <i class="bi bi-arrow-left me-2"></i>Volver al listado
+            </a>
+            <a class="btn btn-outline-primary" [routerLink]="['/admin', 'instalacion', 'edit', oInstalacion.id]">
+              <i class="bi bi-pencil me-2"></i>Editar instalación
+            </a>
+            <a class="btn btn-outline-danger" [routerLink]="['/admin', 'instalacion', 'delete', oInstalacion.id]">
+              <i class="bi bi-trash me-2"></i>Eliminar instalación
+            </a>
+          </div>
         </div>
-        
       </div>
     </div>
   </div>
