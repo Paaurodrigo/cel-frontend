@@ -1,8 +1,8 @@
 <div class="container-fluid py-5">
   <div class="row justify-content-center">
-    <div class="col-xxl-8 col-xl-9 col-lg-10">
-      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-        <!-- Cabecera -->
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="card border-0 shadow-lg">
+        <!-- Cabecera Azul -->
         <div class="card-header bg-gradient text-white py-4" style="background: #0d6efd;">
           <div class="d-flex align-items-center px-3">
             <i class="bi bi-solar-panel display-6 me-3" style="color: white;"></i>
@@ -12,139 +12,134 @@
             </div>
           </div>
         </div>
-        
 
-        <div class="card-body p-4 p-lg-5">
+        <div class="card-body">
           <form [formGroup]="oInstalacionForm!" (ngSubmit)="onSubmit()" novalidate>
-            <!-- Progreso del formulario -->
-            <div class="progress mb-4" style="height: 8px;">
-              <div class="progress-bar bg-success" role="progressbar" 
-                   [style.width.%]="(oInstalacionForm.valid && !cauExiste && cauValido === true) ? 100 : 
-                                   (oInstalacionForm.value.nombre && oInstalacionForm.value.direccion) ? 75 :
-                                   oInstalacionForm.value.nombre ? 50 : 25">
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                formControlName="nombre"
+                placeholder="Nombre de la instalación"
+              />
+            </div>
+
+            <!-- CAU -->
+            <div class="mb-3">
+              <label for="cau" class="form-label fw-bold">CAU</label>
+              <input
+                type="text"
+                id="cau"
+                class="form-control"
+                formControlName="cau"
+                placeholder="Código de Autoconsumo"
+                (input)="onCauChange()"
+                [ngClass]="{
+                  'is-valid': cauValido === true,
+                  'is-invalid': cauValido === false
+                }"
+                [class.is-invalid]="(cauExiste || cauValido === false) && oInstalacionForm.get('cau')?.touched"
+              />
+              <div class="form-text">Debe contener 26 dígitos</div>
+              <div class="invalid-feedback" *ngIf="cauExiste">
+                Este CAU ya está registrado
+              </div>
+              <div class="invalid-feedback" *ngIf="!cauValido && oInstalacionForm.get('cau')?.touched">
+                CAU inválido
               </div>
             </div>
 
-            <!-- Secciones del formulario -->
-            <div class="row g-4">
-              <!-- Datos Generales -->
-              <div class="col-12">
-                <h5 class="border-bottom pb-2 mb-4">
-                  <i class="bi bi-info-circle me-2"></i>Datos Generales
-                </h5>
-              </div>
+            <!-- Dirección -->
+            <div class="mb-3 position-relative">
+              <label for="direccion" class="form-label fw-bold">Dirección</label>
+              <input
+                type="text"
+                id="direccion"
+                class="form-control"
+                placeholder="Introduce una dirección"
+                formControlName="direccion"
+                (input)="onSearchDireccion()"
+                [attr.autocomplete]="'off'"
+              />
+              <ul class="list-group position-absolute w-100 z-3" *ngIf="sugerencias.length > 0">
+                <li
+                  class="list-group-item list-group-item-action"
+                  *ngFor="let sugerencia of sugerencias"
+                  (click)="seleccionarDireccion(sugerencia)"
+                >
+                  {{ sugerencia.properties.name }}, {{ sugerencia.properties.city }}, 
+                  {{ sugerencia.properties.state }}, {{ sugerencia.properties.country }}
+                </li>
+              </ul>
+            </div>
 
-              <!-- Nombre y CAU -->
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Nombre</mat-label>
-                  <input matInput formControlName="nombre" placeholder="Nombre de la instalación" />
-                  <mat-icon matSuffix>solar_power</mat-icon>
-                  <mat-error *ngIf="oInstalacionForm.get('nombre')?.invalid && oInstalacionForm.get('nombre')?.touched">
-                    Campo obligatorio
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100"
-                  [class.mat-form-field-invalid]="cauExiste && oInstalacionForm.get('cau')?.touched">
-                  <mat-label>CAU</mat-label>
-                  <input matInput formControlName="cau" (input)="onCauChange()" 
-                         placeholder="Código de Autoconsumo" />
-                  <mat-icon matSuffix *ngIf="cauValido && !cauExiste" color="primary">check_circle</mat-icon>
-                  <mat-icon matSuffix *ngIf="cauExiste || cauValido === false" color="warn">error</mat-icon>
-                  <mat-hint align="start">26 dígitos</mat-hint>
-                  <mat-error *ngIf="cauExiste && oInstalacionForm.get('cau')?.touched">
-                    Este CAU ya está registrado
-                  </mat-error>
-                  <mat-error *ngIf="!cauValido && oInstalacionForm.get('cau')?.touched">
-                    CAU inválido
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <!-- Dirección -->
-              <div class="col-12">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Dirección</mat-label>
-                  <input matInput formControlName="direccion" 
-                         placeholder="Introduce una dirección"
-                         (input)="onSearchDireccion()"
-                         [attr.autocomplete]="'off'" />
-                  <mat-icon matSuffix>location_on</mat-icon>
-                  <mat-error *ngIf="oInstalacionForm.get('direccion')?.invalid && oInstalacionForm.get('direccion')?.touched">
-                    Dirección obligatoria
-                  </mat-error>
-                </mat-form-field>
-                <ul class="list-group position-absolute w-100 z-3" *ngIf="sugerencias.length > 0">
-                  <li class="list-group-item list-group-item-action" 
-                      *ngFor="let sugerencia of sugerencias"
-                      (click)="seleccionarDireccion(sugerencia)">
-                    {{ sugerencia.properties.name }}, {{ sugerencia.properties.city }}, 
-                    {{ sugerencia.properties.state }}, {{ sugerencia.properties.country }}
-                  </li>
-                </ul>
-              </div>
-
-              <!-- Especificaciones Técnicas -->
-              <div class="col-12 mt-4">
-                <h5 class="border-bottom pb-2 mb-4">
-                  <i class="bi bi-gear me-2"></i>Especificaciones Técnicas
-                </h5>
-              </div>
-
-              <!-- Paneles y Potencia -->
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Cantidad de Paneles</mat-label>
-                  <input matInput type="number" formControlName="paneles" 
-                         placeholder="Número de paneles" min="1" step="1" />
-                  <mat-icon matSuffix>view_module</mat-icon>
-                  <mat-error *ngIf="panelesControl?.invalid && panelesControl?.touched">
-                    Solo se permiten números enteros positivos
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Potencia del Panel (Wp)</mat-label>
-                  <input matInput type="number" formControlName="potenciaPanel" 
-                         placeholder="Ejemplo: 350.5" min="0.1" step="0.001" />
-                  <mat-icon matSuffix>electric_bolt</mat-icon>
-                  <mat-error *ngIf="potenciaPanelControl?.invalid && potenciaPanelControl?.touched">
-                    Solo se permiten valores numéricos con hasta 3 decimales
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <!-- Precio -->
-              <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Precio por kWp (€)</mat-label>
-                  <input matInput type="number" formControlName="precioKw" 
-                         placeholder="Precio por kWp" min="0" step="0.01" />
-                  <mat-icon matSuffix>euro</mat-icon>
-                  <mat-error *ngIf="precioKwControl?.invalid && precioKwControl?.touched">
-                    Solo se permiten valores numéricos positivos
-                  </mat-error>
-                </mat-form-field>
+            <!-- Paneles -->
+            <div class="mb-3">
+              <label for="paneles" class="form-label fw-bold">Número de Paneles</label>
+              <input
+                type="number"
+                id="paneles"
+                class="form-control"
+                formControlName="paneles"
+                placeholder="Ej: 200"
+                min="1"
+                step="1"
+                [class.is-invalid]="panelesControl?.invalid && panelesControl?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="panelesControl?.invalid && panelesControl?.touched">
+                Solo se permiten números enteros positivos
               </div>
             </div>
 
-            <!-- Botones de acción -->
-            
-            <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
-              <button type="button" class="btn btn-outline-secondary px-4" [routerLink]="['/admin', 'Instalacion', 'plist']">
-                <i class="bi bi-arrow-left me-2"></i>Volver al listado
+            <!-- Potencia por Panel -->
+            <div class="mb-3">
+              <label for="potenciaPanel" class="form-label fw-bold">Potencia por Panel (Wp)</label>
+              <input
+                type="number"
+                id="potenciaPanel"
+                class="form-control"
+                formControlName="potenciaPanel"
+                placeholder="Ej: 500"
+                min="0.1"
+                step="0.001"
+                [class.is-invalid]="potenciaPanelControl?.invalid && potenciaPanelControl?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="potenciaPanelControl?.invalid && potenciaPanelControl?.touched">
+                Solo se permiten valores numéricos con hasta 3 decimales
+              </div>
+            </div>
+
+            <!-- Precio por kWp -->
+            <div class="mb-3">
+              <label for="precioKw" class="form-label fw-bold">Precio por kWp (€)</label>
+              <input
+                type="number"
+                id="precioKw"
+                class="form-control"
+                formControlName="precioKw"
+                placeholder="Ej: 1200"
+                min="0"
+                step="0.01"
+                [class.is-invalid]="precioKwControl?.invalid && precioKwControl?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="precioKwControl?.invalid && precioKwControl?.touched">
+                Solo se permiten valores numéricos positivos
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="mt-4 d-flex justify-content-evenly flex-wrap gap-2">
+              <button class="btn btn-warning" [routerLink]="['/admin', 'Instalacion', 'plist']">
+                <i class="bi bi-list"></i> Ir al listado
               </button>
-              <button type="reset" class="btn btn-outline-danger px-4" (click)="onReset()">
-                <i class="bi bi-x-circle me-2"></i>Limpiar formulario
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">
+                <i class="bi bi-x-lg"></i> Reset
               </button>
-              <button type="submit" class="btn btn-primary px-4" 
-              [disabled]="!oInstalacionForm.valid">
-                <i class="bi bi-check2-circle me-2"></i>Registrar instalacion
+              <button class="btn btn-success" type="submit" [disabled]="!oInstalacionForm?.valid">
+                <i class="bi bi-save"></i> Guardar cambios
               </button>
             </div>
           </form>
@@ -152,24 +147,21 @@
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-          (click)="hideModal()"></button>
-      </div>
-      <div class="modal-body">
-        <p>{{ strMessage }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">
-          Cerrar
-        </button>
+  <!-- Modal de confirmación -->
+  <div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="fs-5">{{ strMessage }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
