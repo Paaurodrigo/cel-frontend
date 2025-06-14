@@ -47,7 +47,8 @@
                     <i class="bi bi-percent display-6 me-3 text-primary"></i>
                     <div>
                       <h6 class="mb-1 text-muted">Porcentaje</h6>
-                      <p class="mb-0 fs-5">{{oConexion.porcentaje}}%</p>
+                      <p class="mb-0 fs-5">{{ (oConexion.porcentaje * 100) | number:'1.2-2' }}%</p>
+                      
                     </div>
                   </div>
                 </div>
@@ -63,12 +64,21 @@
                 Información del Inmueble
               </h5>
             </div>
-            <div class="card-body">
+            <div class="col-md-6 mb-3">
               <div class="d-flex align-items-center p-3 bg-light rounded">
                 <i class="bi bi-building display-6 me-3 text-primary"></i>
                 <div>
                   <h6 class="mb-1 text-muted">CUPS</h6>
                   <p class="mb-0 fs-5">{{oConexion.inmueble.cups}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="bi bi-building display-6 me-3 text-primary"></i>
+                <div>
+                  <h6 class="mb-1 text-muted">Direccion</h6>
+                  <p class="mb-0 fs-5">{{oConexion.inmueble.direccion}}</p>
                 </div>
               </div>
             </div>

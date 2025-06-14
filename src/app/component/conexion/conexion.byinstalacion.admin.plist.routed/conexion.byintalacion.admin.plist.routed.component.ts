@@ -154,9 +154,11 @@ L.circle([coords.lat, coords.lon], {
           })
             .addTo(this.map)
             .bindPopup(`
+              <b>Cups:</b> ${(conexion.inmueble?.cups || '')}<br>
               <b>Inmueble:</b> ${dirInmueble}<br>
               <b>Potencia:</b> ${conexion.potencia} kW<br>
               <b>Porcentaje:</b> ${(conexion.porcentaje * 100).toFixed(2)}%
+              
 
             `);
         }
