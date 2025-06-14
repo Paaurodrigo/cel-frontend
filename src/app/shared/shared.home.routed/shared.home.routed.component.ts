@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -17,10 +18,17 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatListModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    CommonModule
   ]
 })
 export class SharedHomeRoutedComponent implements OnInit {
+  displayedCount: number = 0;
+  finalCount: number = 120;
+  
+  
+
+
   resumen = [
     { title: 'Productos', value: 152, icon: 'inventory' },
     { title: 'Proveedores', value: 45, icon: 'groups' },
@@ -49,6 +57,8 @@ export class SharedHomeRoutedComponent implements OnInit {
     this.initCounters();
 
     this.initMap(); // puedes cargar leaflet si usas mapa
+
+    this.animateCount();
   }
 
   @HostListener('window:scroll', [])
@@ -126,4 +136,29 @@ export class SharedHomeRoutedComponent implements OnInit {
     // Por ahora solo cerramos el modal
     this.toggleContactForm();
   }
+
+  animateCount() {
+    const duration = 1000; // duración total en ms
+    const frameRate = 30; // cada cuántos ms actualizar
+    const totalSteps = duration / frameRate;
+    let currentStep = 0;
+  
+    const increment = this.finalCount / totalSteps;
+  
+    const interval = setInterval(() => {
+      this.displayedCount += increment;
+      currentStep++;
+  
+      if (currentStep >= totalSteps) {
+        this.displayedCount = this.finalCount;
+        clearInterval(interval);
+      }
+    }, frameRate);
+  }
 }
+
+
+
+
+
+
