@@ -97,12 +97,20 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       potenciaPanel: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,3})?$/)]],
       precioKw: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
       direccion: ['', [Validators.required, Validators.minLength(3)]],
+      direccionBase: [''], // ← no se guarda, solo interna
       cau: ['', [Validators.minLength(26), Validators.maxLength(26)]],
+      numero: ['', [Validators.pattern(/^[0-9]+$/)]],
     });
-
+  
     this.oInstalacionForm.get('paneles')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
     this.oInstalacionForm.get('potenciaPanel')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
+  
+    // 💥 escucha cambios en 'numero' y actualiza dirección
+    this.oInstalacionForm.get('numero')?.valueChanges.subscribe(() => {
+      this.actualizarDireccionCompleta();
+    });
   }
+  
 
   // ✅ Usamos Subject para que escuche cambios del input
   onSearchDireccion(): void {
@@ -111,20 +119,24 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   }
 
   seleccionarDireccion(sugerencia: any): void {
-    const direccionCompleta = [
+    const direccionBase = [
       sugerencia.properties.name,
       sugerencia.properties.postcode,      
       sugerencia.properties.city,
       sugerencia.properties.state,
       sugerencia.properties.country
-    ].filter(Boolean).join(', '); // Filtra los undefined y junta con comas
+    ].filter(Boolean).join(', ');
   
     this.oInstalacionForm.patchValue({
-      direccion: direccionCompleta
+      direccionBase: direccionBase
     });
+  
+    this.actualizarDireccionCompleta();
   
     this.sugerencias = [];
   }
+  
+  
   
   onCauChange(): void {
     const cau = this.oInstalacionForm.get('cau')?.value;
@@ -185,17 +197,20 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       this.showModal('Formulario inválido. Por favor, revisa los campos marcados.');
       return;
     }
-
+  
     const formData = this.oInstalacionForm.value;
-
+  
+    // 💥 Eliminar campo auxiliar antes de enviar
+    delete formData.direccionBase;
+  
     formData.potenciaTotal = formData.potenciaTotal
       ? parseFloat(formData.potenciaTotal)
       : (formData.paneles * formData.potenciaPanel) / 1000;
-
+  
     formData.potenciaDisponible = formData.potenciaDisponible
       ? parseFloat(formData.potenciaDisponible)
       : formData.potenciaTotal;
-
+  
     this.oInstalacionService.create(formData).subscribe({
       next: (oInstalacion: IInstalacion) => {
         this.oInstalacion = oInstalacion;
@@ -204,6 +219,7 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       error: (err) => console.error(err),
     });
   }
+  
 
   get panelesControl() {
     return this.oInstalacionForm?.get('paneles');
@@ -220,4 +236,25 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
   get precioKwControl() {
     return this.oInstalacionForm?.get('precioKw');
   }
+
+  actualizarDireccionCompleta(): void {
+    const numero = this.oInstalacionForm.get('numero')?.value || '';
+    const direccionBase = this.oInstalacionForm.get('direccionBase')?.value || '';
+  
+    if (direccionBase) {
+      const partes: string[] = direccionBase.split(',');
+      const nombreCalle = partes[0]?.trim();
+      const resto = partes.slice(1).map((p: string) => p.trim()).join(', ');
+  
+      const direccionFinal = numero
+        ? `${nombreCalle}, ${numero}, ${resto}`
+        : direccionBase;
+  
+      this.oInstalacionForm.patchValue({ direccion: direccionFinal });
+    }
+  }
+  
+  
+
+
 }

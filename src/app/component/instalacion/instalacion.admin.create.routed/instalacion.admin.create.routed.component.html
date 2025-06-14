@@ -63,7 +63,7 @@
                   </div>
 
                   <!-- Dirección -->
-                  <div class="col-12 mb-3">
+                  <div class="col-md-6 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Dirección</mat-label>
                       <input 
@@ -85,6 +85,19 @@
                         {{ sugerencia.properties.state }}, {{ sugerencia.properties.country }}
                       </li>
                     </ul>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Numero</mat-label>
+                      <input 
+                        matInput 
+                        formControlName="numero"
+                        placeholder="1"
+                      />
+                    </mat-form-field>
+                    <mat-error *ngIf="oInstalacionForm.get('numero')?.hasError('pattern')">
+                      Solo se permiten números enteros.
+                    </mat-error>
                   </div>
                 </div>
               </div>
@@ -152,7 +165,7 @@
               <div class="card-body">
                 <div class="row">
                   <!-- Potencia Total -->
-                  <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('potenciaTotal') as potenciaTotalControl">
+                  <div class="col-md-4 mb-3" >
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Potencia Total (kWp)</mat-label>
                       <input 
@@ -167,7 +180,7 @@
                   </div>
 
                   <!-- Potencia Disponible -->
-                  <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('potenciaDisponible') as potenciaDisponibleControl">
+                  <div class="col-md-4 mb-3" >
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Potencia Disponible (kWp)</mat-label>
                       <input 
