@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IInmueble } from '../../../model/inmueble.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { InmuebleService } from '../../../service/inmueble.service';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './inmueble.admin.view.routed.component.html',
   styleUrls: ['./inmueble.admin.view.routed.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterLink]
 })
 export class InmuebleAdminViewRoutedComponent implements OnInit {
 
