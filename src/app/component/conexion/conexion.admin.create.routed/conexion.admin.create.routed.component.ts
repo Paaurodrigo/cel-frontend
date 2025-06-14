@@ -186,24 +186,24 @@ export class ConexionAdminCreateRoutedComponent implements OnInit {
       maxHeight: '800px',
       width: '80%',
       maxWidth: '90%',
-      
-
-
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result !== undefined) {
-        console.log(result);
-        this.oConexionForm?.controls['instalacion'].setValue({
-          id: result.id,
-          nombre: result.nombre,
-            
-        });
+      if (result) {
+        if (result.id && result.nombre) {
+          this.oConexionForm?.get('instalacion')?.patchValue({
+            id: result.id,
+            nombre: result.nombre
+          });
+        } else {
+          console.error("La instalación no tiene id o nombre:", result);
+        }
       }
     });
+  
     return false;
   }
+  
 
   private potenciaValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
