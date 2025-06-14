@@ -2,182 +2,108 @@
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
       <div class="card border-0 shadow-lg">
-        <div class="card-header bg-primary text-white text-center">
-          <h2 class="fw-bold">
-            <i class="bi bi-person-circle"></i> Edición de Instalacion <i class="bi bi-pencil"></i>
-          </h2>
+
+        <!-- Cabecera Azul -->
+        <div class="card-header bg-gradient text-white py-4" style="background: #0d6efd;">
+          <div class="d-flex align-items-center px-3">
+            <i class="bi bi-solar-panel display-6 me-3" style="color: white;"></i>
+            <div>
+              <h2 class="fw-bold mb-0">Edición de Instalación</h2>
+              <p class="mb-0 opacity-75">Modifica los datos de la instalación seleccionada</p>
+            </div>
+          </div>
         </div>
+
         <div class="card-body">
           <form [formGroup]="oInstalacionForm!" (ngSubmit)="onSubmit()" novalidate>
 
+            <!-- CAU -->
             <div class="mb-3">
-              <label for="id" class="form-label fw-bold">CAU</label>
-              <input
-                type="text"
-                id="cau"
-                class="form-control"
-                formControlName="cau"
-                placeholder="cau"
-                readonly
-              />
-              <div class="form-text">No se puede cambiar.</div>
+              <label for="cau" class="form-label fw-bold">CAU</label>
+              <input type="text" id="cau" class="form-control" formControlName="cau" readonly />
+              <div class="form-text">Este campo no se puede modificar.</div>
             </div>
-           
+
+            <!-- Nombre -->
             <div class="mb-3">
               <label for="nombre" class="form-label fw-bold">Nombre</label>
-              <input
-                type="text"
-                id="nombre"
-                class="form-control"
-                formControlName="nombre"
-                placeholder="nombre"
-                readonly
-              />
-              <div class="form-text">No se puede cambiar.</div>
+              <input type="text" id="nombre" class="form-control" formControlName="nombre" readonly />
+              <div class="form-text">Este campo no se puede modificar.</div>
             </div>
 
+            <!-- Paneles -->
             <div class="mb-3">
-              <label for="paneles" class="form-label fw-bold">Paneles</label>
+              <label for="paneles" class="form-label fw-bold">Número de Paneles</label>
+              <input type="number" id="paneles" class="form-control" formControlName="paneles" placeholder="Ej: 200" />
+            </div>
+
+            <!-- Potencia por Panel -->
+            <div class="mb-3">
+              <label for="potenciaPanel" class="form-label fw-bold">Potencia por Panel (Wp)</label>
+              <input type="number" id="potenciaPanel" class="form-control" formControlName="potenciaPanel" placeholder="Ej: 500" />
+            </div>
+
+            <!-- Potencia Total -->
+            <div class="mb-3">
+              <label for="potenciaTotal" class="form-label fw-bold">Potencia Total (kWp)</label>
               <input
-                type="text"
-                id="paneles"
+                type="number"
+                id="potenciaTotal"
                 class="form-control"
-                formControlName="paneles"
-                placeholder="paneles"
+                formControlName="potenciaTotal"
+                [readonly]="oInstalacion?.conexiones > 0"
+                placeholder="Ej: 120"
               />
-              <div *ngIf="oInstalacionForm?.get('direccion')?.errors" class="text-danger">
-                <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('required')">Debes introducir un Direccion.</small>
-                <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('minlength')">El Direccion es demasiado corto.</small>
-                <small *ngIf="oInstalacionForm?.get('direccion')?.hasError('maxlength')">El Direccion es demasiado largo.</small>
+              <div *ngIf="oInstalacion?.conexiones > 0" class="form-text text-danger mt-1">
+                Si hay conexiones, no se puede editar la potencia total. Primero deberán eliminarse.
               </div>
             </div>
 
+            <!-- Potencia Disponible -->
             <div class="mb-3">
-              <label for="potenciapanel" class="form-label fw-bold">Potencia Panel</label>
-              <input
-                type="text"
-                id="potenciaPanel"
-                class="form-control"
-                formControlName="potenciaPanel"
-                placeholder="potenciaPanel"
-              />
-              <div *ngIf="oInstalacionForm?.get('codigoPostal')?.errors" class="text-danger">
-                <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('required')">Debes introducir un Codigo Postal.</small>
-                <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('minlength')">El Codigo Postal es demasiado corto.</small>
-                <small *ngIf="oInstalacionForm?.get('codigoPostal')?.hasError('maxlength')">El Codigo Postal es demasiado largo.</small>
-              </div>
+              <label for="potenciaDisponible" class="form-label fw-bold">Potencia Disponible (kWp)</label>
+              <input type="number" id="potenciaDisponible" class="form-control" formControlName="potenciaDisponible" readonly />
+              <div class="form-text">Se actualizará automáticamente al guardar.</div>
             </div>
 
+            <!-- Precio por kWp -->
             <div class="mb-3">
-              <label for="potenciaTotal" class="form-label fw-bold">Potencia Total</label>
-              <input
-              type="text"
-              id="potenciaTotal"
-              class="form-control"
-              formControlName="potenciaTotal"
-              placeholder="potenciaTotal"
-              
-            />
-            
-            
-            
-            
-              <!-- Mensaje cuando hay conexiones -->
-              <div *ngIf="oInstalacion?.conexiones > 0" class="mt-2 text-danger small">
-                Si hay conexiones no se puede editar la potencia total. Primero deberán ser eliminadas.
-              </div>
-            </div>
-            
-            
-
-            <div class="mb-3">
-              <label for="potenciadisponible" class="form-label fw-bold">Potencia Disponible</label>
-              <input
-                type="text"
-                id="potenciadisponible"
-                class="form-control"
-                formControlName="potenciadisponible"
-                placeholder="potenciaDisponible"
-               
-              />
+              <label for="precioKw" class="form-label fw-bold">Precio por kWp (€)</label>
+              <input type="number" id="precioKw" class="form-control" formControlName="precioKw" placeholder="Ej: 1200" />
             </div>
 
-
-
-            <div class="mb-3">
-              <label for="precioKw" class="form-label fw-bold">Precio kWp</label>
-              <input
-                type="email"
-                id="precioKw"
-                class="form-control"
-                formControlName="precioKw"
-                placeholder="preciokWp"
-              />
-              <div *ngIf="oInstalacionForm?.get('potencia1')?.errors" class="text-danger">
-                <small *ngIf="oInstalacionForm?.get('potencia1')?.hasError('required')">Debes introducir un correo.</small>
-                <small *ngIf="oInstalacionForm?.get('potencia1')?.hasError('email')">El formato del correo es incorrecto.</small>
-              </div>
-            </div>
-
-
-           
-            
-
-            <div class="mt-4 d-flex justify-content-evenly">
-              <button
-              class="btn btn-warning mt-4 mx-1"
-              [routerLink]="['/admin', 'instalacion', 'plist']"
-            >
-              <i class="bi bi-list"></i> Ir a listado de Instalacions
-            </button>
-              <button class="btn btn-secondary mt-4 mx-1" type="reset" (click)="onReset()">
+            <!-- Botones -->
+            <div class="mt-4 d-flex justify-content-evenly flex-wrap gap-2">
+              <button class="btn btn-warning" [routerLink]="['/admin', 'instalacion', 'plist']">
+                <i class="bi bi-list"></i> Ir al listado
+              </button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">
                 <i class="bi bi-x-lg"></i> Reset
               </button>
-              <button
-                class="btn btn-success mt-4 mx-1"
-                type="submit"
-                [disabled]="!oInstalacionForm?.valid"
-              >
-                <i class="bi bi-save"></i> Guardar
+              <button class="btn btn-success" type="submit" [disabled]="!oInstalacionForm?.valid">
+                <i class="bi bi-save"></i> Guardar cambios
               </button>
             </div>
+
           </form>
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    class="modal fade"
-    [id]="'mimodal'"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <!-- Modal de confirmación -->
+  <div class="modal fade" [id]="'mimodal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            (click)="hideModal()"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
         </div>
         <div class="modal-body text-center">
           <p class="fs-5">{{ strMessage }}</p>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal"
-            (click)="hideModal()"
-          >
-            Cerrar
-          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">Cerrar</button>
         </div>
       </div>
     </div>

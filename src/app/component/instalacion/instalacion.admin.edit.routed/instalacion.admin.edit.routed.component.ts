@@ -4,6 +4,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InstalacionService } from '../../../service/instalacion.service';
 import { CommonModule } from '@angular/common';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 declare let bootstrap: any;
 
@@ -12,7 +16,13 @@ declare let bootstrap: any;
   templateUrl: './instalacion.admin.edit.routed.component.html',
   styleUrls: ['./instalacion.admin.edit.routed.component.css'],
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule,CommonModule],
+  imports: [MatFormFieldModule,
+      MatInputModule,
+      MatSelectModule,
+      ReactiveFormsModule,
+      RouterModule,
+      CommonModule,
+      MatIconModule],
 })
 export class InstalacionAdminEditRoutedComponent implements OnInit {
   id: number = 0;
