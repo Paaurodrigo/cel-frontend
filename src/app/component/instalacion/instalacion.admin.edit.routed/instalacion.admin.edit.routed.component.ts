@@ -47,7 +47,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     this.createForm();
     this.get();
     this.oInstalacionForm?.markAllAsTouched();
-    this.setupPotenciaCalculada(); // ← Añade esto
+    
   }
   createForm() {
     this.oInstalacionForm = new FormGroup({
@@ -57,7 +57,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       paneles: new FormControl('', [Validators.required]),
       potenciaPanel : new FormControl(''),
       potenciaTotal : new FormControl(''),
-      potenciadisponible: new FormControl(''),
+      potenciaDisponible: new FormControl(''),
       precioKw: new FormControl('',)
      
     });
@@ -82,7 +82,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     this.oInstalacionForm?.controls['paneles'].setValue(this.oInstalacion?.paneles);
     this.oInstalacionForm?.controls['potenciaPanel'].setValue(this.oInstalacion?.potenciaPanel);
     this.oInstalacionForm?.controls['potenciaTotal'].setValue(this.oInstalacion?.potenciaTotal);
-    this.oInstalacionForm?.controls['potenciadisponible'].setValue(this.oInstalacion?.potenciaDisponible);
+    this.oInstalacionForm?.controls['potenciaDisponible'].setValue(this.oInstalacion?.potenciaDisponible);
     this.oInstalacionForm?.controls['precioKw'].setValue(this.oInstalacion?.precioKw);
     
   }
@@ -92,12 +92,14 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       next: (oInstalacion: IInstalacion) => {
         this.oInstalacion = oInstalacion;
         this.updateForm();
+        this.setupPotenciaCalculada(); // ← Moverla aquí, después de updateForm()
       },
       error: (error) => {
         console.error(error);
       },
     });
   }
+  
 
   showModal(strMessage: string) {
     this.strMessage = strMessage;
@@ -118,7 +120,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       return;
     } else {
       // ⚠️ Antes de guardar → forzamos que potenciadisponible sea igual que potenciaTotal
-      this.oInstalacionForm?.controls['potenciadisponible'].setValue(
+      this.oInstalacionForm?.controls['potenciaDisponible'].setValue(
         this.oInstalacionForm?.controls['potenciaTotal'].value
       );
   
@@ -128,7 +130,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
           this.updateForm();
   
           // ⚠️ Aquí volvemos a forzar en el form para que se vea bien en la UI
-          this.oInstalacionForm?.controls['potenciadisponible'].setValue(
+          this.oInstalacionForm?.controls['potenciaDisponible'].setValue(
             this.oInstalacionForm?.controls['potenciaTotal'].value
           );
   
@@ -144,16 +146,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
   
   
 
-  onPotenciaTotalChange(value: string): void {
-    if (this.oInstalacion?.conexiones === 0) {
-      const potenciaTotal = parseFloat(value);
-      if (!isNaN(potenciaTotal)) {
-        // Aquí decides la lógica → en este caso, igualar potenciaDisponible
-        this.oInstalacionForm?.controls['potenciadisponible'].setValue(potenciaTotal);
-      }
-    }
-  }
-  
+
   
   setupPotenciaCalculada(): void {
     const panelesControl = this.oInstalacionForm?.get('paneles');
@@ -172,7 +165,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     if (!isNaN(paneles) && !isNaN(potenciaPanel)) {
       const potenciaTotal = parseFloat((paneles * potenciaPanel).toFixed(2));
       this.oInstalacionForm?.get('potenciaTotal')?.setValue(potenciaTotal);
-      this.oInstalacionForm?.get('potenciadisponible')?.setValue(potenciaTotal);
+      this.oInstalacionForm?.get('potenciaDisponible')?.setValue(potenciaTotal);
     }
   }
   

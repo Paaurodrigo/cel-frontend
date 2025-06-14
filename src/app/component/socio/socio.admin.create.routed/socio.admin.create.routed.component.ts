@@ -73,7 +73,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       tipoSocio: this.fb.group({
         id: [2, Validators.required], // id por defecto 2
-        descripcion: ['Miembro', Validators.required], // descripción por defecto "Miembro"
+        descripcion: ['miembro', Validators.required], // descripción por defecto "Miembro"
         socios: [null] // lo dejamos en null, salvo que quieras meter algo
       })      
     });
