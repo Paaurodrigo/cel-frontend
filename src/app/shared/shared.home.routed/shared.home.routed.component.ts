@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { CountUp } from 'countup.js';
+
 
 @Component({
   selector: 'app-shared-home-routed',
@@ -57,12 +57,7 @@ export class SharedHomeRoutedComponent implements OnInit {
 
     this.initMap(); // puedes cargar leaflet si usas mapa
 
-    const countUp = new CountUp('counter', 120, { duration: 1.5 });
-  if (!countUp.error) {
-    countUp.start();
-  } else {
-    console.error(countUp.error);
-  }
+    
 
    
   }
