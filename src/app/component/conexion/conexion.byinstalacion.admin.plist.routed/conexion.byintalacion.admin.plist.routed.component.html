@@ -186,6 +186,12 @@
                     </th>
                     <th class="sortable" (click)="sort('inmueble')">
                       <div class="d-flex align-items-center">
+                        <span>Direccion</span>
+                        <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'direccion' && strDir === 'desc', 'bi-caret-up-fill': strField === 'direccion' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'direccion'}"></i>
+                      </div>
+                    </th>
+                    <th class="sortable" (click)="sort('inmueble')">
+                      <div class="d-flex align-items-center">
                         <span>Propietario</span>
                         <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'inmueble' && strDir === 'desc', 'bi-caret-up-fill': strField === 'inmueble' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'inmueble'}"></i>
                       </div>
@@ -237,6 +243,12 @@
                       <div class="d-flex align-items-center">
                         <i class="bi bi-building me-2 text-muted"></i>
                         <a href="admin/inmueble/view/{{ conexion.inmueble.id }}">{{ conexion.inmueble.cups }}</a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-pin-map me-2 text-muted"></i>
+                        <a >{{ conexion.inmueble.direccion }}</a>
                       </div>
                     </td>
                     <td>
