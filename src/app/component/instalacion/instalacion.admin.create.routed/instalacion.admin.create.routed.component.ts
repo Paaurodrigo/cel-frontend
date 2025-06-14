@@ -123,8 +123,6 @@ export class InstalacionAdminCreateRoutedComponent implements OnInit {
       sugerencia.properties.name,
       sugerencia.properties.postcode,      
       sugerencia.properties.city,
-      sugerencia.properties.state,
-      sugerencia.properties.country
     ].filter(Boolean).join(', ');
   
     this.oInstalacionForm.patchValue({
