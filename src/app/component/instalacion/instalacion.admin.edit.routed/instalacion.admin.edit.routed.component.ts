@@ -47,6 +47,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     this.createForm();
     this.get();
     this.oInstalacionForm?.markAllAsTouched();
+    this.setupPotenciaCalculada(); // ← Añade esto
   }
   createForm() {
     this.oInstalacionForm = new FormGroup({
@@ -71,7 +72,6 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
         console.error(error);
       },
     });
-    return false;
   }
 
   updateForm() {
@@ -153,6 +153,26 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
   }
   
   
+  setupPotenciaCalculada(): void {
+    const panelesControl = this.oInstalacionForm?.get('paneles');
+    const potenciaPanelControl = this.oInstalacionForm?.get('potenciaPanel');
+  
+    if (panelesControl && potenciaPanelControl) {
+      panelesControl.valueChanges.subscribe(() => this.calcularPotenciaTotal());
+      potenciaPanelControl.valueChanges.subscribe(() => this.calcularPotenciaTotal());
+    }
+  }
+  
+  calcularPotenciaTotal(): void {
+    const paneles = parseFloat(this.oInstalacionForm?.get('paneles')?.value);
+    const potenciaPanel = parseFloat(this.oInstalacionForm?.get('potenciaPanel')?.value);
+  
+    if (!isNaN(paneles) && !isNaN(potenciaPanel)) {
+      const potenciaTotal = parseFloat((paneles * potenciaPanel).toFixed(2));
+      this.oInstalacionForm?.get('potenciaTotal')?.setValue(potenciaTotal);
+      this.oInstalacionForm?.get('potenciadisponible')?.setValue(potenciaTotal);
+    }
+  }
   
 
 }

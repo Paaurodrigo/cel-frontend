@@ -55,6 +55,7 @@ export class InmuebleAdminEditRoutedComponent implements OnInit {
       potencia2 : new FormControl('',),
       tension : new FormControl('',),
       uso : new FormControl('',),
+      
      
     });
   }
