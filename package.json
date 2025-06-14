@@ -25,7 +25,6 @@
     "@ngx-translate/http-loader": "^16.0.1",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "countup.js": "^2.9.0",
     "crypto-js": "^4.2.0",
     "icons": "^1.0.0",
     "leaflet": "^1.9.4",
