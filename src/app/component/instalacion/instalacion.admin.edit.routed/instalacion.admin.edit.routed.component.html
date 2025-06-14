@@ -38,8 +38,8 @@
                   <div class="col-md-6 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Nombre</mat-label>
-                      <input matInput formControlName="nombre" readonly />
-                      <mat-hint>Este campo no se puede modificar</mat-hint>
+                      <input matInput formControlName="nombre" />
+                      
                     </mat-form-field>
                   </div>
                 </div>
@@ -65,7 +65,11 @@
                         type="number" 
                         formControlName="paneles" 
                         placeholder="Ej: 200"
+                        [readonly]="oInstalacion?.conexiones > 0"
                       />
+                      <mat-hint *ngIf="oInstalacion?.conexiones > 0" class="text-danger">
+                        No se puede modificar si hay conexiones activas
+                      </mat-hint>
                       <mat-hint>Número total de paneles instalados</mat-hint>
                       <mat-error *ngIf="panelesControl.invalid && panelesControl.touched">
                         Solo se permiten números enteros positivos
@@ -82,7 +86,11 @@
                         type="number" 
                         formControlName="potenciaPanel" 
                         placeholder="Ej: 500"
+                        [readonly]="oInstalacion?.conexiones > 0"
                       />
+                      <mat-hint *ngIf="oInstalacion?.conexiones > 0" class="text-danger">
+                        No se puede modificar si hay conexiones activas
+                      </mat-hint>
                       <mat-hint>Potencia individual de cada panel</mat-hint>
                       <mat-error *ngIf="potenciaPanelControl.invalid && potenciaPanelControl.touched">
                         Solo se permiten valores numéricos con hasta 3 decimales
@@ -111,31 +119,22 @@
                         matInput 
                         type="number" 
                         formControlName="potenciaTotal"
-                        [readonly]="oInstalacion?.conexiones > 0"
+                        [readonly]
                         placeholder="Ej: 120"
                       />
-                      <mat-hint *ngIf="oInstalacion?.conexiones > 0" class="text-danger">
-                        No se puede modificar si hay conexiones activas
-                      </mat-hint>
-                      <mat-error *ngIf="potenciaTotalControl.invalid && potenciaTotalControl.touched">
-                        Solo se permiten valores numéricos positivos
-                      </mat-error>
+                      <mat-hint>Se actualizará automáticamente al guardar si hay cambios en las Especificaciones Técnicas</mat-hint>
+                      
                     </mat-form-field>
                   </div>
+                <!-- Potencia Disponible -->
 
-                  <!-- Potencia Disponible -->
-                  <div class="col-md-4 mb-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Potencia Disponible (kWp)</mat-label>
-                      <input 
-                        matInput 
-                        type="number" 
-                        formControlName="potenciaDisponible" 
-                        readonly
-                      />
-                      <mat-hint>Se actualizará automáticamente al guardar</mat-hint>
-                    </mat-form-field>
-                  </div>
+                <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('potenciaDisponible') as potenciaDisponibleControl">
+                   <mat-form-field appearance="outline" class="w-100">
+                   <mat-label>Potencia Disponible (kWp)</mat-label>
+                    <input matInput type="number" formControlName="potenciaDisponible" readonly />
+                    <mat-hint>Se actualizará automáticamente al guardar si hay cambios en las Especificaciones Técnicas</mat-hint>
+                  </mat-form-field>
+                </div>
 
                   <!-- Precio por kWp -->
                   <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('precioKw') as precioKwControl">
@@ -146,10 +145,11 @@
                         type="number" 
                         formControlName="precioKw" 
                         placeholder="Ej: 1200"
+                        readonly
                       />
                       <mat-hint>Precio por kilovatio pico</mat-hint>
                       <mat-error *ngIf="precioKwControl.invalid && precioKwControl.touched">
-                        Solo se permiten valores numéricos positivos
+                        Una vez creada una instalacion no se puede modificar su precio
                       </mat-error>
                     </mat-form-field>
                   </div>
