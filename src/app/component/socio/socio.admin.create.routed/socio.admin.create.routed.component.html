@@ -220,6 +220,26 @@
                     </small>
                   </div>
                 </div>
+                <div class="col-md-5 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Tipo Socio</mat-label>
+                    <input
+                      matInput
+                      formControlName="tipoSocio"
+                      [readonly]="true"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-2 mb-3 d-flex align-items-end">
+                  <button
+                    type="button"
+                    class="btn btn-primary w-100 search-btn"
+                    (click)="showTipoSocioSelectorModal()"
+                  >
+                    <i class="bi bi-search"></i> Buscar
+                  </button>
+                </div>
               </div>
             </div>
 
