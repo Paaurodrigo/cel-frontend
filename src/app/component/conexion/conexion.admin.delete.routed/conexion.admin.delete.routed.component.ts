@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { IConexion } from '../../../model/conexion.interface';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConexionService } from '../../../service/conexion.service';
+import { CommonModule } from '@angular/common';
 declare let bootstrap: any;
 @Component({
   selector: 'app-conexion.admin.delete.routed',
   templateUrl: './conexion.admin.delete.routed.component.html',
   styleUrls: ['./conexion.admin.delete.routed.component.css'],
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
 })
 export class ConexionAdminDeleteRoutedComponent implements OnInit {
   oConexion: IConexion | null = null;
