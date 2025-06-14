@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 declare let bootstrap: any;
 
@@ -50,7 +50,28 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     this.createForm();
     this.get();
     this.oInstalacionForm.markAllAsTouched();
+  
+    this.direccionSubject.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(direccion => {
+      if (!direccion || direccion.length < 3) {
+        this.sugerencias = [];
+        return;
+      }
+  
+      fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(direccion)}&limit=5&bbox=-1.75,37.8,0.75,40.9`)
+        .then(res => res.json())
+        .then(data => {
+          this.sugerencias = data.features;
+        })
+        .catch(err => {
+          console.error('Error al buscar direcciones:', err);
+          this.sugerencias = [];
+        });
+    });
   }
+  
 
   createForm() {
     this.oInstalacionForm = new FormGroup({
@@ -181,4 +202,5 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     const direccion = this.oInstalacionForm.get('direccion')?.value;
     this.direccionSubject.next(direccion);
   }
+  
 }
