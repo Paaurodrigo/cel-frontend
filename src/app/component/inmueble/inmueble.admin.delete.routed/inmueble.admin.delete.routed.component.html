@@ -1,104 +1,185 @@
-<div class="container-fluid mt-5">
-  <div class="row">
-    <div class="col-12">
-      <div class="card shadow-lg border-0">
-        <div class="card-header bg-dark text-white text-center">
-          <h2 class="mb-0">
-            <i class="bi bi-trash"></i> Borrar Inmueble <i class="bi bi-person-circle"></i>
-          </h2>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border-0 shadow-lg">
+        <!-- Cabecera -->
+        <div class="card-header bg-danger text-white py-4">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-exclamation-triangle display-6 me-3"></i>
+            <div>
+              <h2 class="fw-bold mb-0">Eliminar Inmueble</h2>
+              <p class="mb-0 opacity-75">Confirme la eliminación del inmueble seleccionado</p>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <table class="table table-striped table-bordered my-4 text-center">
-            <tbody>
-              <tr class="text-center">
-                <th class="bg-danger text-white text-end pe-4">CUPS</th>
-                <td class="text-start ps-4">{{ oInmueble?.cups }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Dirección</th>
-                <td class="text-start ps-4">{{ oInmueble?.direccion }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Código Postal</th>
-                <td class="text-start ps-4">{{ oInmueble?.codigoPostal }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Municipio</th>
-                <td class="text-start ps-4">{{ oInmueble?.municipio }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Referencia Catastral</th>
-                <td class="text-start ps-4">{{ oInmueble?.refCatas }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Potencia1</th>
-                <td class="text-start ps-4">{{ oInmueble?.potencia1 }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Potencia2</th>
-                <td class="text-start ps-4">{{ oInmueble?.potencia2 }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Tensión</th>
-                <td class="text-start ps-4">{{ oInmueble?.tension }}</td>
-              </tr>
-              <tr class="text-center">
-                <th class="bg-primary text-white text-end pe-4">Uso</th>
-                <td class="text-start ps-4">{{ oInmueble?.uso }}</td>
-              </tr>
-            </tbody>
-          </table>
 
-          <div class="d-flex justify-content-center mt-4">
-            <p class="fs-4 fw-bold">¿Seguro que desea borrar el Inmueble?</p>
+        <div class="card-body p-4">
+          <!-- Información del Inmueble -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-building me-2"></i>
+                Información del Inmueble
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <!-- Información Básica -->
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-upc display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">CUPS</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.cups }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-geo-alt display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Dirección</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.direccion }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ubicación -->
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-mailbox display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Código Postal</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.codigoPostal }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-building display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Municipio</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.municipio }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Información Técnica -->
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-file-earmark-text display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Referencia Catastral</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.refCatas }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-lightning-charge display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Potencia 1</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.potencia1 }} kW</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-lightning display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Potencia 2</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.potencia2 }} kW</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-bolt display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Tensión</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.tension }} V</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-house display-6 me-3 text-danger"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Uso</h6>
+                      <p class="mb-0 fs-5">{{ oInmueble?.uso }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="d-flex justify-content-center mt-4">
-            <button class="btn btn-outline-warning mt-4 mx-2" [routerLink]="['/admin', 'inmueble', 'plist']">
-              <i class="bi bi-list"></i> Ir a listado de Inmuebles
+          <!-- Advertencia -->
+          <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill display-6 me-3"></i>
+            <div>
+              <h5 class="alert-heading mb-1">¡Advertencia!</h5>
+              <p class="mb-0">Esta acción eliminará permanentemente el inmueble y todas sus conexiones asociadas. Esta operación no se puede deshacer.</p>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="d-flex justify-content-end gap-3 mt-4">
+            <button class="btn btn-outline-secondary" [routerLink]="['/admin', 'inmueble', 'plist']">
+              <i class="bi bi-arrow-left me-2"></i>Cancelar y volver
             </button>
-            <button class="btn btn-danger mt-4 mx-2" (click)="deleteInmueble()">
-              <i class="bi bi-trash"></i> Borrar Inmueble
+            <button class="btn btn-danger" (click)="deleteInmueble()">
+              <i class="bi bi-trash me-2"></i>Confirmar eliminación
             </button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal Mensaje -->
-  <div class="modal fade" [id]="'mimodal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
-        </div>
-        <div class="modal-body">
-          <p>{{ strMessage }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">Cerrar</button>
-        </div>
+<!-- Modal de confirmación -->
+<div class="modal fade" [id]="'mimodal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <i class="bi bi-info-circle me-2"></i>Resultado de la Operación
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fs-5">{{ strMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">
+          <i class="bi bi-check2 me-2"></i>Cerrar
+        </button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ✅ Modal Confirmación personalizado -->
-  <div class="modal fade" [id]="'confirmModal'" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirmar eliminación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeConfirmModal()"></button>
-        </div>
-        <div class="modal-body">
-          <p>{{ confirmMessage }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeConfirmModal()">No</button>
-          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Sí, eliminar</button>
-        </div>
+<!-- Modal de confirmación personalizado -->
+<div class="modal fade" [id]="'confirmModal'" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle me-2"></i>Confirmar Eliminación
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeConfirmModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fs-5">{{ confirmMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeConfirmModal()">
+          <i class="bi bi-x-circle me-2"></i>No, cancelar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+          <i class="bi bi-trash me-2"></i>Sí, eliminar
+        </button>
       </div>
     </div>
   </div>
