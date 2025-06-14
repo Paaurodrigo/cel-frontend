@@ -51,6 +51,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
   }
   createForm() {
     this.oInstalacionForm = new FormGroup({
+      cau: new FormControl('', [Validators.required]),
       id: new FormControl('', [Validators.required]),
       nombre: new FormControl('', [Validators.required]),
       paneles: new FormControl('', [Validators.required]),
@@ -75,6 +76,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
   }
 
   updateForm() {
+    this.oInstalacionForm?.controls['cau'].setValue(this.oInstalacion?.cau);
     this.oInstalacionForm?.controls['id'].setValue(this.oInstalacion?.id);
     this.oInstalacionForm?.controls['nombre'].setValue(this.oInstalacion?.nombre);
     this.oInstalacionForm?.controls['paneles'].setValue(this.oInstalacion?.paneles);

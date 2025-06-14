@@ -2,16 +2,17 @@
   <div class="row justify-content-center">
     <div class="col-xxl-8 col-xl-9 col-lg-10">
       <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-        <!-- Cabecera -->
-        <div class="card-header bg-gradient text-white py-4" style="background: 0d6efd;">
-          <div class="d-flex align-items-center px-3">
-            <i class="bi bi-person-circle display-6 me-3" style="color: black;"></i>
-            <div style="background-color:#0d6efd  ;">
-              <h2 class="fw-bold mb-0" style="color: rgb(255, 255, 255);">Edición de Socio</h2>
-              <p class="mb-0 opacity-75">Modifique los datos del socio</p>
-            </div>
-          </div>
-        </div>
+       <!-- Cabecera unificada para todas las tarjetas -->
+<div class="card-header bg-primary text-white py-4">
+  <div class="d-flex align-items-center px-3">
+    <i class="bi bi-person-circle display-6 me-3 text-white"></i>
+    <div>
+      <h2 class="fw-bold mb-0">Edición de Socio</h2>
+      <p class="mb-0 opacity-75">Modifique los datos del socio</p>
+    </div>
+  </div>
+</div>
+
 
         <div class="card-body p-4 p-lg-5">
           <form [formGroup]="oSocioForm!" (ngSubmit)="onSubmit()" novalidate>
