@@ -1,62 +1,109 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border-0 shadow-lg">
+        <!-- Cabecera -->
+        <div class="card-header bg-primary text-white py-4">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-lightning-charge display-6 me-3"></i>
+            <div>
+              <h2 class="fw-bold mb-0">Detalle de Conexión</h2>
+              <p class="mb-0 opacity-75">Información detallada de la conexión seleccionada</p>
+            </div>
+          </div>
+        </div>
 
-<div class="row justify-content-center m-3">
-  <div class="col-lg-7 col-md-10 col-sm-12">
-    <h1 class="my-5 text-center">
-      <i class="bi bi-card-list"></i>
-      Detalle de Conexiones
-      <i class="bi bi-person-circle"></i>
-    </h1>
-    <br />
-    <table class="table table-striped table-bordered my-5 text-center">
-      <tbody>
-        <tr class="text-center">
-          <th scope="row" class="bg-danger text-white text-end pe-5">Fecha de la conexion</th>
-          <td class="text-start ps-5">{{oConexion.fecha }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Potencia de la conexion
-          </th>
-          <td class="text-start ps-5">{{oConexion.potencia }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Porcentaje de la conexion
-          </th>
-          <td class="text-start ps-5">{{oConexion.porcentaje }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-            Cups del inmueble
-          </th>
-          <td class="text-start ps-5">{{oConexion.inmueble.cups }}</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row" class="bg-primary text-white text-end pe-5">
-           Nombre Instalacion
-          </th>
-          <td class="text-start ps-5">{{oConexion.instalacion.nombre }}</td>
-        </tr>
-       
-     
-        
+        <div class="card-body p-4">
+          <!-- Información de la Conexión -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                Información de la Conexión
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-calendar-event display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Fecha de la Conexión</h6>
+                      <p class="mb-0 fs-5">{{oConexion.fecha | date:'dd/MM/yyyy'}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-lightning-charge display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Potencia</h6>
+                      <p class="mb-0 fs-5">{{oConexion.potencia}} kWp</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="d-flex align-items-center p-3 bg-light rounded">
+                    <i class="bi bi-percent display-6 me-3 text-primary"></i>
+                    <div>
+                      <h6 class="mb-1 text-muted">Porcentaje</h6>
+                      <p class="mb-0 fs-5">{{oConexion.porcentaje}}%</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-       
+          <!-- Información del Inmueble -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-building me-2"></i>
+                Información del Inmueble
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="bi bi-building display-6 me-3 text-primary"></i>
+                <div>
+                  <h6 class="mb-1 text-muted">CUPS</h6>
+                  <p class="mb-0 fs-5">{{oConexion.inmueble.cups}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      </tbody>
-    </table>
-  </div>
+          <!-- Información de la Instalación -->
+          <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">
+                <i class="bi bi-solar-panel me-2"></i>
+                Información de la Instalación
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="bi bi-solar-panel display-6 me-3 text-primary"></i>
+                <div>
+                  <h6 class="mb-1 text-muted">Nombre de la Instalación</h6>
+                  <p class="mb-0 fs-5">{{oConexion.instalacion.nombre}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-
-
-  <div class="d-flex justify-content-center mt-4">
-    <a class="btn btn-warning mt-4 mx-1" href="admin/conexion/plist">
-      <i class="bi bi-list"></i>
-      Ir a listado de Conexiones
-    </a>
-    <a class="btn btn-danger mt-4 mx-1" href="admin/conexion/delete/{{oConexion.id }}">
-      <i class="bi bi-trash"></i>
-      Borrar
-    </a>
+          <!-- Botones de acción -->
+          <div class="d-flex justify-content-end gap-3 mt-4">
+            <a class="btn btn-outline-secondary" [routerLink]="['/admin', 'conexion', 'plist']">
+              <i class="bi bi-arrow-left me-2"></i>Volver al listado
+            </a>
+            <a class="btn btn-outline-danger" [routerLink]="['/admin', 'conexion', 'delete', oConexion.id]">
+              <i class="bi bi-trash me-2"></i>Eliminar conexión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
