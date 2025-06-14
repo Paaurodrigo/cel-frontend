@@ -2,7 +2,6 @@
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
       <div class="card border-0 shadow-lg">
-
         <!-- Cabecera Azul -->
         <div class="card-header bg-gradient text-white py-4" style="background: #0d6efd;">
           <div class="d-flex align-items-center px-3">
@@ -16,62 +15,129 @@
 
         <div class="card-body">
           <form [formGroup]="oInstalacionForm!" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Sección: Información Básica -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-info-circle me-2"></i>Información Básica
+                </h5>
+              </div>
 
-            <!-- CAU -->
-            <div class="mb-3">
-              <label for="cau" class="form-label fw-bold">CAU</label>
-              <input type="text" id="cau" class="form-control" formControlName="cau" readonly />
-              <div class="form-text">Este campo no se puede modificar.</div>
-            </div>
+              <!-- CAU -->
+              <div class="mb-3">
+                <label for="cau" class="form-label fw-bold">CAU</label>
+                <input type="text" id="cau" class="form-control" formControlName="cau" readonly />
+                <div class="form-text">Este campo no se puede modificar.</div>
+              </div>
 
-            <!-- Nombre -->
-            <div class="mb-3">
-              <label for="nombre" class="form-label fw-bold">Nombre</label>
-              <input type="text" id="nombre" class="form-control" formControlName="nombre" readonly />
-              <div class="form-text">Este campo no se puede modificar.</div>
-            </div>
-
-            <!-- Paneles -->
-            <div class="mb-3">
-              <label for="paneles" class="form-label fw-bold">Número de Paneles</label>
-              <input type="number" id="paneles" class="form-control" formControlName="paneles" placeholder="Ej: 200" />
-            </div>
-
-            <!-- Potencia por Panel -->
-            <div class="mb-3">
-              <label for="potenciaPanel" class="form-label fw-bold">Potencia por Panel (Wp)</label>
-              <input type="number" id="potenciaPanel" class="form-control" formControlName="potenciaPanel" placeholder="Ej: 500" />
-            </div>
-
-            <!-- Potencia Total -->
-            <div class="mb-3">
-              <label for="potenciaTotal" class="form-label fw-bold">Potencia Total (kWp)</label>
-              <input
-                type="number"
-                id="potenciaTotal"
-                class="form-control"
-                formControlName="potenciaTotal"
-                [readonly]="oInstalacion?.conexiones > 0"
-                placeholder="Ej: 120"
-              />
-              <div *ngIf="oInstalacion?.conexiones > 0" class="form-text text-danger mt-1">
-                Si hay conexiones, no se puede editar la potencia total. Primero deberán eliminarse.
+              <!-- Nombre -->
+              <div class="mb-3">
+                <label for="nombre" class="form-label fw-bold">Nombre</label>
+                <input type="text" id="nombre" class="form-control" formControlName="nombre" readonly />
+                <div class="form-text">Este campo no se puede modificar.</div>
               </div>
             </div>
 
-            <!-- Potencia Disponible -->
-            <div class="mb-3">
-              <label for="potenciaDisponible" class="form-label fw-bold">Potencia Disponible (kWp)</label>
-              <input type="number" id="potenciaDisponible" class="form-control" formControlName="potenciaDisponible" readonly />
-              <div class="form-text">Se actualizará automáticamente al guardar.</div>
+            <!-- Sección: Especificaciones Técnicas -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-gear me-2"></i>Especificaciones Técnicas
+                </h5>
+              </div>
+
+              <!-- Paneles -->
+              <div class="mb-3">
+                <label for="paneles" class="form-label fw-bold">Número de Paneles</label>
+                <input 
+                  type="number" 
+                  id="paneles" 
+                  class="form-control" 
+                  formControlName="paneles" 
+                  placeholder="Ej: 200"
+                  [class.is-invalid]="oInstalacionForm?.get('paneles')?.invalid && oInstalacionForm?.get('paneles')?.touched"
+                />
+                <div class="invalid-feedback" *ngIf="oInstalacionForm?.get('paneles')?.invalid && oInstalacionForm?.get('paneles')?.touched">
+                  Solo se permiten números enteros positivos
+                </div>
+              </div>
+
+              <!-- Potencia por Panel -->
+              <div class="mb-3">
+                <label for="potenciaPanel" class="form-label fw-bold">Potencia por Panel (Wp)</label>
+                <input 
+                  type="number" 
+                  id="potenciaPanel" 
+                  class="form-control" 
+                  formControlName="potenciaPanel" 
+                  placeholder="Ej: 500"
+                  [class.is-invalid]="oInstalacionForm?.get('potenciaPanel')?.invalid && oInstalacionForm?.get('potenciaPanel')?.touched"
+                />
+                <div class="invalid-feedback" *ngIf="oInstalacionForm?.get('potenciaPanel')?.invalid && oInstalacionForm?.get('potenciaPanel')?.touched">
+                  Solo se permiten valores numéricos con hasta 3 decimales
+                </div>
+              </div>
+
+              <!-- Potencia Total -->
+              <div class="mb-3" *ngIf="oInstalacionForm?.get('potenciaTotal') as potenciaTotalControl">
+                <label for="potenciaTotal" class="form-label fw-bold">Potencia Total (kWp)</label>
+                <input
+                  type="number"
+                  id="potenciaTotal"
+                  class="form-control"
+                  formControlName="potenciaTotal"
+                  [readonly]="oInstalacion?.conexiones > 0"
+                  placeholder="Ej: 120"
+                  [class.is-invalid]="potenciaTotalControl.invalid && potenciaTotalControl.touched"
+                />
+                <div *ngIf="oInstalacion?.conexiones > 0" class="form-text text-danger mt-1">
+                  Si hay conexiones, no se puede editar la potencia total. Primero deberán eliminarse.
+                </div>
+                <div class="invalid-feedback" *ngIf="potenciaTotalControl.invalid && potenciaTotalControl.touched">
+                  Solo se permiten valores numéricos positivos
+                </div>
+              </div>
+              
+
+              <!-- Potencia Disponible -->
+              <div class="mb-3">
+                <label for="potenciaDisponible" class="form-label fw-bold">Potencia Disponible (kWp)</label>
+                <input 
+                  type="number" 
+                  id="potenciaDisponible" 
+                  class="form-control" 
+                  formControlName="potenciaDisponible" 
+                  readonly 
+                />
+                <div class="form-text">Se actualizará automáticamente al guardar.</div>
+              </div>
             </div>
 
-            <!-- Precio por kWp -->
-            <div class="mb-3">
-              <label for="precioKw" class="form-label fw-bold">Precio por kWp (€)</label>
-              <input type="number" id="precioKw" class="form-control" formControlName="precioKw" placeholder="Ej: 1200" />
-            </div>
+            <!-- Sección: Información Económica -->
+            <div class="section-card mb-4">
+              <div class="section-header">
+                <h5 class="border-bottom pb-2 mb-4">
+                  <i class="bi bi-currency-euro me-2"></i>Información Económica
+                </h5>
+              </div>
 
+              <!-- Precio por kWp -->
+              <div class="mb-3" *ngIf="oInstalacionForm?.get('precioKw') as precioKwControl">
+                <label for="precioKw" class="form-label fw-bold">Precio por kWp (€)</label>
+                <input 
+                  type="number" 
+                  id="precioKw" 
+                  class="form-control" 
+                  formControlName="precioKw" 
+                  placeholder="Ej: 1200"
+                  [class.is-invalid]="precioKwControl.invalid && precioKwControl.touched"
+                />
+                <div class="invalid-feedback" *ngIf="precioKwControl.invalid && precioKwControl.touched">
+                  Solo se permiten valores numéricos positivos
+                </div>
+              </div>
+            </div> <!-- 🔵 ESTE DIV FALTABA -->
+              
             <!-- Botones -->
             <div class="mt-4 d-flex justify-content-evenly flex-wrap gap-2">
               <button class="btn btn-warning" [routerLink]="['/admin', 'instalacion', 'plist']">
@@ -84,7 +150,6 @@
                 <i class="bi bi-save"></i> Guardar cambios
               </button>
             </div>
-
           </form>
         </div>
       </div>
