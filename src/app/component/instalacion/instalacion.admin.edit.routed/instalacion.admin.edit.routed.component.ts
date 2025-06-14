@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { IInstalacion } from '../../../model/instalacion.interface';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { IInstalacion } from '../../../model/instalacion.interface';
 import { InstalacionService } from '../../../service/instalacion.service';
 import { CommonModule } from '@angular/common';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Subject } from 'rxjs';
 
 declare let bootstrap: any;
 
@@ -16,75 +17,59 @@ declare let bootstrap: any;
   templateUrl: './instalacion.admin.edit.routed.component.html',
   styleUrls: ['./instalacion.admin.edit.routed.component.css'],
   standalone: true,
-  imports: [MatFormFieldModule,
-      MatInputModule,
-      MatSelectModule,
-      ReactiveFormsModule,
-      RouterModule,
-      CommonModule,
-      MatIconModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    RouterModule,
+    CommonModule,
+    MatIconModule
+  ],
 })
 export class InstalacionAdminEditRoutedComponent implements OnInit {
   id: number = 0;
-  oInstalacionForm: FormGroup | undefined = undefined;
+  oInstalacionForm!: FormGroup;
   oInstalacion: IInstalacion | null = null;
   strMessage: string = '';
-
+  direccionSubject: Subject<string> = new Subject<string>();
   myModal: any;
-  constructor(private oActivatedRoute: ActivatedRoute,
+  sugerencias: any[] = [];
+
+  constructor(
+    private oActivatedRoute: ActivatedRoute,
     private oInstalacionService: InstalacionService,
     private oRouter: Router
   ) {
     this.oActivatedRoute.params.subscribe((params) => {
-      this.id = params['id'];
+      this.id = +params['id'];
     });
   }
-
-
-
 
   ngOnInit() {
     this.createForm();
     this.get();
-    this.oInstalacionForm?.markAllAsTouched();
-    
+    this.oInstalacionForm.markAllAsTouched();
   }
+
   createForm() {
     this.oInstalacionForm = new FormGroup({
-      cau: new FormControl('', [Validators.required]),
-      id: new FormControl('', [Validators.required]),
-      nombre: new FormControl('', [Validators.required]),
-      paneles: new FormControl('', [Validators.required]),
-      potenciaPanel : new FormControl(''),
-      potenciaTotal : new FormControl(''),
+      id: new FormControl('', Validators.required),
+      cau: new FormControl('', Validators.required),
+      nombre: new FormControl('', Validators.required),
+      paneles: new FormControl('', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]),
+      potenciaPanel: new FormControl('', [Validators.pattern(/^\d+(\.\d{1,3})?$/)]),
+      potenciaTotal: new FormControl(''),
       potenciaDisponible: new FormControl(''),
-      precioKw: new FormControl('',)
-     
+      precioKw: new FormControl('', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]),
+      direccion: new FormControl('', [Validators.required]),
+      direccionBase: new FormControl(''),
+      numero: new FormControl('', [Validators.pattern(/^[0-9]+$/)])
     });
-  }
 
-  onReset() {
-    this.oInstalacionService.get(this.id).subscribe({
-      next: (oInstalacion: IInstalacion) => {
-        this.oInstalacion= oInstalacion;
-        this.updateForm();
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-  }
-
-  updateForm() {
-    this.oInstalacionForm?.controls['cau'].setValue(this.oInstalacion?.cau);
-    this.oInstalacionForm?.controls['id'].setValue(this.oInstalacion?.id);
-    this.oInstalacionForm?.controls['nombre'].setValue(this.oInstalacion?.nombre);
-    this.oInstalacionForm?.controls['paneles'].setValue(this.oInstalacion?.paneles);
-    this.oInstalacionForm?.controls['potenciaPanel'].setValue(this.oInstalacion?.potenciaPanel);
-    this.oInstalacionForm?.controls['potenciaTotal'].setValue(this.oInstalacion?.potenciaTotal);
-    this.oInstalacionForm?.controls['potenciaDisponible'].setValue(this.oInstalacion?.potenciaDisponible);
-    this.oInstalacionForm?.controls['precioKw'].setValue(this.oInstalacion?.precioKw);
-    
+    this.oInstalacionForm.get('paneles')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
+    this.oInstalacionForm.get('potenciaPanel')?.valueChanges.subscribe(() => this.calcularPotenciaTotal());
+    this.oInstalacionForm.get('numero')?.valueChanges.subscribe(() => this.actualizarDireccionCompleta());
   }
 
   get() {
@@ -92,85 +77,109 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
       next: (oInstalacion: IInstalacion) => {
         this.oInstalacion = oInstalacion;
         this.updateForm();
-        this.setupPotenciaCalculada(); // ← Moverla aquí, después de updateForm()
+        this.setupPotenciaCalculada();
       },
-      error: (error) => {
-        console.error(error);
-      },
+      error: (error) => console.error(error)
     });
   }
-  
 
-  showModal(strMessage: string) {
-    this.strMessage = strMessage;
-    this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
-      keyboard: false,
+  updateForm() {
+    if (!this.oInstalacion) return;
+    this.oInstalacionForm.patchValue({ ...this.oInstalacion });
+  }
+
+  onReset() {
+    this.get();
+  }
+
+  onSubmit() {
+    if (!this.oInstalacionForm.valid) {
+      this.showModal('Formulario no válido');
+      return;
+    }
+
+    this.oInstalacionForm.get('potenciaDisponible')?.setValue(
+      this.oInstalacionForm.get('potenciaTotal')?.value
+    );
+
+    const formData = { ...this.oInstalacionForm.value };
+    delete formData.direccionBase;
+
+    this.oInstalacionService.update(formData).subscribe({
+      next: (oInstalacion: IInstalacion) => {
+        this.oInstalacion = oInstalacion;
+        this.updateForm();
+        this.showModal(`Instalación ${oInstalacion.id} actualizada correctamente`);
+      },
+      error: (error) => {
+        this.showModal('Error al actualizar la instalación');
+        console.error(error);
+      }
     });
+  }
+
+  showModal(mensaje: string) {
+    this.strMessage = mensaje;
+    this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), { keyboard: false });
     this.myModal.show();
   }
 
   hideModal = () => {
     this.myModal.hide();
-    this.oRouter.navigate(['/admin/instalacion/plist/']);
+    this.oRouter.navigate(['/admin/instalacion/plist']);
   };
 
-  onSubmit() {
-    if (!this.oInstalacionForm?.valid) {
-      this.showModal('Formulario no válido');
-      return;
-    } else {
-      // ⚠️ Antes de guardar → forzamos que potenciadisponible sea igual que potenciaTotal
-      this.oInstalacionForm?.controls['potenciaDisponible'].setValue(
-        this.oInstalacionForm?.controls['potenciaTotal'].value
-      );
-  
-      this.oInstalacionService.update(this.oInstalacionForm?.value).subscribe({
-        next: (oInstalacion: IInstalacion) => {
-          this.oInstalacion = oInstalacion;
-          this.updateForm();
-  
-          // ⚠️ Aquí volvemos a forzar en el form para que se vea bien en la UI
-          this.oInstalacionForm?.controls['potenciaDisponible'].setValue(
-            this.oInstalacionForm?.controls['potenciaTotal'].value
-          );
-  
-          this.showModal('Instalacion ' + this.oInstalacion.id + ' actualizada');
-        },
-        error: (error) => {
-          this.showModal('Error al actualizar la instalacion');
-          console.error(error);
-        },
-      });
-    }
-  }
-  
-  
+  setupPotenciaCalculada() {
+    const panelesControl = this.oInstalacionForm.get('paneles');
+    const potenciaPanelControl = this.oInstalacionForm.get('potenciaPanel');
 
-
-  
-  setupPotenciaCalculada(): void {
-    const panelesControl = this.oInstalacionForm?.get('paneles');
-    const potenciaPanelControl = this.oInstalacionForm?.get('potenciaPanel');
-  
     if (panelesControl && potenciaPanelControl) {
       panelesControl.valueChanges.subscribe(() => this.calcularPotenciaTotal());
       potenciaPanelControl.valueChanges.subscribe(() => this.calcularPotenciaTotal());
     }
   }
-  
-  calcularPotenciaTotal(): void {
-    const paneles = parseFloat(this.oInstalacionForm?.get('paneles')?.value);
-    const potenciaPanel = parseFloat(this.oInstalacionForm?.get('potenciaPanel')?.value);
-  
+
+  calcularPotenciaTotal() {
+    const paneles = parseFloat(this.oInstalacionForm.get('paneles')?.value);
+    const potenciaPanel = parseFloat(this.oInstalacionForm.get('potenciaPanel')?.value);
+
     if (!isNaN(paneles) && !isNaN(potenciaPanel)) {
       const potenciaTotal = parseFloat((paneles * potenciaPanel).toFixed(2));
-      this.oInstalacionForm?.get('potenciaTotal')?.setValue(potenciaTotal);
-      this.oInstalacionForm?.get('potenciaDisponible')?.setValue(potenciaTotal);
+      this.oInstalacionForm.get('potenciaTotal')?.setValue(potenciaTotal);
+      this.oInstalacionForm.get('potenciaDisponible')?.setValue(potenciaTotal);
     }
   }
-  
 
+  seleccionarDireccion(sugerencia: any) {
+    const direccionBase = [
+      sugerencia.properties.name,
+      sugerencia.properties.postcode,
+      sugerencia.properties.city,
+      sugerencia.properties.state,
+      sugerencia.properties.country
+    ].filter(Boolean).join(', ');
+
+    this.oInstalacionForm.patchValue({ direccionBase });
+    this.actualizarDireccionCompleta();
+    this.sugerencias = [];
+  }
+
+  actualizarDireccionCompleta() {
+    const numero = this.oInstalacionForm.get('numero')?.value || '';
+    const direccionBase = this.oInstalacionForm.get('direccionBase')?.value || '';
+
+    if (direccionBase) {
+      const partes: string[] = direccionBase.split(',');
+      const nombreCalle = partes[0]?.trim();
+      const resto = partes.slice(1).map((p: string) => p.trim()).join(', ');
+      const direccionFinal = numero ? `${nombreCalle}, ${numero}, ${resto}` : direccionBase;
+
+      this.oInstalacionForm.patchValue({ direccion: direccionFinal });
+    }
+  }
+
+  onSearchDireccion(): void {
+    const direccion = this.oInstalacionForm.get('direccion')?.value;
+    this.direccionSubject.next(direccion);
+  }
 }
-
-
-

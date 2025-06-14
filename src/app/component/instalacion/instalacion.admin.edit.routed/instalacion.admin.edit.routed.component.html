@@ -43,6 +43,42 @@
                     </mat-form-field>
                   </div>
                 </div>
+                <div class="col-md-6 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Dirección</mat-label>
+                    <input 
+                      matInput 
+                      formControlName="direccion"
+                      placeholder="Introduce una dirección"
+                      (input)="onSearchDireccion()"
+                      [attr.autocomplete]="'off'"
+                    />
+                    <mat-hint>Seleccione una dirección de la lista de sugerencias</mat-hint>
+                  </mat-form-field>
+                  <ul class="list-group position-absolute w-100 z-3" *ngIf="sugerencias.length > 0">
+                    <li
+                      class="list-group-item list-group-item-action"
+                      *ngFor="let sugerencia of sugerencias"
+                      (click)="seleccionarDireccion(sugerencia)"
+                    >
+                      {{ sugerencia.properties.name }}, {{ sugerencia.properties.city }}, 
+                      {{ sugerencia.properties.state }}, {{ sugerencia.properties.country }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Numero</mat-label>
+                    <input 
+                      matInput 
+                      formControlName="numero"
+                      placeholder="1"
+                    />
+                  </mat-form-field>
+                  <mat-error *ngIf="oInstalacionForm.get('numero')?.hasError('pattern')">
+                    Solo se permiten números enteros.
+                  </mat-error>
+                </div>
               </div>
             </div>
 
