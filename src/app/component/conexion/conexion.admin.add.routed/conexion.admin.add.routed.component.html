@@ -1,122 +1,148 @@
-<div class="container mt-5 d-flex align-items-center justify-content-center">
-  <div class="row">
-    <div class="col text-center">
-      <h2 class="my-2">
-        <i class="bi bi-plus-square"></i>
-        Creación de una nueva conexion
-        <i class="bi bi-diagram-3"></i>
-      </h2>
-      <form [formGroup]="oConexionForm!" (ngSubmit)="onSubmit()" novalidate>
-        <div class="row mt-4">
-          <mat-form-field appearance="outline">
-            <mat-label>Selecciona una fecha</mat-label>
-            <input matInput [readonly]="true" [matDatepicker]="picker1" formControlName="fecha" placeholder="Elige una fecha"  />
-            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-          
-          
- 
-
-        </div>
-        
-        <div class="row mt-4">
-          <mat-form-field>
-            <mat-label>Potencia (kWp)</mat-label>
-            <input
-              matInput
-              formControlName="potencia"
-              placeholder="Pon aqui tu potencia"
-            />
-            <mat-hint align="start">De 3 caracteres a 50 caracteres</mat-hint>
-            @if (oConexionForm?.get('potencia')?.hasError('required')) {
-            <mat-error>Debes introducir una potencia</mat-error>
-            } @if (oConexionForm?.get('potencia')?.hasError('minlength')) {
-            <mat-error>Debes introducir una potencia mas larga</mat-error>
-            } @if (oConexionForm?.get('potencia')?.hasError('maxlength')) {
-            <mat-error>Debes introducir una potencia mas corta</mat-error>
-            }
-          </mat-form-field>
-        </div>
-        <div formGroupName="inmueble">
-          <div class="row mt-4">
-            <mat-form-field class="w-100">
-              <mat-label>Seleccione el inmueble</mat-label>
-        
-              <!-- Botón de selección -->
-              <div class="d-flex justify-content-end mb-2">
-                <button class="btn btn-primary" (click)="showInmuebleSelectorModal()">
-                  <i class="bi bi-search"></i> Buscar
-                </button>
-              </div>
-        
-              <!-- Resumen visual del inmueble seleccionado -->
-              <div class="d-flex flex-column mb-2">
-                <div><strong>CUPS:</strong> {{ oConexionForm.get('inmueble.cups')?.value }}</div>
-                <div><strong>Dirección:</strong> {{ oConexionForm.get('inmueble.direccion')?.value }}</div>
-              </div>
-        
-              <!-- Inputs solo lectura -->
-              <input matInput formControlName="cups" readonly hidden />
-              <input matInput formControlName="id" readonly hidden />
-              <input matInput formControlName="direccion" readonly hidden />
-            </mat-form-field>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border-0 shadow-lg">
+        <!-- Cabecera -->
+        <div class="card-header bg-primary text-white py-4">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-lightning-charge display-6 me-3"></i>
+            <div>
+              <h2 class="fw-bold mb-0">Creación de Nueva Conexión</h2>
+              <p class="mb-0 opacity-75">Complete el formulario con los datos de la conexión</p>
+            </div>
           </div>
         </div>
-        
-        <br />
-        <button
-          class="btn btn-warning mt-4 mx-1"
-          [routerLink]="['/admin', 'conexion', 'plist']"
-        >
-          <i class="bi bi-list"></i>
-          Ir a listado de Conexions
-        </button>
 
-        <button class="btn btn-secondary mt-4 mx-1" (click)="onReset()">
-          <i class="bi bi-x-lg"></i>
-          Reset
-        </button>
+        <div class="card-body p-4">
+          <form [formGroup]="oConexionForm!" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Información de la Conexión -->
+            <div class="card mb-4 border-0 shadow-sm">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">
+                  <i class="bi bi-info-circle me-2"></i>
+                  Información de la Conexión
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- Fecha -->
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Fecha de Conexión</mat-label>
+                      <input matInput [readonly]="true" [matDatepicker]="picker1" formControlName="fecha" placeholder="Elige una fecha" />
+                      <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                      <mat-hint>Seleccione la fecha de la conexión</mat-hint>
+                    </mat-form-field>
+                  </div>
 
-        <button class="btn btn-primary mt-4 mx-1" type="submit" [disabled]="!oConexionForm?.valid">
-          <i class="bi bi-floppy"></i>
-          Guardar
-      </button>
-      </form>
+                  <!-- Potencia -->
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Potencia (kWp)</mat-label>
+                      <input
+                        matInput
+                        formControlName="potencia"
+                        placeholder="Introduzca la potencia"
+                      />
+                      <mat-hint>Valor entre 3 y 50 caracteres</mat-hint>
+                      @if (oConexionForm?.get('potencia')?.hasError('required')) {
+                        <mat-error>Debe introducir una potencia</mat-error>
+                      } @if (oConexionForm?.get('potencia')?.hasError('minlength')) {
+                        <mat-error>La potencia debe tener al menos 3 caracteres</mat-error>
+                      } @if (oConexionForm?.get('potencia')?.hasError('maxlength')) {
+                        <mat-error>La potencia no puede exceder los 50 caracteres</mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Selección de Inmueble -->
+            <div class="card mb-4 border-0 shadow-sm">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">
+                  <i class="bi bi-building me-2"></i>
+                  Inmueble
+                </h5>
+              </div>
+              <div class="card-body">
+                <div formGroupName="inmueble">
+                  <div class="row">
+                    <div class="col-12 mb-3">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Seleccione el inmueble</mat-label>
+                        <div class="d-flex justify-content-end mb-2">
+                          <button class="btn btn-primary" (click)="showInmuebleSelectorModal()" type="button">
+                            <i class="bi bi-search me-2"></i>Buscar Inmueble
+                          </button>
+                        </div>
+              
+                        <!-- MOSTRAR DATOS DESDE EL FORMULARIO -->
+                        <div class="selected-item p-3 bg-light rounded mb-2" *ngIf="oConexionForm?.get('inmueble.cups')?.value">
+                          <div class="d-flex align-items-center">
+                            <i class="bi bi-building me-2"></i>
+                            <div>
+                              <strong>CUPS:</strong> {{ oConexionForm?.get('inmueble.cups')?.value }}
+                            </div>
+                          </div>
+                          <div class="mt-1">
+                            <strong>Dirección:</strong> {{ oConexionForm?.get('inmueble.direccion')?.value }}
+                          </div>
+                        </div>
+              
+                        <!-- Inputs ocultos (opcional, puedes quitarlos si no son necesarios) -->
+                        <input matInput formControlName="cups" hidden />
+                        <input matInput formControlName="id" hidden />
+                        <input matInput formControlName="direccion" hidden />
+                        <mat-hint>Seleccione un inmueble para la conexión</mat-hint>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+           
+            
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-end gap-3 mt-4">
+              <button type="button" class="btn btn-outline-secondary" [routerLink]="['/admin', 'conexion', 'plist']">
+                <i class="bi bi-arrow-left me-2"></i>Volver al listado
+              </button>
+              <button type="reset" class="btn btn-outline-danger" (click)="onReset()">
+                <i class="bi bi-x-circle me-2"></i>Limpiar formulario
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="!oConexionForm?.valid">
+                <i class="bi bi-check2-circle me-2"></i>Crear conexión
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<div
-  class="modal fade"
-  [id]="'mimodal'"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
+<!-- Modal de confirmación -->
+<div class="modal fade" [id]="'mimodal'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Conexion Realizada</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          (click)="hideModal()"
-        ></button>
+        <h5 class="modal-title" id="exampleModalLabel">
+          <i class="bi bi-check-circle me-2"></i>Conexión Creada
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
       </div>
-      <div class="modal-body">
-        <p>{{ strMessage }}</p>
+      <div class="modal-body text-center">
+        <p class="fs-5">{{ strMessage }}</p>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-dismiss="modal"
-          (click)="hideModal()"
-        >
-          Cerrar
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="hideModal()">
+          <i class="bi bi-check2 me-2"></i>Cerrar
         </button>
       </div>
     </div>

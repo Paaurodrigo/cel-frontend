@@ -120,23 +120,28 @@
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Seleccione la instalación</mat-label>
                         <div class="d-flex justify-content-end mb-2">
-                          <button class="btn btn-primary" (click)="showInstalacionSelectorModal()">
+                          <button type="button" class="btn btn-primary" (click)="showInstalacionSelectorModal()">
                             <i class="bi bi-search me-2"></i>Buscar Instalación
                           </button>
                         </div>
-                        <div class="selected-item p-3 bg-light rounded mb-2">
+            
+                        <!-- Muestra de instalación seleccionada -->
+                        <div class="selected-item p-3 bg-light rounded mb-2" *ngIf="oConexionForm?.get('instalacion.id')?.value">
                           <div class="d-flex align-items-center">
                             <i class="bi bi-solar-panel me-2"></i>
                             <div>
-                              <strong>ID:</strong> {{oInstalacion.id}}
+                              <strong>ID:</strong> {{ oConexionForm?.get('instalacion.id')?.value }}
                             </div>
                           </div>
                           <div class="mt-1">
-                            <strong>Nombre:</strong> {{oInstalacion.nombre}}
+                            <strong>Nombre:</strong> {{ oConexionForm?.get('instalacion.nombre')?.value }}
                           </div>
                         </div>
+            
+                        <!-- Inputs ocultos -->
                         <input matInput formControlName="nombre" hidden />
                         <input matInput formControlName="id" hidden />
+            
                         <mat-hint>Seleccione una instalación para la conexión</mat-hint>
                       </mat-form-field>
                     </div>
@@ -144,6 +149,7 @@
                 </div>
               </div>
             </div>
+            
 
             <!-- Botones de acción -->
             <div class="d-flex justify-content-end gap-3 mt-4">
