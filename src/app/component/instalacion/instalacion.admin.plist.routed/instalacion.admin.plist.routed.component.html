@@ -72,16 +72,10 @@
                       <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'nombre' && strDir === 'desc', 'bi-caret-up-fill': strField === 'nombre' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'nombre'}"></i>
                     </div>
                   </th>
-                  <th class="sortable" (click)="sort('paneles')">
+                  <th class="sortable" (click)="sort('direccion')">
                     <div class="d-flex align-items-center">
-                      <span>Paneles</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'paneles' && strDir === 'desc', 'bi-caret-up-fill': strField === 'paneles' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'paneles'}"></i>
-                    </div>
-                  </th>
-                  <th class="sortable" (click)="sort('potenciaPanel')">
-                    <div class="d-flex align-items-center">
-                      <span>Potencia Panel</span>
-                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'potenciaPanel' && strDir === 'desc', 'bi-caret-up-fill': strField === 'potenciaPanel' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'potenciaPanel'}"></i>
+                      <span>Direccion</span>
+                      <i class="bi ms-1" [ngClass]="{'bi-caret-down-fill': strField === 'direccion' && strDir === 'desc', 'bi-caret-up-fill': strField === 'direccion' && strDir === 'asc', 'bi-arrow-down-up text-muted': strField !== 'direccion'}"></i>
                     </div>
                   </th>
                   <th class="sortable" (click)="sort('potenciaTotal')">
@@ -111,11 +105,8 @@
                   <td class="fw-medium">{{ instalacion.cau }}</td>
                   <td class="fw-medium">{{ instalacion.nombre }}</td>
                   <td>
-                    <span class="badge bg-light text-dark border">
-                      <i class="bi bi-grid-3x3 me-1"></i> {{ instalacion.paneles }}
-                    </span>
                   </td>
-                  <td>{{ instalacion.potenciaPanel }} Wp</td>
+                  {{ instalacion.direccion }} 
                   <td>
                     <span class="badge bg-success-subtle text-success">
                       {{ instalacion.potenciaTotal }} kWp
@@ -126,7 +117,7 @@
                       {{ instalacion.potenciaDisponible }} kWp
                     </span>
                   </td>
-                  <td>{{ instalacion.precioKw }} €/kWp</td>
+                  <td>{{ instalacion.precioKw | number:'1.0-2' }} €/kWp</td>
                   <td>
                     <div class="d-flex justify-content-center gap-2">
                       <a class="btn btn-sm btn-action-secondary" href="admin/conexion/byinstalacion/plist/{{ instalacion.id }}" (click)="$event.stopPropagation()" title="Ver conexiones">
