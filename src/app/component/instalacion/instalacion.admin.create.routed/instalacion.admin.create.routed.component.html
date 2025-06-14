@@ -3,15 +3,16 @@
     <div class="col-xxl-8 col-xl-9 col-lg-10">
       <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
         <!-- Cabecera -->
-        <div class="card-header bg-gradient text-white py-4" style="background: 0d6efd;">
+        <div class="card-header bg-gradient text-white py-4" style="background: #0d6efd;">
           <div class="d-flex align-items-center px-3">
-            <i class="bi bi-solar-panel display-6 me-3" style="color: black;"></i>
+            <i class="bi bi-solar-panel display-6 me-3" style="color: white;"></i>
             <div>
-              <h2 class="fw-bold mb-0" style="color: rgb(255, 255, 255);">Registro de Instalación</h2>
+              <h2 class="fw-bold mb-0">Registro de Instalación</h2>
               <p class="mb-0 opacity-75">Complete el formulario con los datos de la instalación</p>
             </div>
           </div>
         </div>
+        
 
         <div class="card-body p-4 p-lg-5">
           <form [formGroup]="oInstalacionForm!" (ngSubmit)="onSubmit()" novalidate>
@@ -133,15 +134,17 @@
             </div>
 
             <!-- Botones de acción -->
-            <div class="d-flex justify-content-end gap-2 mt-4">
-              <button mat-button type="button" [routerLink]="['/admin', 'Instalacion', 'plist']" class="me-2">
-                <i class="bi bi-list me-2"></i>Ir a listado
+            
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
+              <button type="button" class="btn btn-outline-secondary px-4" [routerLink]="['/admin', 'Instalacion', 'plist']">
+                <i class="bi bi-arrow-left me-2"></i>Volver al listado
               </button>
-              <button mat-button type="button" (click)="onReset()" class="me-2">
-                <i class="bi bi-x-lg me-2"></i>Reset
+              <button type="reset" class="btn btn-outline-danger px-4" (click)="onReset()">
+                <i class="bi bi-x-circle me-2"></i>Limpiar formulario
               </button>
-              <button mat-raised-button color="primary" type="submit" [disabled]="!oInstalacionForm.valid">
-                <i class="bi bi-floppy me-2"></i>Guardar
+              <button type="submit" class="btn btn-primary px-4" 
+              [disabled]="!oInstalacionForm.valid">
+                <i class="bi bi-check2-circle me-2"></i>Registrar instalacion
               </button>
             </div>
           </form>

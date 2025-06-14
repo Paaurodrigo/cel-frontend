@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 declare let bootstrap: any;
 
@@ -23,6 +24,7 @@ declare let bootstrap: any;
     ReactiveFormsModule,
     RouterModule,
     CommonModule,
+    MatIconModule
   ],
 })
 export class InstalacionAdminCreateRoutedComponent implements OnInit {
