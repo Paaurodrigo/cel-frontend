@@ -128,13 +128,13 @@
                   </div>
                 <!-- Potencia Disponible -->
 
-                <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('potenciaDisponible') as potenciaDisponibleControl">
-                   <mat-form-field appearance="outline" class="w-100">
-                   <mat-label>Potencia Disponible (kWp)</mat-label>
-                    <input matInput type="number" formControlName="potenciaDisponible" readonly />
-                    <mat-hint>Se actualizará automáticamente al guardar si hay cambios en las Especificaciones Técnicas</mat-hint>
-                  </mat-form-field>
-                </div>
+                  <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('potenciaDisponible') as potenciaDisponibleControl">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Potencia Disponible (kWp)</mat-label>
+                      <input matInput type="number" formControlName="potenciaDisponible" readonly />
+                      <mat-hint>Se actualizará automáticamente al guardar si hay cambios en las Especificaciones Técnicas</mat-hint>
+                    </mat-form-field>
+                  </div>
 
                   <!-- Precio por kWp -->
                   <div class="col-md-4 mb-3" *ngIf="oInstalacionForm?.get('precioKw') as precioKwControl">
