@@ -6,7 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-
+import { CountUp } from 'countup.js';
 
 @Component({
   selector: 'app-shared-home-routed',
@@ -23,8 +23,7 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class SharedHomeRoutedComponent implements OnInit {
-  displayedCount: number = 0;
-  finalCount: number = 120;
+  
   
   
 
@@ -58,7 +57,14 @@ export class SharedHomeRoutedComponent implements OnInit {
 
     this.initMap(); // puedes cargar leaflet si usas mapa
 
-    this.animateCount();
+    const countUp = new CountUp('counter', 120, { duration: 1.5 });
+  if (!countUp.error) {
+    countUp.start();
+  } else {
+    console.error(countUp.error);
+  }
+
+   
   }
 
   @HostListener('window:scroll', [])
@@ -137,24 +143,7 @@ export class SharedHomeRoutedComponent implements OnInit {
     this.toggleContactForm();
   }
 
-  animateCount() {
-    const duration = 1000; // duración total en ms
-    const frameRate = 30; // cada cuántos ms actualizar
-    const totalSteps = duration / frameRate;
-    let currentStep = 0;
   
-    const increment = this.finalCount / totalSteps;
-  
-    const interval = setInterval(() => {
-      this.displayedCount += increment;
-      currentStep++;
-  
-      if (currentStep >= totalSteps) {
-        this.displayedCount = this.finalCount;
-        clearInterval(interval);
-      }
-    }, frameRate);
-  }
 }
 
 
