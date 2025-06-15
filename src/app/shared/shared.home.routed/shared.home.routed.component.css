@@ -2,8 +2,6 @@
 :root {
   --primary: #1a5f7a;
   --primary-dark: #134a60;
-  --secondary: #27ae60;
-  --secondary-dark: #1e8449;
   --dark: #2c3e50;
   --light: #f5f6f7;
   --gray: #6c7a89;
@@ -218,68 +216,34 @@ body {
   color: white;
   font-size: 2rem;
 }
-
-/* Timeline Section */
-.timeline {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 0;
+.steps-section {
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
 }
 
-.timeline::before {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 100%;
-  background: var(--primary);
-  left: 50%;
-  transform: translateX(-50%);
+.steps-section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2a2a2a;
 }
 
-.timeline-item {
-  margin-bottom: 3rem;
-  position: relative;
-  width: 50%;
-}
-
-.timeline-item:nth-child(odd) {
-  left: 0;
-  padding-right: 3rem;
-}
-
-.timeline-item:nth-child(even) {
-  left: 50%;
-  padding-left: 3rem;
-}
-
-.timeline-content {
+.step-card {
   background: white;
+  border-radius: 1rem;
   padding: 2rem;
-  border-radius: 20px;
-  box-shadow: var(--shadow);
+  width: 280px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
-.timeline-icon {
-  width: 60px;
-  height: 60px;
-  background: var(--gradient);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  position: absolute;
-  top: 0;
+.step-card:hover {
+  transform: translateY(-5px);
 }
 
-.timeline-item:nth-child(odd) .timeline-icon {
-  right: -30px;
-}
-
-.timeline-item:nth-child(even) .timeline-icon {
-  left: -30px;
+.step-icon {
+  font-size: 2.5rem;
+  color: #3684a2;
+  margin-bottom: 1rem;
 }
 
 /* Benefits Section */
