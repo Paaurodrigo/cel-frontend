@@ -132,9 +132,10 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.actualizarDireccionCompleta();
     });
     
-    this.oSocioForm.get('direccionfiscal')?.valueChanges.subscribe(() => {
+    this.oSocioForm.get('direccionBase')?.valueChanges.subscribe(() => {
       this.actualizarDireccionCompleta();
     });
+    
     
   }
 
@@ -145,6 +146,27 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     }
   }
 
+  seleccionarDireccion(sugerencia: any): void {
+    const props = sugerencia.properties;
+  
+    const direccionBase = [
+      props.name,
+      props.postcode,
+      props.city
+    ].filter(Boolean).join(', ');
+  
+    this.oSocioForm.patchValue({
+      direccionBase: direccionBase,
+      direccionfiscal: direccionBase,
+      codigopostal: props.postcode || ''
+    });
+  
+    this.sugerencias = [];
+  
+    // Actualiza la dirección completa si ya hay número
+    this.actualizarDireccionCompleta();
+  }
+
   actualizarDireccionCompleta(): void {
     let direccion = this.oSocioForm.get('direccionBase')?.value || '';
     const numero = this.oSocioForm.get('numero')?.value || '';
@@ -152,19 +174,20 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     if (direccion) {
       const partes: string[] = direccion.split(',').map((p: string) => p.trim());
   
-      // Si el último fragmento es un número, lo eliminamos
-      if (partes.length > 1 && /^\d+$/.test(partes[partes.length - 1])) {
-        partes.pop();
+      // Elimina el número anterior si lo hubiera
+      if (partes.length > 1 && /^\d+$/.test(partes[1])) {
+        partes.splice(1, 1); // elimina el número anterior
       }
   
       if (numero) {
-        partes.splice(1, 0, numero); // Inserta el número después de la calle
+        partes.splice(1, 0, numero); // inserta el número después de la calle
       }
   
       const direccionActualizada = partes.join(', ');
       this.oSocioForm.get('direccionfiscal')?.setValue(direccionActualizada, { emitEvent: false });
     }
   }
+  
   
   
   
@@ -331,20 +354,5 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     this.direccionSubject.next(direccion);
   }
 
-  seleccionarDireccion(sugerencia: any): void {
-    const props = sugerencia.properties;
   
-    const direccionCompleta = [
-      props.name,
-     
-    ].filter(Boolean).join(', '); // Filtra null/undefined
-  
-    this.oSocioForm.patchValue({
-      direccionfiscal: direccionCompleta,
-      codigoPostal: props.postcode || '',
-      
-    });
-  
-    this.sugerencias = [];
-  }
 }
