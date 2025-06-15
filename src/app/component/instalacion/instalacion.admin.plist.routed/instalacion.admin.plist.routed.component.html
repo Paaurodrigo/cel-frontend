@@ -112,7 +112,8 @@
                   </td>
                   <td>
                     <span class="badge" [ngClass]="getPotenciaClass(instalacion.potenciaDisponible, instalacion.potenciaTotal)">
-                      {{ instalacion.potenciaDisponible }} kWp
+                      {{ instalacion.potenciaDisponible | number:'1.2-2' }} kWp
+
                     </span>
                   
                   </td>

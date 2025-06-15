@@ -102,7 +102,6 @@ export class InmuebleAdminCreateByuserRoutedComponent implements OnInit {
       tension: ['', [Validators.required, Validators.pattern(/^\d{3}$/)]],
       uso: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       consumoAnual: ['', [Validators.required]],
-      habitos: ['', [Validators.required]],
       comercializadora: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       socio: this.fb.group({
         id: [this.idSocio!, Validators.required]
