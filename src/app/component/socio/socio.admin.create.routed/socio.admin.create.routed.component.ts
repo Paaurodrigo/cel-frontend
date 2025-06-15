@@ -73,6 +73,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      direccionBase: [''], // ← no se guarda, solo interna
       tipoSocio: this.fb.group({
         id: [2, Validators.required], // id por defecto 2
         descripcion: ['miembro', Validators.required], // descripción por defecto "Miembro"
@@ -131,9 +132,6 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.actualizarDireccionCompleta();
     });
     
-    this.oSocioForm.get('direccionfiscal')?.valueChanges.subscribe(() => {
-      this.actualizarDireccionCompleta();
-    });
     
   }
 
@@ -145,11 +143,19 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   actualizarDireccionCompleta(): void {
-    const direccion = this.oSocioForm.get('direccionfiscal')?.value || '';
     const numero = this.oSocioForm.get('numero')?.value || '';
-    if (direccion && numero) {
-      const direccionConNumero = `${direccion}, nº ${numero}`;
-      this.oSocioForm.get('direccionfiscal')?.setValue(direccionConNumero, { emitEvent: false });
+    const direccionBase = this.oSocioForm.get('direccionBase')?.value || '';
+  
+    if (direccionBase) {
+      const partes: string[] = direccionBase.split(',');
+      const nombreCalle = partes[0]?.trim();
+      const resto = partes.slice(1).map((p: string) => p.trim()).join(', ');
+  
+      const direccionFinal = numero
+        ? `${nombreCalle}, ${numero}, ${resto}`
+        : direccionBase;
+  
+      this.oSocioForm.patchValue({ direccion: direccionFinal });
     }
   }
   
@@ -315,19 +321,19 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   seleccionarDireccion(sugerencia: any): void {
-    const props = sugerencia.properties;
-  
-    const direccionCompleta = [
-      props.name,
-     
-    ].filter(Boolean).join(', '); // Filtra null/undefined
+    const direccionBase = [
+      sugerencia.properties.name,
+      sugerencia.properties.postcode,
+      sugerencia.properties.city,
+    ].filter(Boolean).join(', ');
   
     this.oSocioForm.patchValue({
-      direccionfiscal: direccionCompleta,
-      codigoPostal: props.postcode || '',
-      
+      direccionBase: direccionBase
     });
   
-    this.sugerencias = [];
+    this.actualizarDireccionCompleta(); // ← aquí se aplica el número si lo hay
+  
+    this.sugerencias = []; // limpia la lista de sugerencias
   }
+  
 }
