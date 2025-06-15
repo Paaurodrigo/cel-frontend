@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ISocio } from '../../model/socio.interface';
 import { SocioService } from '../../service/socio.service';
@@ -9,18 +9,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { debounceTime, Subject } from 'rxjs';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-shared.byemail.edit',
   templateUrl: './shared.byemail.edit.component.html',
   styleUrls: ['./shared.byemail.edit.component.css'],
-  imports: [ CommonModule,             
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    RouterLink,
-    MatIconModule],
+  imports: [ RouterModule, ReactiveFormsModule,CommonModule,   MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatIconModule],
   standalone: true
 })
 export class SharedByemailEditComponent implements OnInit {
