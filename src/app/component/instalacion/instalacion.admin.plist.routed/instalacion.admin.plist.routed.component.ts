@@ -108,7 +108,7 @@ export class InstalacionAdminPlistRoutedComponent implements OnInit {
     } else if (disponible < total / 2) {
       return 'bg-warning text-dark'; // Naranja
     } else {
-      return 'bg-info-subtle text-info'; // Azul
+      return 'bg-info-subtle text-black'; // Azul
     }
   }
   
