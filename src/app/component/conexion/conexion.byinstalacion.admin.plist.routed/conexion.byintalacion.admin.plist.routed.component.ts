@@ -179,6 +179,7 @@ L.circle([coords.lat, coords.lon], {
     const jsonData = {
       id: conexion.id,
       fecha: conexion.fecha,
+      potencia: conexion.potencia,
       inmueble: {
         id: conexion.inmueble.id,
         socio: {
@@ -186,14 +187,19 @@ L.circle([coords.lat, coords.lon], {
           email: conexion.inmueble.socio.email,
           nombre: conexion.inmueble.socio.nombre
         }
+      },
+      instalacion: {
+        id: conexion.instalacion?.id,
+        precioKw: conexion.instalacion?.precioKw
       }
     };
-
+  
     this.oConexionService.enviarCorreo(jsonData).subscribe({
       next: () => console.log('Correo enviado correctamente'),
       error: (err) => console.error('Error al enviar el correo:', err)
     });
   }
+  
 
  
   downloadPdf() {
