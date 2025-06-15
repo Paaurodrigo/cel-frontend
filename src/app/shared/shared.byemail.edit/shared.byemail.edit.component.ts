@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ISocio } from '../../model/socio.interface';
 import { SocioService } from '../../service/socio.service';
@@ -16,7 +16,8 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule],
+    MatButtonModule,
+  RouterLink],
   standalone: true
 })
 export class SharedByemailEditComponent implements OnInit {
@@ -87,6 +88,7 @@ export class SharedByemailEditComponent implements OnInit {
     this.oPerfilForm?.controls['codigopostal'].setValue(this.oSocio?.codigopostal)
   }
 
+ 
 
   onSubmit(): void {
     if (this.oPerfilForm.invalid) {

@@ -2,19 +2,20 @@
   <div class="row justify-content-center">
     <div class="col-xxl-8 col-xl-9 col-lg-10">
       <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-        <!-- Cabecera unificada para todas las tarjetas -->
-        <div class="card-header bg-primary text-white py-4">
-          <div class="d-flex align-items-center px-3">
-            <i class="bi bi-person-circle display-6 me-3 text-white"></i>
-            <div>
-              <h2 class="fw-bold mb-0">Edición de Perfil</h2>
-              <p class="mb-0 opacity-75">Modifique sus datos personales</p>
-            </div>
-          </div>
-        </div>
+       <!-- Cabecera unificada para todas las tarjetas -->
+<div class="card-header bg-primary text-white py-4">
+  <div class="d-flex align-items-center px-3">
+    <i class="bi bi-person-circle display-6 me-3 text-white"></i>
+    <div>
+      <h2 class="fw-bold mb-0">Edición de Socio</h2>
+      <p class="mb-0 opacity-75">Modifique los datos del socio</p>
+    </div>
+  </div>
+</div>
+
 
         <div class="card-body p-4 p-lg-5">
-          <form [formGroup]="oPerfilForm" (ngSubmit)="onSubmit()" novalidate>
+          <form [formGroup]="oPerfilForm!" (ngSubmit)="onSubmit()" novalidate>
             <!-- Secciones del formulario -->
             <div class="row g-4">
               <!-- Datos Personales -->
@@ -23,6 +24,9 @@
                   <i class="bi bi-person-badge me-2"></i>Datos Personales
                 </h5>
               </div>
+
+              <!-- ID -->
+              
 
               <!-- Nombre -->
               <div class="col-md-4">
@@ -128,6 +132,9 @@
 
             <!-- Botones de acción -->
             <div class="d-flex flex-wrap justify-content-center gap-3 mt-5">
+              <button type="button" class="btn btn-outline-secondary px-4" [routerLink]="['/home']">
+                <i class="bi bi-arrow-left me-2"></i>Volver a la página principal
+              </button>
               <button type="reset" class="btn btn-outline-danger px-4" (click)="onReset()">
                 <i class="bi bi-x-circle me-2"></i>Limpiar formulario
               </button>
@@ -140,9 +147,12 @@
             <div *ngIf="strMessage" class="mt-3 text-center" [ngClass]="{ 'text-success': showSuccess, 'text-danger': !showSuccess }">
               {{ strMessage }}
             </div>
+
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
