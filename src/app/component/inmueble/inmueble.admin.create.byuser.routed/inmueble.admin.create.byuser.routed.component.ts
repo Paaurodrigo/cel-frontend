@@ -16,6 +16,7 @@ import { InmuebleService } from '../../../service/inmueble.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 declare let bootstrap: any;
 // ... (importaciones sin cambios)
@@ -30,7 +31,8 @@ declare let bootstrap: any;
     ReactiveFormsModule,
     RouterModule,
     CommonModule,
-    FormsModule,         // <-- Añádelo
+    FormsModule, 
+    MatIconModule        // <-- Añádelo
    
   ],
   standalone: true

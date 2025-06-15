@@ -44,27 +44,29 @@
                   </div>
                   <div class="col-md-6 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>Dirección</mat-label>
+                      <mat-label>Buscar dirección</mat-label>
                       <input 
                         matInput 
-                        formControlName="direccion"
-                        placeholder="Introduce una dirección"
+                        formControlName="direccionBase"
+                        placeholder="Busca una dirección"
                         (input)="onSearchDireccion()"
-                        [attr.autocomplete]="'off'"
+                        autocomplete="off"
                       />
-                      <mat-hint>Seleccione una dirección de la lista de sugerencias</mat-hint>
+                      <mat-hint>Escribe una dirección para buscar</mat-hint>
                     </mat-form-field>
+                  
+                    <!-- Sugerencias -->
                     <ul class="list-group position-absolute w-100 z-3" *ngIf="sugerencias.length > 0">
                       <li
                         class="list-group-item list-group-item-action"
                         *ngFor="let sugerencia of sugerencias"
                         (click)="seleccionarDireccion(sugerencia)"
                       >
-                        {{ sugerencia.properties.name }}, {{ sugerencia.properties.city }}, 
-                        
+                        {{ sugerencia.properties.name }}, {{ sugerencia.properties.city }}
                       </li>
                     </ul>
                   </div>
+                  
                   <div class="col-md-6 mb-3">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Numero</mat-label>
