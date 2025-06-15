@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { debounceTime, Subject } from 'rxjs';
 
 declare let bootstrap: any;
 @Component({
@@ -33,7 +34,9 @@ export class SocioAdminEditRoutedComponent implements OnInit {
   oSocio: ISocio | null = null;
   strMessage: string = '';
   showSuccess: boolean = false; // ✅ Añade esta línea
-
+  emailExiste: boolean = false;
+  
+  emailSubject: Subject<string> = new Subject<string>();
 
   myModal: any;
 
@@ -51,6 +54,14 @@ export class SocioAdminEditRoutedComponent implements OnInit {
     this.createForm();
     this.get();
     this.oSocioForm?.markAllAsTouched();
+    
+     this.emailSubject.pipe(debounceTime(1000)).subscribe(email => {
+          if (!email) {
+            this.emailExiste = false;
+          } else {
+            this.checkEmailExists(email);
+          }
+        });
   }
 
   createForm() {
@@ -127,6 +138,13 @@ export class SocioAdminEditRoutedComponent implements OnInit {
     this.oRouter.navigate(['/admin/socio/plist/']);
   };
 
+  onEmailChange(): void {
+    const email = this.oSocioForm.get('email')?.value;
+    this.emailSubject.next(email);
+  }
+
+
+
   onSubmit() {
     if (!this.oSocioForm?.valid) {
       this.showModal('Formulario no válido');
@@ -144,6 +162,25 @@ export class SocioAdminEditRoutedComponent implements OnInit {
         },
       });
     }
+  }
+
+
+  // Método para llamar al servicio y actualizar emailExiste
+  private checkEmailExists(email: string): void {
+    this.oSocioService.checkEmailExists(email).subscribe({
+      next: (existe: boolean) => {
+        console.log('¿EMAIL existe?', existe);
+        this.emailExiste = existe;
+  
+        // 🔥 Fuerza visualización del error si ya existe
+        this.oSocioForm.get('email')?.markAsTouched();
+        this.oSocioForm.get('email')?.updateValueAndValidity();
+      },
+      error: (err) => {
+        console.error('Error checking email existence', err);
+        this.emailExiste = false;
+      }
+    });
   }
 }
 

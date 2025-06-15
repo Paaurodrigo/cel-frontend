@@ -79,10 +79,24 @@
 
               <!-- Email -->
               <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
+                <mat-form-field appearance="outline" class="w-100"
+                  [class.mat-form-field-invalid]="emailExiste && oSocioForm.get('email')?.touched">
                   <mat-label>Email</mat-label>
-                  <input matInput formControlName="email" readonly type="email" />
-                  <mat-icon matSuffix>email</mat-icon>
+                  <input matInput formControlName="email" (input)="onEmailChange()" 
+                         placeholder="ejemplo@email.com" type="email" />
+                  
+                  <mat-icon matSuffix *ngIf="!emailExiste && oSocioForm.get('email')?.valid" color="primary">check_circle</mat-icon>
+                  <mat-icon matSuffix *ngIf="emailExiste && oSocioForm.get('email')?.touched" color="warn">error</mat-icon>
+
+                  <mat-error *ngIf="oSocioForm.get('email')?.hasError('required') && oSocioForm.get('email')?.touched">
+                    Email obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="oSocioForm.get('email')?.hasError('email') && oSocioForm.get('email')?.touched">
+                    Formato de email incorrecto
+                  </mat-error>
+                  <mat-error *ngIf="emailExiste && oSocioForm.get('email')?.touched">
+                    Email ya registrado
+                  </mat-error>
                 </mat-form-field>
               </div>
 
@@ -138,9 +152,10 @@
               <button type="reset" class="btn btn-outline-danger px-4" (click)="onReset()">
                 <i class="bi bi-x-circle me-2"></i>Limpiar formulario
               </button>
-              <button type="submit" class="btn btn-primary px-4" [disabled]="!oSocioForm.valid">
-                <i class="bi bi-check2-circle me-2"></i>Guardar cambios
-              </button>
+              <button type="submit" class="btn btn-primary px-4" 
+              [disabled]="!oSocioForm.valid || emailExiste">
+        <i class="bi bi-check2-circle me-2"></i>Guardar cambios
+      </button>
             </div>
           </form>
         </div>
