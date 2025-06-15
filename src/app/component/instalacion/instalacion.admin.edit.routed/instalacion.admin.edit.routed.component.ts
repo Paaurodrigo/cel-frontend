@@ -129,7 +129,7 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     this.oInstalacionService.update(formData).subscribe({
       next: (oInstalacion: IInstalacion) => {
         this.oInstalacion = oInstalacion;
-        this.updateForm();
+        
         this.showModal(`Instalación ${oInstalacion.id} actualizada correctamente`);
       },
       error: (error) => {
