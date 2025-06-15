@@ -32,7 +32,8 @@ export class SocioAdminEditRoutedComponent implements OnInit {
   oSocioForm: FormGroup = new FormGroup({});
   oSocio: ISocio | null = null;
   strMessage: string = '';
- 
+  showSuccess: boolean = false; // ✅ Añade esta línea
+
 
   myModal: any;
 
