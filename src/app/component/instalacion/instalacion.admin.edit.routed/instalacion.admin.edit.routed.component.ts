@@ -160,16 +160,19 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
     }
   }
 
-  calcularPotenciaTotal() {
-    const paneles = parseFloat(this.oInstalacionForm.get('paneles')?.value);
-    const potenciaPanel = parseFloat(this.oInstalacionForm.get('potenciaPanel')?.value);
-
-    if (!isNaN(paneles) && !isNaN(potenciaPanel)) {
-      const potenciaTotal = parseFloat((paneles * potenciaPanel).toFixed(2));
-      this.oInstalacionForm.get('potenciaTotal')?.setValue(potenciaTotal);
-      this.oInstalacionForm.get('potenciaDisponible')?.setValue(potenciaTotal);
+  calcularPotenciaTotal(): void {
+    const paneles = parseInt(this.oInstalacionForm?.get('paneles')?.value) || 0;
+    const potenciaPanel = parseFloat(this.oInstalacionForm?.get('potenciaPanel')?.value) || 0;
+  
+    if (!isNaN(paneles) && !isNaN(potenciaPanel) && paneles > 0 && potenciaPanel > 0) {
+      const potenciaTotal = (paneles * potenciaPanel) / 1000;
+      this.oInstalacionForm?.patchValue({
+        potenciaTotal: potenciaTotal.toFixed(3),
+        potenciaDisponible: potenciaTotal.toFixed(3)
+      });
     }
   }
+  
 
   seleccionarDireccion(sugerencia: any) {
     const direccionBase = [

@@ -290,29 +290,21 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<!-- Modal de Resultado Simple -->
+<div class="modal fade" id="mimodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow rounded-4">
-      <div class="modal-header border-0" 
-           [ngClass]="{ 'bg-success text-white': esExito, 'bg-danger text-white': !esExito }">
-        <h5 class="modal-title" id="modalLabel">
-          <i [class]="esExito ? 'bi bi-check-circle me-2' : 'bi bi-exclamation-circle me-2'"></i>
-          {{ esExito ? 'Éxito' : 'Error' }}
-        </h5>
-        <button type="button" class="btn-close" 
-                [class.btn-close-white]="!esExito" 
-                data-bs-dismiss="modal" 
-                aria-label="Close" 
-                (click)="hideModal()"></button>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideModal()"></button>
       </div>
       <div class="modal-body text-center p-4">
-        <p class="mb-0">{{ strMessage }}</p>
+        <p class="fs-5 mb-0">{{ strMessage }}</p>
       </div>
       <div class="modal-footer border-0 justify-content-center">
-        <button type="button" class="btn btn-primary px-4" 
-                data-bs-dismiss="modal" 
-                (click)="hideModal()">Aceptar</button>
+        <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal" (click)="hideModal()">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
+
