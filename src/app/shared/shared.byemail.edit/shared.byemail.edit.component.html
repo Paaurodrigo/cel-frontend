@@ -153,9 +153,10 @@
               <button type="reset" class="btn btn-outline-danger px-4" (click)="onReset()">
                 <i class="bi bi-x-circle me-2"></i>Limpiar formulario
               </button>
-              <button type="submit" class="btn btn-primary px-4" [disabled]="!oPerfilForm.valid">
-                <i class="bi bi-check2-circle me-2"></i>Guardar cambios
-              </button>
+              <button type="submit" class="btn btn-primary px-4" 
+              [disabled]="!oPerfilForm.valid || emailExiste">
+        <i class="bi bi-check2-circle me-2"></i>Guardar cambios
+      </button>
             </div>
 
             <!-- Mensajes de error/éxito -->
