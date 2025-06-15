@@ -73,6 +73,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      direccion: [''], // ← Añade esta línea en el form group
       direccionBase: [''], // ← no se guarda, solo interna
       tipoSocio: this.fb.group({
         id: [2, Validators.required], // id por defecto 2
@@ -226,10 +227,10 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.showModal('Formulario inválido. Revisa los campos e inténtalo de nuevo.');
       return;
     }
-
+  
     const contraseña = this.oSocioForm.get('contraseña')?.value || '';
     const hashedcontraseña = this.oCryptoService.getHashSHA256(contraseña);
-
+  
     const formData = new FormData();
     formData.append('nombre', this.oSocioForm.get('nombre')?.value);
     formData.append('apellido1', this.oSocioForm.get('apellido1')?.value);
@@ -241,8 +242,9 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('fotoDni', this.fotoDni!);
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
+    formData.append('direccion', this.oSocioForm.get('direccion')?.value || ''); // ✅ AÑADIDO AQUÍ
     formData.append('tiposocio', this.oSocioForm.get('tipoSocio')?.value.id);
-
+  
     this.oSocioService.createbyAdmin(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
@@ -254,6 +256,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       },
     });
   }
+  
 
   // ✅ Función de validación del DNI (la mantenemos)
   private esDniValido(dni: string): boolean {
