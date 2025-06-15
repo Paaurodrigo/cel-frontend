@@ -54,6 +54,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   direccionSubject: Subject<string> = new Subject<string>();
   sugerencias: any[] = [];
   hidePassword: boolean = true;
+  esExito: boolean = false;
   constructor(
     private oSocioService: SocioService,
     private oRouter: Router,
@@ -177,8 +178,9 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   
   
 
-  showModal(mensaje: string): void {
+  showModal(mensaje: string, exito: boolean = false): void {
     this.strMessage = mensaje;
+    this.esExito = exito;
     this.myModal = new bootstrap.Modal(document.getElementById('mimodal'), {
       keyboard: false,
     });
