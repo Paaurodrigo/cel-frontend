@@ -255,13 +255,14 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
 
   onSubmit(): void {
     if (this.oSocioForm.invalid) {
+      this.esExito = false;
       this.showModal('Formulario inválido. Revisa los campos e inténtalo de nuevo.');
       return;
     }
-
+  
     const contraseña = this.oSocioForm.get('contraseña')?.value || '';
     const hashedcontraseña = this.oCryptoService.getHashSHA256(contraseña);
-
+  
     const formData = new FormData();
     formData.append('nombre', this.oSocioForm.get('nombre')?.value);
     formData.append('apellido1', this.oSocioForm.get('apellido1')?.value);
@@ -276,19 +277,21 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
     formData.append('tiposocio', this.oSocioForm.get('tipoSocio')?.value.id);
-
+  
     this.oSocioService.createbyAdmin(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
+        this.esExito = true; // ✅ Éxito
         this.showModal(`Socio creado con el id: ${this.oSocio.id}`);
       },
       error: (err) => {
+        this.esExito = false; // ❌ Error
         this.showModal('Error al crear el usuario');
         console.error(err);
       },
     });
   }
-
+  
   // ✅ Función de validación del DNI (la mantenemos)
   private esDniValido(dni: string): boolean {
     const dniRegex = /^[0-9]{8}[A-Z]$/;
