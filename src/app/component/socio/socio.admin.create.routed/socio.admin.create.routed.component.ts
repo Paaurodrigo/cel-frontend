@@ -132,6 +132,14 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     this.oSocioForm.get('numero')?.valueChanges.subscribe(() => {
       this.actualizarDireccionCompleta();
     });
+
+    this.oSocioForm.get('direccionfiscal')?.valueChanges.subscribe(() => {
+      this.actualizarDireccionCompleta();
+    });
+
+    this.oSocioForm.get('direccionBase')?.valueChanges.subscribe(() => {
+      this.actualizarDireccionCompleta();
+    });
     
     
   }
