@@ -24,7 +24,7 @@ export class SharedByemailEditComponent implements OnInit {
   oPerfilForm: FormGroup = new FormGroup({});
   strMessage: string = '';
   showSuccess: boolean = false;
-
+  oSocio: ISocio | null = null;
   constructor(
     private oActivatedRoute: ActivatedRoute,
     private oSocioService: SocioService
@@ -61,6 +61,32 @@ export class SharedByemailEditComponent implements OnInit {
       }
     });
   }
+
+  onReset() {
+    this.oSocioService.getSocioByEmail(this.email).subscribe({
+      next: (oSocio: ISocio) => {
+        this.oSocio= oSocio;
+        this.updateForm();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+    return false;
+  }
+
+  updateForm() {
+    this.oPerfilForm?.controls['id'].setValue(this.oSocio?.id);
+    this.oPerfilForm?.controls['nombre'].setValue(this.oSocio?.nombre);
+    this.oPerfilForm?.controls['apellido1'].setValue(this.oSocio?.apellido1);
+    this.oPerfilForm?.controls['apellido2'].setValue(this.oSocio?.apellido2);
+    this.oPerfilForm?.controls['email'].setValue(this.oSocio?.email);
+    this.oPerfilForm?.controls['dni'].setValue(this.oSocio?.dni);
+    this.oPerfilForm?.controls['telefono'].setValue(this.oSocio?.telefono)
+    this.oPerfilForm?.controls['direccionfiscal'].setValue(this.oSocio?.direccionfiscal)
+    this.oPerfilForm?.controls['codigopostal'].setValue(this.oSocio?.codigopostal)
+  }
+
 
   onSubmit(): void {
     if (this.oPerfilForm.invalid) {
