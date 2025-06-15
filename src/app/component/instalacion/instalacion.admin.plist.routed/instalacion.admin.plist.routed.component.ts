@@ -102,6 +102,15 @@ export class InstalacionAdminPlistRoutedComponent implements OnInit {
     this.debounceSubject.next(this.strFiltro);
   }
 
-
+  getPotenciaClass(disponible: number, total: number): string {
+    if (disponible === 0) {
+      return 'bg-danger text-white'; // Rojo
+    } else if (disponible < total / 2) {
+      return 'bg-warning text-dark'; // Naranja
+    } else {
+      return 'bg-info-subtle text-info'; // Azul
+    }
+  }
+  
 
 }

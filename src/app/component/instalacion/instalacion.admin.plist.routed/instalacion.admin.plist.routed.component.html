@@ -111,12 +111,13 @@
                     </span>
                   </td>
                   <td>
-                    <span class="badge bg-info-subtle text-info">
+                    <span class="badge" [ngClass]="getPotenciaClass(instalacion.potenciaDisponible, instalacion.potenciaTotal)">
                       {{ instalacion.potenciaDisponible }} kWp
                     </span>
+                  
                   </td>
-                  <td>{{ instalacion.precioKw | number:'1.0-2' }} €/kWp</td>
-                  <td>
+                  <td>{{ instalacion.precioKw | number:'1.0-2' }} €/kWp</td>      
+                      <td>
                     <div class="d-flex justify-content-center gap-2">
                       <a class="btn btn-sm btn-action-secondary" href="admin/conexion/byinstalacion/plist/{{ instalacion.id }}" (click)="$event.stopPropagation()" title="Ver conexiones">
                         <i class="bi bi-diagram-3"></i>
