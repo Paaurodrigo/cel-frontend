@@ -175,17 +175,24 @@ export class InstalacionAdminEditRoutedComponent implements OnInit {
   
 
   seleccionarDireccion(sugerencia: any) {
-    const direccionBase = [
-      sugerencia.properties.name,
-      sugerencia.properties.postcode,
-      sugerencia.properties.city,
-    
-    ].filter(Boolean).join(', ');
-
-    this.oInstalacionForm.patchValue({ direccionBase });
-    this.actualizarDireccionCompleta();
+    const nombreCalle = sugerencia.properties.name || '';
+    const codigoPostal = sugerencia.properties.postcode || '';
+    const ciudad = sugerencia.properties.city || '';
+    const numero = this.oInstalacionForm.get('numero')?.value || '';
+  
+    let direccion = nombreCalle;
+    if (numero) direccion += `, ${numero}`;
+    if (codigoPostal) direccion += `, ${codigoPostal}`;
+    if (ciudad) direccion += `, ${ciudad}`;
+  
+    this.oInstalacionForm.patchValue({
+      direccion: direccion,
+      direccionBase: `${nombreCalle}, ${codigoPostal}, ${ciudad}` // solo por si luego la usas
+    });
+  
     this.sugerencias = [];
   }
+  
 
   actualizarDireccionCompleta() {
     const numero = this.oInstalacionForm.get('numero')?.value || '';
