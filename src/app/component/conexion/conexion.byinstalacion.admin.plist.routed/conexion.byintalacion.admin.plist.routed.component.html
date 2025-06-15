@@ -81,7 +81,9 @@
                         <div class="tech-stat-icon mb-2">
                           <i class="bi bi-lightning text-success fs-3"></i> <!-- 🔋 Potencia disponible -->
                         </div>
-                        <div class="tech-stat-value fw-bold fs-4">{{ instalacion.potenciaDisponible }} kWp</div>
+                        <div class="tech-stat-value fw-bold fs-4">
+                          {{ instalacion.potenciaDisponible | number:'1.0-2' }} kWp
+                        </div>                        
                         <div class="tech-stat-label small text-muted">Potencia Disponible</div>
                       </div>
                     </div>
