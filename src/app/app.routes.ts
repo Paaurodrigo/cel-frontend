@@ -36,6 +36,7 @@ import { ConexionAdminAddRoutedComponent } from './component/conexion/conexion.a
 import { InmuebleAdminCreateByuserRoutedComponent } from './component/inmueble/inmueble.admin.create.byuser.routed/inmueble.admin.create.byuser.routed.component';
 import { SharedRecuperarContraseñaComponent } from './shared/shared.recuperar.contraseña/shared.recuperar.contraseña.component';
 import { SharedRestablecerContraseñaComponent } from './shared/shared.restablecer.contraseña/shared.restablecer.contraseña.component';
+import { SharedByemailEditComponent } from './shared/shared.byemail.edit/shared.byemail.edit.component';
 
 export const routes: Routes = [
 
@@ -47,7 +48,7 @@ export const routes: Routes = [
   { path: 'forgot-password', component: SharedRecuperarContraseñaComponent },
   { path: 'reset-password/:id', component: SharedRestablecerContraseñaComponent },
   
-  
+  { path: 'byemail/edit/:email', component: SharedByemailEditComponent},
   { path: 'admin/socio/plist', component: SocioAdminPlistRoutedComponent,canActivate: [AdminGuard] },
   { path: 'admin/socio/delete/:id', component: SocioAdminDeleteRoutedComponent,canActivate: [AdminGuard] },
   { path: 'admin/socio/edit/:id', component: SocioAdminEditRoutedComponent,canActivate: [AdminGuard] },
