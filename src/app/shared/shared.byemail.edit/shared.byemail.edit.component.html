@@ -78,11 +78,26 @@
               </div>
 
               <!-- Email -->
+              <!-- Email -->
               <div class="col-md-6">
-                <mat-form-field appearance="outline" class="w-100">
+                <mat-form-field appearance="outline" class="w-100"
+                  [class.mat-form-field-invalid]="emailExiste && oPerfilForm.get('email')?.touched">
                   <mat-label>Email</mat-label>
-                  <input matInput formControlName="email" readonly type="email" />
-                  <mat-icon matSuffix>email</mat-icon>
+                  <input matInput formControlName="email" (input)="onEmailChange()" 
+                         placeholder="ejemplo@email.com" type="email" />
+                  
+                  <mat-icon matSuffix *ngIf="!emailExiste && oPerfilForm.get('email')?.valid" color="primary">check_circle</mat-icon>
+                  <mat-icon matSuffix *ngIf="emailExiste && oPerfilForm.get('email')?.touched" color="warn">error</mat-icon>
+
+                  <mat-error *ngIf="oPerfilForm.get('email')?.hasError('required') && oPerfilForm.get('email')?.touched">
+                    Email obligatorio
+                  </mat-error>
+                  <mat-error *ngIf="oPerfilForm.get('email')?.hasError('email') && oPerfilForm.get('email')?.touched">
+                    Formato de email incorrecto
+                  </mat-error>
+                  <mat-error *ngIf="emailExiste && oPerfilForm.get('email')?.touched">
+                    Email ya registrado
+                  </mat-error>
                 </mat-form-field>
               </div>
 

@@ -7,6 +7,8 @@ import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/fo
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-shared.byemail.edit',
@@ -17,7 +19,8 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-  RouterLink],
+    RouterLink,
+    MatIconModule],
   standalone: true
 })
 export class SharedByemailEditComponent implements OnInit {
@@ -26,6 +29,8 @@ export class SharedByemailEditComponent implements OnInit {
   strMessage: string = '';
   showSuccess: boolean = false;
   oSocio: ISocio | null = null;
+  emailExiste: boolean = false;
+    emailSubject: Subject<string> = new Subject<string>();
   constructor(
     private oActivatedRoute: ActivatedRoute,
     private oSocioService: SocioService
@@ -35,6 +40,14 @@ export class SharedByemailEditComponent implements OnInit {
     this.email = this.oActivatedRoute.snapshot.params['email'];
     this.createForm();
     this.cargarPerfil();
+    
+     this.emailSubject.pipe(debounceTime(1000)).subscribe(email => {
+          if (!email) {
+            this.emailExiste = false;
+          } else {
+            this.checkEmailExists(email);
+          }
+        });
   }
 
   createForm(): void {
@@ -109,4 +122,30 @@ export class SharedByemailEditComponent implements OnInit {
       }
     });
   }
+ // Método para llamar al servicio y actualizar emailExiste
+ private checkEmailExists(email: string): void {
+  this.oSocioService.checkEmailExists(email).subscribe({
+    next: (existe: boolean) => {
+      console.log('¿EMAIL existe?', existe);
+      this.emailExiste = existe;
+
+      // 🔥 Fuerza visualización del error si ya existe
+      this.oPerfilForm.get('email')?.markAsTouched();
+      this.oPerfilForm.get('email')?.updateValueAndValidity();
+    },
+    error: (err) => {
+      console.error('Error checking email existence', err);
+      this.emailExiste = false;
+    }
+  });
+}
+
+onEmailChange(): void {
+  const email = this.oPerfilForm.get('email')?.value;
+  this.emailSubject.next(email);
+}
+
+
+
+
 }
