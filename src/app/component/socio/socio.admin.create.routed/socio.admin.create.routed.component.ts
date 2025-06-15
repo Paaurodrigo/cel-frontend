@@ -282,7 +282,8 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
         this.esExito = true; // ✅ Éxito
-        this.showModal(`Socio creado con el id: ${this.oSocio.id}`);
+        this.showModal(`Socio creado con el id: ${this.oSocio.id}`, true);
+
       },
       error: (err) => {
         this.esExito = false; // ❌ Error
