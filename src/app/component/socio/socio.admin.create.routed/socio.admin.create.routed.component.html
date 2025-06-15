@@ -172,6 +172,17 @@
                   </ul>
                 </div>
               </div>
+              <!-- Teléfono -->
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Numero</mat-label>
+                  <input matInput formControlName="numero" placeholder="EJ. 23" />
+                  <mat-icon matSuffix>numero</mat-icon>
+                  <mat-error *ngIf="oSocioForm.get('numero')?.invalid && oSocioForm.get('numero')?.touched">
+                    Numero 
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
               <!-- Teléfono -->
               <div class="col-md-3">

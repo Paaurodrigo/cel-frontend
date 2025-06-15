@@ -72,6 +72,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       fotoDni: [null],
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+      numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       tipoSocio: this.fb.group({
         id: [2, Validators.required], // id por defecto 2
         descripcion: ['miembro', Validators.required], // descripción por defecto "Miembro"
@@ -126,6 +127,14 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
         this.checkEmailExists(email);
       }
     });
+    this.oSocioForm.get('numero')?.valueChanges.subscribe(() => {
+      this.actualizarDireccionCompleta();
+    });
+    
+    this.oSocioForm.get('direccionfiscal')?.valueChanges.subscribe(() => {
+      this.actualizarDireccionCompleta();
+    });
+    
   }
 
   onFileSelect(event: any): void {
@@ -134,6 +143,16 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.fotoDni = file;
     }
   }
+
+  actualizarDireccionCompleta(): void {
+    const direccion = this.oSocioForm.get('direccionfiscal')?.value || '';
+    const numero = this.oSocioForm.get('numero')?.value || '';
+    if (direccion && numero) {
+      const direccionConNumero = `${direccion}, nº ${numero}`;
+      this.oSocioForm.get('direccionfiscal')?.setValue(direccionConNumero, { emitEvent: false });
+    }
+  }
+  
 
 
   // Método para llamar al servicio y actualizar dniExiste
