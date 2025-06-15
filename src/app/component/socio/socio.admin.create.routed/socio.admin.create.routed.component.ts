@@ -73,8 +73,6 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      direccion: [''], // ← Añade esta línea en el form group
-      direccionBase: [''], // ← no se guarda, solo interna
       tipoSocio: this.fb.group({
         id: [2, Validators.required], // id por defecto 2
         descripcion: ['miembro', Validators.required], // descripción por defecto "Miembro"
@@ -132,15 +130,10 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     this.oSocioForm.get('numero')?.valueChanges.subscribe(() => {
       this.actualizarDireccionCompleta();
     });
-
+    
     this.oSocioForm.get('direccionfiscal')?.valueChanges.subscribe(() => {
       this.actualizarDireccionCompleta();
     });
-
-    this.oSocioForm.get('direccionBase')?.valueChanges.subscribe(() => {
-      this.actualizarDireccionCompleta();
-    });
-    
     
   }
 
@@ -152,19 +145,11 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   actualizarDireccionCompleta(): void {
+    const direccion = this.oSocioForm.get('direccionfiscal')?.value || '';
     const numero = this.oSocioForm.get('numero')?.value || '';
-    const direccionBase = this.oSocioForm.get('direccionBase')?.value || '';
-  
-    if (direccionBase) {
-      const partes: string[] = direccionBase.split(',');
-      const nombreCalle = partes[0]?.trim();
-      const resto = partes.slice(1).map((p: string) => p.trim()).join(', ');
-  
-      const direccionFinal = numero
-        ? `${nombreCalle}, ${numero}, ${resto}`
-        : direccionBase;
-  
-      this.oSocioForm.patchValue({ direccion: direccionFinal });
+    if (direccion && numero) {
+      const direccionConNumero = `${direccion}, nº ${numero}`;
+      this.oSocioForm.get('direccionfiscal')?.setValue(direccionConNumero, { emitEvent: false });
     }
   }
   
@@ -235,10 +220,10 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       this.showModal('Formulario inválido. Revisa los campos e inténtalo de nuevo.');
       return;
     }
-  
+
     const contraseña = this.oSocioForm.get('contraseña')?.value || '';
     const hashedcontraseña = this.oCryptoService.getHashSHA256(contraseña);
-  
+
     const formData = new FormData();
     formData.append('nombre', this.oSocioForm.get('nombre')?.value);
     formData.append('apellido1', this.oSocioForm.get('apellido1')?.value);
@@ -250,9 +235,8 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('fotoDni', this.fotoDni!);
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
-    formData.append('direccion', this.oSocioForm.get('direccion')?.value || ''); // ✅ AÑADIDO AQUÍ
     formData.append('tiposocio', this.oSocioForm.get('tipoSocio')?.value.id);
-  
+
     this.oSocioService.createbyAdmin(formData).subscribe({
       next: (oSocio: ISocio) => {
         this.oSocio = oSocio;
@@ -264,7 +248,6 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       },
     });
   }
-  
 
   // ✅ Función de validación del DNI (la mantenemos)
   private esDniValido(dni: string): boolean {
@@ -332,19 +315,19 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   seleccionarDireccion(sugerencia: any): void {
-    const direccionBase = [
-      sugerencia.properties.name,
-      sugerencia.properties.postcode,
-      sugerencia.properties.city,
-    ].filter(Boolean).join(', ');
+    const props = sugerencia.properties;
+  
+    const direccionCompleta = [
+      props.name,
+     
+    ].filter(Boolean).join(', '); // Filtra null/undefined
   
     this.oSocioForm.patchValue({
-      direccionBase: direccionBase
+      direccionfiscal: direccionCompleta,
+      codigoPostal: props.postcode || '',
+      
     });
   
-    this.actualizarDireccionCompleta(); // ← aquí se aplica el número si lo hay
-  
-    this.sugerencias = []; // limpia la lista de sugerencias
+    this.sugerencias = [];
   }
-  
 }
