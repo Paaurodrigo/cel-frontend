@@ -70,6 +70,7 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
       dni: ['', [Validators.required, Validators.pattern(/^\d{8}[A-Z]$/)]],
       telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       fotoDni: [null],
+      direccionBase: [''],  
       direccionfiscal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       codigopostal: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       numero: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
@@ -145,13 +146,27 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
   }
 
   actualizarDireccionCompleta(): void {
-    const direccion = this.oSocioForm.get('direccionfiscal')?.value || '';
+    let direccion = this.oSocioForm.get('direccionBase')?.value || '';
     const numero = this.oSocioForm.get('numero')?.value || '';
-    if (direccion && numero) {
-      const direccionConNumero = `${direccion}, nº ${numero}`;
-      this.oSocioForm.get('direccionfiscal')?.setValue(direccionConNumero, { emitEvent: false });
+  
+    if (direccion) {
+      const partes: string[] = direccion.split(',').map((p: string) => p.trim());
+  
+      // Si el último fragmento es un número, lo eliminamos
+      if (partes.length > 1 && /^\d+$/.test(partes[partes.length - 1])) {
+        partes.pop();
+      }
+  
+      if (numero) {
+        partes.splice(1, 0, numero); // Inserta el número después de la calle
+      }
+  
+      const direccionActualizada = partes.join(', ');
+      this.oSocioForm.get('direccionfiscal')?.setValue(direccionActualizada, { emitEvent: false });
     }
   }
+  
+  
   
 
 
@@ -232,7 +247,9 @@ export class SocioAdminCreateRoutedComponent implements OnInit {
     formData.append('password', hashedcontraseña);
     formData.append('telefono', this.oSocioForm.get('telefono')?.value);
     formData.append('dni', this.oSocioForm.get('dni')?.value);
-    formData.append('fotoDni', this.fotoDni!);
+    if (this.fotoDni) {
+      formData.append('fotoDni', this.fotoDni);
+    }
     formData.append('direccionfiscal', this.oSocioForm.get('direccionfiscal')?.value);
     formData.append('codigopostal', this.oSocioForm.get('codigopostal')?.value);
     formData.append('tiposocio', this.oSocioForm.get('tipoSocio')?.value.id);
